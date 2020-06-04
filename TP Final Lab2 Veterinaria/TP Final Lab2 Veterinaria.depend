@@ -2,3 +2,22 @@
 1591227511 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\main.cpp
 	<iostream>
 
+1591289205 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\fecha.cpp
+	<iostream>
+	"fecha.h"
+
+1591290893 c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\fecha.h
+
+1591289549 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\arancel.cpp
+
+1591289498 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\clientes.cpp
+
+1591289450 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\historias.cpp
+
+1591289522 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\mascotas.cpp
+
+1591290622 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\tipovisita.cpp
+
+1591290655 source:c:\users\yerbaa\documents\github\tp-final-lab2-veterinaria\tp final lab2 veterinaria\visuales.cpp
+	<iostream>
+
