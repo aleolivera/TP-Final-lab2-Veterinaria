@@ -3,7 +3,7 @@
 
 #include "fecha.h"
 
-class tipoVisita{
+class TipoVisita{
     private:
         int IDTipoVisita;
         char nombreTipoVisita[15];

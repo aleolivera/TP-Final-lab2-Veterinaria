@@ -2,9 +2,9 @@
 #define ARANCEL_H_INCLUDED
 #include "fecha.h"
 
-class arancel{
+class Arancel{
     private:
-        fecha fechaArancel;
+        Fecha fechaArancel;
         int numArancel;
         int numHistoria;
         int IDTipoVisita;

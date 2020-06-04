@@ -1,4 +1,5 @@
 #include <iostream>
+#include "visuales.h"
 using namespace std;
 
 void pantallaPrincipal(){

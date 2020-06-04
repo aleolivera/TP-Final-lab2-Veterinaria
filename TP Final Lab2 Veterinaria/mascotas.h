@@ -3,17 +3,17 @@
 
 #include "fecha.h"
 
-class mascota{
+class mascotas{
     private:
         char nombreMascota[20];
         int IDCliente;
         int edad;
         bool castrado;
         bool vacunado;
-        char[10] especie;
-        char[20] raza;
+        char especie [10];
+        char raza [20];
         char sexo;
-        fecha fechaVacuna;
+        Fecha fechaVacuna;
         bool vivo;
     public:
 

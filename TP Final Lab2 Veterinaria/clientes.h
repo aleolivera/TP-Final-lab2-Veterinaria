@@ -2,7 +2,7 @@
 #define CLIENTES_H_INCLUDED
 #include "fecha.h"
 
-class cliente{
+class Cliente{
     private:
         int IDCliente;
         char nombreCliente[30];
@@ -11,7 +11,7 @@ class cliente{
         int Telefono;
         char email[30];
         bool deudor;
-        fecha fechaDeuda;
+        Fecha fechaDeuda;
     public:
 
 
