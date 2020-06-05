@@ -32,7 +32,23 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="arancel.cpp" />
+		<Unit filename="arancel.h" />
+		<Unit filename="clientes.cpp" />
+		<Unit filename="clientes.h" />
+		<Unit filename="fecha.cpp" />
+		<Unit filename="fecha.h" />
+		<Unit filename="historias.cpp" />
+		<Unit filename="historias.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="mascotas.cpp" />
+		<Unit filename="mascotas.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="tipoVisita.cpp" />
+		<Unit filename="tipoVisita.h" />
+		<Unit filename="visuales.cpp" />
+		<Unit filename="visuales.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
