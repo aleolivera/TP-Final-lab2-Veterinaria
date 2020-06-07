@@ -9,3 +9,6 @@ TP Final Lab2 Veterinaria/obj/Debug/main.o
 TP Final Lab2 Veterinaria/bin/Debug/TP Final Lab2 Veterinaria.exe
 TP Final Lab2 Veterinaria/bin/Debug/TP Final Lab2 Veterinaria.exe
 *.layout
+*.exe
+*.layout
+*.o
