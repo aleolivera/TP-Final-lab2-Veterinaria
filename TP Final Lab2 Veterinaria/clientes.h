@@ -7,7 +7,7 @@ class Cliente{
         int IDCliente;
         char nombreCliente[30];
         char nombreApellido[30];
-        char nombreDomicilio[50];
+        char domicilio[50];
         int Telefono;
         char email[30];
         bool deudor;

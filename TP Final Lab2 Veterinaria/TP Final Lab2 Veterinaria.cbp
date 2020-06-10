@@ -45,6 +45,8 @@
 		<Unit filename="mascotas.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="tipoPago.cpp" />
+		<Unit filename="tipoPago.h" />
 		<Unit filename="tipoVisita.cpp" />
 		<Unit filename="tipoVisita.h" />
 		<Unit filename="visuales.cpp" />
