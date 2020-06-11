@@ -6,6 +6,7 @@ void pantallaPrincipal(){
     cout << " ===================================================== "<< endl;
     cout << "|                   VETERINARIA                       |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
+    cout << "|        1) INGRESO PACIENTE                          |"<< endl;
     cout << "|        1) HISTORIA CLINICA                          |"<< endl;
     cout << "|        2) CLIENTES                                  |"<< endl;
     cout << "|        3) MASCOTAS                                  |"<< endl;
@@ -18,6 +19,18 @@ void pantallaPrincipal(){
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
+
+void pantallaAgregar(){
+    cout<<" ======================================================== "<<endl;
+    cout<<"|                     AGREGAR                            |"<<endl;
+    cout<<"|--------------------------------------------------------|"<<endl;
+    cout<<"|        1) AGREGAR MASCOTA Y CLIENTE                    |"<<endl;
+    cout<<"|        2) AGREGAR MASCOTA (CLIENTE EXISTENTE)          |"<<endl;
+    cout<<"|--------------------------------------------------------|"<<endl;
+    cout<<"|         0)SALIR                                        |"<<endl;
+    cout<<" ======================================================== "<<endl;
+}
+
 void pantallaHistorias(){
     cout << " ===================================================== "<< endl;
     cout << "|                 HISTORIA CLINICA                    |"<< endl;

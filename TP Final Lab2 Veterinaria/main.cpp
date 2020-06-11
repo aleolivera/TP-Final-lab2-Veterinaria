@@ -17,8 +17,17 @@ const char ARCHIVOARANCELESBKP[20]="aranceles.bkp";
 
 
 int main()
-{
-        //HOLAAAA
-        ///Hola BB, send nudes! XD
+{   int op;
+    bool salir=true;
+    while(!salir){
+
+       pantallaPrincipal();
+       cin>>op;
+        switch(op)
+        {
+            case 1:{pantallaHistorias();}break;
+        }
+    }
+
     return 0;
 }
