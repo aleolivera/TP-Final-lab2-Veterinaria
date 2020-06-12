@@ -9,7 +9,7 @@ class Historia{
         Fecha fechaVisita;
         int IDCliente;
         char nombreMascota[20];
-        char amnesis [300];
+        char anamnesis [300];
         bool control; ///constructor =falso
         Fecha fechaControl;///constructor =0
         int numArancel; ///constructor =0
@@ -21,20 +21,19 @@ class Historia{
         void mostrarFechaIngreso();
         void mostrarFechaVisita();
         void mostrarNombreMascota();
-        void mostrarAmnesis();
+        void mostrarAnamnesis();
         void mostrarControl();
         void mostrarFechaControl();
 
-///      CARGA
-        void cargarIDHistoria(); /// no la hice, no se hacerla aun
-        void cargarIDCliente();
-        void cargarFechaIngreso(); /// se pone sola la fecha que se creo la historia (fecha actual de ese dia)
-        void cargarFechaVisita(); /// la carga el usuario
-        void cargarNombreMascota(); /// la carga el usuario
-        void cargarAmnesis(); /// la carga el usuario
-        void cargarControl(); /// la carga el usuario
-        void cargarFechaControl(); /// la carga el usuario
-        void cargarNuevaHistoria(); ///carga toda  la historia clinica llamando a los demas metodos
+///     SETs
+        void setIDHistoria(int); /// no la hice, no se hacerla aun
+        void setIDCliente(int);
+        void setFechaIngreso(int,int,int); /// No se si esta bien
+        void setFechaVisita(int,int,int); /// No se si esta bien
+        void setNombreMascota(const char*cadena);
+        void setAnamnesis(); /// la carga el usuario
+        void setControl(bool);
+        void setFechaControl(int,int,int);
 
 ///      GETs
         int getIDHistoria();

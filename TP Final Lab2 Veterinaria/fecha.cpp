@@ -6,11 +6,6 @@ using namespace std;
 void Fecha::mostrarFecha(){
     cout << dia <<"/"<< mes << "/" << anio << endl;
 }
-void Fecha::cargarFecha(int d, int m, int a){
-    dia=d;
-    mes=m;
-    anio=a;
-}
 void Fecha::getFechaActual(){
     time_t timestamp;
     timestamp=time(NULL); //asigna a timestamp el tiempo actual
@@ -31,9 +26,8 @@ void Fecha::getFechaActual(){
 //    tm_yday	int	days since January 1	0-365
 //    tm_isdst int	Daylight Saving Time flag
 }
-void Fecha::cargarFecha(){
-    cout << "DIA/MES/ANIO: ";
-    cin >> dia;
-    cin >> mes;
-    cin >> anio;
+void Fecha::setFecha(int d,int m,int a){
+    dia=d;
+    mes=m;
+    anio=a;
 }

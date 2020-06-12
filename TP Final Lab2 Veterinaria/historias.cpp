@@ -25,8 +25,8 @@ void Historia::mostrarFechaVisita(){
 void Historia::mostrarNombreMascota(){
     cout << nombreMascota;
 }
-void Historia::mostrarAmnesis(){
-    cout << amnesis;
+void Historia::mostrarAnamnesis(){
+    cout << anamnesis;
 }
 void Historia::mostrarControl(){
     if(control){
@@ -41,53 +41,34 @@ void Historia::mostrarFechaControl(){
 }
 
 
-/// CARGAR
-void Historia::cargarIDHistoria(){
-    // no la se hacer aun, se tiene que cargar sola de manera secuencial
+/// SETs
+void Historia::setIDHistoria(int ID){
+    IDHistoria=ID;
 }
-void Historia::cargarIDCliente(){
-    cout << "ID del Cliente:" << endl;
-    cin >> IDCliente;
-    //habria que validarlo si esta en el archivo
+void Historia::setIDCliente(int ID){
+    IDCliente=ID;
 }
-void Historia::cargarFechaIngreso(){
+void Historia::setFechaIngreso(int d,int m,int a){
     fechaIngreso.getFechaActual();
 }
-void Historia::cargarFechaVisita(){
-    fechaVisita.cargarFecha();
+void Historia::setFechaVisita(int d, int m, int a){     ///no se si esta bien
+    fechaVisita.setFecha(d,m,a);
 }
-void Historia::cargarNombreMascota(){
-    cin.getline(nombreMascota,19);
-    //habria que validar si esta en el archivo de mascotas y si coincide con el dueño en el mismo archivo
+void Historia::setNombreMascota(const char*cadena){
+   strcpy(nombreMascota,cadena);
 }
-void Historia::cargarAmnesis(){
-    cin.getline(amnesis,299);
+void Historia::setAnamnesis(){
+    cin.getline(anamnesis,299);
 }
-void Historia::cargarControl(){
-    int op;
-    cout << "Se requiere otra visita de control?    1-Si   2-No" << endl;
-    cin >> op;
-
-    //habria que validar que se ingreso 1 o 2.
-
-    if(op==1){
-        control=true;
-    }
-    else{
-        control=false;
-    }
+void Historia::setControl(bool valor){
+    control=valor;
 }
-void Historia::cargarFechaControl(){
-    fechaControl.cargarFecha();
-}
-void Historia::cargarNuevaHistoria(){
-    cargarIDHistoria();
-    cargarFechaIngreso();
-
+void Historia::setFechaControl(int d, int m, int a){
+    fechaControl.setFecha(d,m,a);
 }
 
 
-///GETS
+///GETs
 int Historia::getIDHistoria(){
     return IDHistoria;
 }
@@ -157,7 +138,7 @@ bool Historia::leerHistoria(int pos){
 int Historia::cantidadRegistros(){
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL){
-        return false;
+        return -1;
     }
     fseek(p,0,2);
     return ftell(p)/sizeof (Historia);

@@ -8,8 +8,7 @@ class Fecha{
     public:
         void mostrarFecha(); //hace cout de las 3 variables
         void getFechaActual();// le pone la echa actual a una variable clase Fecha
-        void cargarFecha(); // carga D/M/A con cin>>
-        void cargarFecha(int, int, int); // carga D/M/A con 3 enteros
+        void setFecha(int, int, int); // carga D/M/A con 3 enteros
 };
 
 #endif // FECHA_H_INCLUDED
