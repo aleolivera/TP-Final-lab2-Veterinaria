@@ -13,8 +13,12 @@ class Cliente{
         bool deudor;
         Fecha fechaDeuda;
     public:
-
-
+        bool cargarCliente();
+        bool gurdarClienteEnDisco();
+        bool LeerDiscoDeCliente(int);
+        void mostrarCliente();
+        int buscarCliente(char*,char*);
+        void listarClietes();
 };
 
 #endif // CLIENTES_H_INCLUDED

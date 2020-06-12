@@ -8,6 +8,7 @@ void pantallaClientes();
 void pantallaAranceles();
 void pantallaAdministracion();
 void pantallaConfiguracion();
+void pantallaAgregar();
 
 
 #endif // VISUALES_H_INCLUDED

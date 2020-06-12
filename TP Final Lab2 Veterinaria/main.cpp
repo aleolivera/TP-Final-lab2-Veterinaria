@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "visuales.h"
 #include "fecha.h"
+#include "clientes.h"
 
 using namespace std;
 ///CONSTANTES DAT
@@ -19,17 +20,26 @@ const char ARCHIVOARANCELESBKP[20]="aranceles.bkp";
 const char ARCHIVOTIPOVISITABKP[20]="tipovisita.bkp";
 
 int main()
-{   int op;
-    bool salir=true;
-    while(!salir){
+{
+    int op;
+    bool salir=false;
+    while(!salir)
+    {
 
-       pantallaPrincipal();
-       cin>>op;
+        pantallaPrincipal();
+        cin>>op;
         switch(op)
         {
-            case 1:{pantallaHistorias();}break;
+        case 1:
+        {
+            pantallaAgregar();
+        }
+        break;
+        case 3:
+        {
+            pantallaClientes();
+        }break;
         }
     }
-
     return 0;
 }
