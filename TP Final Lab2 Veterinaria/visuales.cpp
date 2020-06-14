@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <cstdlib>
 #include "clientes.h"
 #include "visuales.h"
 using namespace std;
@@ -54,6 +55,7 @@ void pantallaHistorias()
     cout << "|                 HISTORIA CLINICA                    |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|     1) INGRESO DE NUEVA VISITA                      |"<< endl;
+    cout << "|     1) MOSTRAR ENTRADA DE HISTORIA CLINICA (ID)     |"<< endl;
     cout << "|     2) MOSTRAR HISTORIA CLINICA                     |"<< endl;
     cout << "|     3) MODIFICAR HISTORIA   /|_/|        /|___/|    |"<< endl;
     cout << "|     4) CONTROLES PENDIENTES (0_0)         (0_o)     |"<< endl;
@@ -153,4 +155,9 @@ void pantallaConfiguracion()
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
+}
+
+void limpiar(){
+    system("cls");
+    cin.ignore();
 }

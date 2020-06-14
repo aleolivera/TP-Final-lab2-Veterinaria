@@ -1,9 +1,16 @@
 #ifndef MASCOTAS_H_INCLUDED
 #define MASCOTAS_H_INCLUDED
+#include <cstdlib>
+#include <iostream>
+#include <cstdio>
+#include <string.h>
 
 #include "fecha.h"
 
-class mascotas{
+const char ARCHIVOMASCOTAS[20]="mascotas.dat";
+const char ARCHIVOMASCOTASBKP[20]="mascotas.bkp";
+
+class Mascotas{
     private:
         char nombreMascota[20];
         int IDCliente;
@@ -17,6 +24,13 @@ class mascotas{
         bool vivo;
     public:
 
+
+        ///GETs
+        int getIDCliente();
+        void getNombre(char*);
+
+        ///DISCO
+        bool leerMascota(int);
 };
 
 #endif // MASCOTAS_H_INCLUDED

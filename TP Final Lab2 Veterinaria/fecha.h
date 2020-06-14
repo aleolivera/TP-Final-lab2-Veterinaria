@@ -7,8 +7,13 @@ class Fecha{
 
     public:
         void mostrarFecha(); //hace cout de las 3 variables
-        void getFechaActual();// le pone la echa actual a una variable clase Fecha
+        ///GETs
+        int getDia();
+        int getMes();
+        int getAnio();
+        ///SETs
         void setFecha(int, int, int); // carga D/M/A con 3 enteros
+        void setFechaActual();// le pone la echa actual a una variable clase Fecha
 };
 
 #endif // FECHA_H_INCLUDED

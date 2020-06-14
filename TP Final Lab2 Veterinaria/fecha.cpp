@@ -3,10 +3,29 @@
 using namespace std;
 #include "fecha.h"
 
+///MOSTRAR
 void Fecha::mostrarFecha(){
     cout << dia <<"/"<< mes << "/" << anio << endl;
 }
-void Fecha::getFechaActual(){
+
+///GETs
+int Fecha::getDia(){
+    return dia;
+}
+int Fecha::getMes(){
+    return mes;
+}
+int Fecha::getAnio(){
+    return anio;
+}
+
+///SETs
+void Fecha::setFecha(int d,int m,int a){
+    dia=d;
+    mes=m;
+    anio=a;
+}
+void Fecha::setFechaActual(){
     time_t timestamp;
     timestamp=time(NULL); //asigna a timestamp el tiempo actual
     tm *p;
@@ -26,8 +45,4 @@ void Fecha::getFechaActual(){
 //    tm_yday	int	days since January 1	0-365
 //    tm_isdst int	Daylight Saving Time flag
 }
-void Fecha::setFecha(int d,int m,int a){
-    dia=d;
-    mes=m;
-    anio=a;
-}
+

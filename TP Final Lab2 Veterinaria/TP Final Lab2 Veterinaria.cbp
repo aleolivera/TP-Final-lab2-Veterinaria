@@ -38,6 +38,8 @@
 		<Unit filename="clientes.h" />
 		<Unit filename="fecha.cpp" />
 		<Unit filename="fecha.h" />
+		<Unit filename="funcionesGlobales.cpp" />
+		<Unit filename="funcionesGlobales.h" />
 		<Unit filename="historias.cpp" />
 		<Unit filename="historias.h" />
 		<Unit filename="main.cpp" />
@@ -45,8 +47,6 @@
 		<Unit filename="mascotas.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="tipoPago.cpp" />
-		<Unit filename="tipoPago.h" />
 		<Unit filename="tipoVisita.cpp" />
 		<Unit filename="tipoVisita.h" />
 		<Unit filename="visuales.cpp" />

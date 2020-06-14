@@ -6,8 +6,6 @@ using namespace std;
 #include "historias.h"
 #include "fecha.h"
 
-const char ARCHIVOHISTORIAS[20]="historias.dat";
-const char ARCHIVOHISTORIASBKP[20]="historias.bkp";
 
 ///MOSTRAR
 void Historia::mostrarIDHistoria(){
@@ -18,6 +16,9 @@ void Historia::mostrarIDCliente(){
 }
 void Historia::mostrarFechaIngreso(){
     fechaIngreso.mostrarFecha();
+}
+void Historia::mostrarFechaModificacion(){
+    fechaModificacion.mostrarFecha();
 }
 void Historia::mostrarFechaVisita(){
     fechaVisita.mostrarFecha();
@@ -48,8 +49,8 @@ void Historia::setIDHistoria(int ID){
 void Historia::setIDCliente(int ID){
     IDCliente=ID;
 }
-void Historia::setFechaIngreso(int d,int m,int a){
-    fechaIngreso.getFechaActual();
+void Historia::setFechaIngreso(){
+    fechaIngreso.setFechaActual();
 }
 void Historia::setFechaVisita(int d, int m, int a){     ///no se si esta bien
     fechaVisita.setFecha(d,m,a);
@@ -84,6 +85,9 @@ Fecha Historia::getFechaVisita(){
 void Historia::getNombreMascota(char*cadena){
     strcpy(cadena,nombreMascota);
 }
+bool Historia::getControl(){
+    return control;
+}
 Fecha Historia::getFechaControl(){
     return fechaControl;
 }
@@ -96,7 +100,7 @@ int Historia::buscarHistoria(int ID){
         return false;
     }
 
-    if(fread(this,sizeof (Historia),1,p)==1){
+    while(fread(this,sizeof (Historia),1,p)==1){
         if(ID==IDHistoria){
             fclose(p);
             return ftell(p)/sizeof (Historia);
@@ -135,14 +139,15 @@ bool Historia::leerHistoria(int pos){
         return false;
     }
 }
-int Historia::cantidadRegistros(){
-    FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
-    if(p==NULL){
-        return -1;
-    }
-    fseek(p,0,2);
-    return ftell(p)/sizeof (Historia);
-}
+//int Historia::cantidadRegistros(){
+//    FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
+//    if(p==NULL){
+//        return -1;
+//    }
+//    fseek(p,0,2);
+//    return ftell(p)/sizeof (Historia);
+//}
+
 
 
 

@@ -9,6 +9,7 @@ void pantallaAranceles();
 void pantallaAdministracion();
 void pantallaConfiguracion();
 void pantallaAgregar();
+void limpiar();
 
 
 #endif // VISUALES_H_INCLUDED

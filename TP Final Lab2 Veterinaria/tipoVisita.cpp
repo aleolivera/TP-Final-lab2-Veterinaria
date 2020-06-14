@@ -55,7 +55,7 @@ int TipoVisita::buscarTipoVisita(int ID){
         return false;
     }
 
-    if(fread(this,sizeof (TipoVisita),1,p)==1){
+    while(fread(this,sizeof (TipoVisita),1,p)==1){
         if(ID==IDTipoVisita){
             fclose(p);
             return ftell(p)/sizeof (TipoVisita);

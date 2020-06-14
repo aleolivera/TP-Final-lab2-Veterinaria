@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <string.h>
 #include "clientes.h"
-const char ARCHIVOCLIENTES[20]="clientes.dat";
+
 using namespace std;
 
 /*int IDCliente;
@@ -22,8 +22,8 @@ bool Cliente::cargarCliente()
     cout<<" Nombre:";
     cin.getline(nombreCliente,30);
     cout<<" Apellido :";
-    cin.getline(nombreApellido,30);
-    encontrado=buscarCliente(nombreCliente,nombreApellido);  //////NO FUNCIONA (( NO DETECTA SI REPITE EL NOMBRE.
+    cin.getline(apellido,30);
+    encontrado=buscarCliente(nombreCliente,apellido);  //////NO FUNCIONA (( NO DETECTA SI REPITE EL NOMBRE.
     if(encontrado==-1)
     {
         cout<<" Domicilio :";
@@ -35,7 +35,7 @@ bool Cliente::cargarCliente()
         cin.getline(email,30);
     }
     else{
-        cout<<" El cliente "<<nombreApellido<<" "<<nombreCliente<<" esta registrado "<<endl;      //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
+        cout<<" El cliente "<<apellido<<" "<<nombreCliente<<" esta registrado "<<endl;      //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
         return false;
     }
         return true;
@@ -77,7 +77,7 @@ int Cliente::buscarCliente(char*nombre,char*apellido)
     Cliente reg;
     while(reg.LeerDiscoDeCliente(pos)==1)
     {
-        if(strcmp(nombre,reg.nombreCliente)==1&&strcmp(apellido,reg.nombreApellido)==1)
+        if(strcmp(nombre,reg.nombreCliente)==1&&strcmp(apellido,reg.apellido)==1)
             return pos;
         pos++;
     }
@@ -87,7 +87,7 @@ int Cliente::buscarCliente(char*nombre,char*apellido)
 void Cliente::mostrarCliente()
 {
     cout<<" Nombre :"<<nombreCliente<<endl;
-    cout<<" Apellido :"<<nombreApellido<<endl;
+    cout<<" Apellido :"<<apellido<<endl;
     cout<<" Domicilio :"<<domicilio<<endl;
     cout<<" Telefono :"<<Telefono<<endl;
     cout<<" Email :"<<email<<endl;
@@ -120,3 +120,13 @@ void Cliente::listarClietes()
 		system("pause>null");
 		}
 	}*/
+
+
+
+	///GETs     TE HICE ESTE GET PARA PODER VALIDAR EL ID DEL CLIENTE AL INGRESAR LA HISTORIA CLINICA
+	int Cliente::getIDCliente(){
+        return IDCliente;
+	}
+	void Cliente::getApellido(char*cadena){
+        strcpy(cadena,apellido);
+	}
