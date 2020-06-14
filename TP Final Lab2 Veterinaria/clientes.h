@@ -22,9 +22,15 @@ class Cliente{
         void mostrarCliente();
         int buscarCliente(char*,char*);
         void listarClietes();
+
+
         ///GETs
         int getIDCliente();
         void getApellido(char*);
+        int getTelefono();
+        ///MOSTRAR solo cout de un solo atributo
+        void mostrarTelefono();
+        void mostrarApellido();
 };
 
 #endif // CLIENTES_H_INCLUDED

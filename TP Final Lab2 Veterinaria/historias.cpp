@@ -139,14 +139,7 @@ bool Historia::leerHistoria(int pos){
         return false;
     }
 }
-//int Historia::cantidadRegistros(){
-//    FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
-//    if(p==NULL){
-//        return -1;
-//    }
-//    fseek(p,0,2);
-//    return ftell(p)/sizeof (Historia);
-//}
+
 
 
 

@@ -1,6 +1,42 @@
 #include "funcionesGlobales.h"
+#include <ctime>
 
 ///VALIDACIONES
+int compararFechas(Fecha fechaUno, Fecha fechaDos){ ///Devuelve 0 si son iguales, 1 si la primera es anterior a la segunda, o 2 si la segunda es anterior a la primera
+
+    if((fechaUno.getAnio()-fechaDos.getAnio())<0){
+        return 1;
+    }
+    else if((fechaUno.getAnio()-fechaDos.getAnio())>0){
+        return 2;
+    }
+    if((fechaUno.getMes()-fechaDos.getMes())<0){
+        return 1;
+    }
+    else if((fechaUno.getMes()-fechaDos.getMes())>0){
+        return 2;
+    }
+    if((fechaUno.getDia()-fechaDos.getDia())<0){
+        return 1;
+    }
+    else if((fechaUno.getDia()-fechaDos.getDia())>0){
+        return 2;
+    }
+    return 0;
+
+}
+Fecha obtenerFechaActual(){
+    Fecha reg;
+    time_t timestamp;
+    timestamp=time(NULL); //asigna a timestamp el tiempo actual
+    tm *p;
+    p = localtime(&timestamp);
+    int dia = p->tm_mday;
+    int mes = p->tm_mon+1;
+    int anio= p->tm_year +1900;
+    reg.setFecha(dia,mes,anio);
+    return reg;
+}
 bool validarFebrero(int dia,int anio){
         if ((anio%400==0) || (!anio%100==0 && anio%4==0)){
         if(dia>0 && dia<30){
@@ -244,13 +280,15 @@ void menuMascotas(){
 void menuIngresoPaciente(){
 
 }
+
+
 ///HISTORIAS
 bool ingresoHistoria(){
     Historia reg;
     int dia,mes,anio,valor;
     char cadena[20];
-    reg.setIDHistoria(asignarIDHistoria());
-    reg.setFechaIngreso();
+    reg.setIDHistoria(asignarIDHistoria());     ///Aca se asigna solo ID de manera secuencial
+    reg.setFechaIngreso();                      ///Aca se asigna automaticamente la fecha del HOY
     ///EL ATRIBUTO 'Fecha fechaModificacion' LO ASIGNA EL CONSTRUCTOR EN ESTA ETAPA
 
     cout << "INGRESE LA FECHA DE LA VISITA(DD/MM/AA):"<< endl;
@@ -258,29 +296,29 @@ bool ingresoHistoria(){
     if (!validarFecha(dia,mes,anio)){
         return false;
     }
-    reg.setFechaVisita(dia,mes,anio);
+    reg.setFechaVisita(dia,mes,anio);       ///Aca de ingresa la fecha de visita tras validarla
 
     cout << "ID DEL CLIENTE: ";
     cin >> valor;
     if(validarIDcliente(valor)){
         return false;
     }
-    reg.setIDCliente(valor);
+    reg.setIDCliente(valor);                ///Aca se ingresa el ID del cliente en el registro tras validarlo en disco
 
     cout << "NOMBRE DE LA MASCOTA: ";
     cin.ignore();
     cin.getline(cadena,20);
-    reg.setNombreMascota(cadena);
+    reg.setNombreMascota(cadena);           ///Aca se ingresa el nombre de la mascota
 
     cout << "ANAMNESIS: ";
     cin.ignore();
-    reg.setAnamnesis();
+    reg.setAnamnesis();                     ///Aca la Anamnesis (detalles de la visita)
 
     cout << "REQUIERE VOLVER A CONTROL?: ";
     cin.ignore();
     cin.getline(cadena,2);
     if(strcmp(cadena,"SI")||strcmp(cadena,"si")){
-        reg.setControl(true);
+        reg.setControl(true);                ///al ingresar SI o NO se cambia el estado del booleano
     }
     else if(strcmp(cadena,"NO")||strcmp(cadena,"no")){
         reg.setControl(false);
@@ -293,10 +331,13 @@ bool ingresoHistoria(){
     if(reg.getControl()){
         cout << "INGRESE LA FECHA DEL CONTROL(DD/MM/AA):"<< endl;
         cin >> dia >> mes >> anio;
-        if (!validarFecha(dia,mes,anio)){ ///TENDRIA QUE VALIDAR ADEMAS QUE LA FECHA NO SEA MENOR A LA DE HOY
+        if (!validarFecha(dia,mes,anio)){ ///Se valida que no se ingrese 42/9/2500 o 29/2 si no es anio biciesto
                 return false;
             }
-        reg.setFechaControl(dia,mes,anio);
+        reg.setFechaControl(dia,mes,anio); ///Se valida que la fecha del control no sea en le pasado
+        if(compararFechas(reg.getFechaControl(),obtenerFechaActual())==2){
+            return false;
+        }
     }
     ///EL CAMPO QUE RESTA ES 'int IDArancel' QUE SE CARGA CON EL ARANCEL
     if(!reg.guardarHistoria()){
@@ -314,58 +355,52 @@ bool mostrarEntradaHistoria(){
     if(pos==-1){
         return false;
     }
-    reg.leerHistoria(pos);
-    reg.mostrarFechaModificacion();
+    reg.leerHistoria(pos);          ///se busca la posicion del registro por ID
+    reg.mostrarFechaModificacion(); ///Despues se muestran los registros de a uno
     reg.mostrarNombreMascota();
     reg.mostrarAnamnesis();
     return true;
 }
 bool mostrarHistoria(){
-    Historia*vecHistoria;
-    Mascotas*vecMascota;
-    Cliente*vecClientes;
-    char aux[30];
-    int ID=-1;
-    int tam1;
-    int tam2;
+    Historia*vecHistoria; ///para encontrar las entradas correspondientes a la historia clinica
+    Cliente*vecClientes;    ///para encontrar con el ID del paciente el apellido que coincida con el del reg mascota
+    char aux[30];           ///para deposita el contenido de los GETS que devuelven cadenas
+    int ID=-1;              ///para comprar el ID entre los registros
+    int tam1;               ///para armar el vector y recorrer los ciclos
+    int tam2;               ///para armar el vector y recorrer los ciclos
     vecHistoria=new Historia[cantidadRegistrosHistorias()];
     if(vecHistoria==NULL){
         return false;
     }
-    vecMascota=new Mascotas [cantidadRegistrosMascotas()];
-    if(vecHistoria==NULL){
-        free(vecHistoria);
-        return false;
-    }
     vecClientes=new Cliente [cantidadRegistrosClientes()];
     if(vecHistoria==NULL){
-        free(vecMascota);
         free(vecHistoria);
         return false;
     }
     char nombreMascota[20];
     char apellidoCliente[30];
-    cin.ignore();
+    cin.ignore();                       ///PIDO nombreMascota (clase mascota)
     cin.getline(nombreMascota,20);
-    cin.ignore();
+    cin.ignore();                       ///PIDO apellido (clase cliente)
     cin.getline(apellidoCliente,30);
 
     tam1=cantidadRegistrosHistorias();
     tam2=cantidadRegistrosMascotas();
 
-    if(!cargarVecHistorias(vecHistoria)||(!cargarVecMascotas(vecMascota))||(cargarVecClientes(vecClientes))){
+
+    ///CARGO LOS VECTORES
+    if(!cargarVecHistorias(vecHistoria)||(cargarVecClientes(vecClientes))){
         free(vecClientes);
-        free(vecMascota);
         free(vecHistoria);
         return false;
     }
-    for(int i=0;i<tam1;i++){
+    for(int i=0;i<tam1;i++){           ///El problema es que puede haber mas de un cliente con el mismo apellido
         vecHistoria[i].getNombreMascota(aux);
-        if(strcmp(nombreMascota,aux)==0){
+        if(strcmp(nombreMascota,aux)==0){         ///Recorro el vecHistoria hasta encontrar el nombre de mascota ingresado
             for(int j=0;j<tam2;j++){
-                vecClientes[j].getApellido(aux);
+                vecClientes[j].getApellido(aux);    ///ahora vuuelvo a recorrer pero el vecCliente hasta que coincida del apellido ingresado con el del REG
                 if((vecHistoria[i].getIDCliente() == vecClientes[j].getIDCliente())&&(strcmp(apellidoCliente,aux))){
-                    ID=vecHistoria[i].getIDCliente();
+                    ID=vecHistoria[i].getIDCliente();   ///al poder tener varios clientes con el mismo apellido, asi se puede obtener el ID correcto
                 }
             }
         }
@@ -375,7 +410,7 @@ bool mostrarHistoria(){
     cout << "NOMBRE DE MASCOTA: " << nombreMascota << endl;
     cout << "APELLIDO DEL CLIENTE: " << apellidoCliente << endl;
     for (int i=0;i<tam1;i++){
-        if(vecHistoria[i].getIDCliente()==ID){
+        if(vecHistoria[i].getIDCliente()==ID){  ///con el ID obtenido mostramos los atributos que corresponden
             vecHistoria[i].mostrarIDHistoria();
             vecHistoria[i].mostrarFechaVisita();
             vecHistoria[i].mostrarAnamnesis();
@@ -383,28 +418,141 @@ bool mostrarHistoria(){
             cout << "      ---------------      " << endl;
         }
     }
-    free(vecHistoria);
-    free(vecMascota);
+    free(vecHistoria);      ///tal vez necesite un DESTRUCTOR
     free(vecClientes);
     return true;
 }
-
 bool modificarHistoria(){
+    Historia reg;
+    int ID,dia,mes,anio;
+    int pos;
+    char cad[3];
+    cout << "MODIFICAR HISTORIA: ";
+    cout << "ID ENTRADA DE HISTORIA: ";
+    cin>> ID;
+    cout <<endl;
+    pos=reg.buscarHistoria(ID);         ///PIDO EL ID, abro el archivo, busco esa entrada en particular y la leo
+    reg.leerHistoria(pos);
 
+    cout << "ANAMNESIS: ";              ///Despues se editan los Atributos de a uno.
+    reg.setAnamnesis();
+    cout << "REQUIERE VISITA DE CONTROL?"<< endl;
+    cout << "INGRESE: 'SI' o 'NO': ";
+    cin >> cad;
+    if(strcmp(cad,"SI")==0||strcmp(cad,"si")==0){
+        reg.setControl(true);
+        cout << "FECHA DE CONTROL (DD/MM/AA): " << endl;
+        cin >> dia;
+        cin >> mes;
+        cin >> anio;
+        if(!validarFecha(dia,mes,anio)){
+        return false;
+        }
+        reg.setFechaControl(dia,mes,anio);
+    }
+    else if(strcmp(cad,"NO")==0||strcmp(cad,"no")==0){
+        reg.setControl(false);
+        reg.setFechaControl(0,0,0);
+    }
+    reg.guardarHistoria();
     return true;
 }
-void controlesPendientes(){
+bool controlesPendientes(){
+    Historia*vecHistoria;
+    Cliente*vecCliente;
+    int cantHistorias=cantidadRegistrosHistorias();
+    int cantClientes=cantidadRegistrosClientes();
 
+    vecHistoria=new Historia [cantHistorias]; ///CARGO LOS VECTORES CON TODOS LOS REG HISTORIAS
+    if(vecHistoria==NULL){
+        return false;
+    }
+    vecCliente=new Cliente[cantClientes];///CARGO LOS VECTORES CON TODOS LOS REG CLIENTES
+    if(vecCliente==NULL){
+        free(vecHistoria);
+        return false;
+    }
+
+    if(!cargarVecHistorias(vecHistoria)||(cargarVecClientes(vecCliente))){
+        free(vecCliente);
+        free(vecHistoria);
+        return false;
+    }
+
+    for(int i=0;i<cantHistorias;i++){   ///Recorro el vecHistorias para encontrar las "control=true"
+        if(vecHistoria[i].getControl()&&compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==1){
+            vecHistoria[i].mostrarNombreMascota();
+            cout << endl;
+            vecHistoria[i].mostrarFechaControl();
+            cout << endl;
+            for(int j=0;j<cantClientes;j++){        ///al encontrar uno, muestro el nombre de mascota, fecha de control en el mismo reg.
+                if(vecHistoria[i].getIDCliente()==vecCliente[i].getIDCliente()){
+                    vecCliente[j].mostrarTelefono();    ///y ahora con el ID del cliente del reg de esa historia, ubico al cliente en el vec.
+                    cout << endl;
+                    vecCliente[j].mostrarApellido();    ///asi accedo a sus atributos y muestro lo que necesito
+                    cout << endl;
+                }
+            }
+            cout << endl;
+        }
+    }
+    cout << "ESAS ENTRADAS HASTA LA FECHA." << endl;
+    system("pause");
+    free(vecHistoria);
+    free(vecCliente);
+    return true;
 }
-void controlesAusentes(){
+bool controlesAusentes(){
+    Historia*vecHistoria;
+    Cliente*vecCliente;
+    int cantHistorias=cantidadRegistrosHistorias();
+    int cantClientes=cantidadRegistrosClientes();
 
+    vecHistoria=new Historia [cantHistorias]; ///CARGO LOS VECTORES CON TODOS LOS REG HISTORIAS
+    if(vecHistoria==NULL){
+        return false;
+    }
+    vecCliente=new Cliente[cantClientes];///CARGO LOS VECTORES CON TODOS LOS REG CLIENTES
+    if(vecCliente==NULL){
+        free(vecHistoria);
+        return false;
+    }
+    if(!cargarVecHistorias(vecHistoria)||(cargarVecClientes(vecCliente))){
+        free(vecCliente);
+        free(vecHistoria);
+        return false;
+    }
+
+    for(int i=0;i<cantHistorias;i++){   ///Recorro el vecHistorias para encontrar las "control=true" y que la fecha de contro no haya pasado
+        if(vecHistoria[i].getControl() && compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==2){
+            vecHistoria[i].mostrarNombreMascota();
+            cout << endl;
+            vecHistoria[i].mostrarFechaControl();
+            cout << endl;
+            for(int j=0;j<cantClientes;j++){        ///al encontrar uno, muestro el nombre de mascota, fecha de control en el mismo reg.
+                if(vecHistoria[i].getIDCliente()==vecCliente[i].getIDCliente()){
+                    vecCliente[j].mostrarTelefono();    ///y ahora con el ID del cliente del reg de esa historia, ubico al cliente en el vec.
+                    cout << endl;
+                    vecCliente[j].mostrarApellido();    ///asi accedo a sus atributos y muestro lo que necesito
+                    cout << endl;
+                }
+            }
+            cout << endl;
+        }
+    }
+    cout << "ESAS ENTRADAS HASTA LA FECHA." << endl;
+    system("pause");
+    free(vecHistoria);
+    free(vecCliente);
+    return true;
+    return true;
 }
-
 void menuHistorias(){
     limpiar();
     pantallaHistorias();
     int op;
     cin >>op;
+    limpiar();
     switch(op){
         case 1:{
             ingresoHistoria();
@@ -422,8 +570,6 @@ void menuHistorias(){
             controlesAusentes();
         }break;
         case 0:{
-
-
         }break;
     }
 }

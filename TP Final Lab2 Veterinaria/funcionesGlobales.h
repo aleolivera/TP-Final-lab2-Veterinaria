@@ -16,6 +16,8 @@ using namespace std;
 
 
 ///VALIDACIONES DE INGRESOS
+int compararFechas(Fecha, Fecha);
+Fecha obtenerFechaActual();
 bool validarFebrero(int,int);
 bool validarBisiesto(int, int, int);
 bool validarFecha(int,int,int);
@@ -50,9 +52,9 @@ void menuIngresoPaciente();
 bool ingresoHistoria();
 bool mostrarEntradaHistoria();
 bool mostrarHistoria();
-bool modificarHistotia();
-void controlesPendientes();
-void controlesAusentes();
+bool modificarHistoria();
+bool controlesPendientes();
+bool controlesAusentes();
 
 void menuHistorias();
 ///ARANCELES

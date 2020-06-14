@@ -1,6 +1,9 @@
 #ifndef FECHA_H_INCLUDED
 #define FECHA_H_INCLUDED
+#include <iostream>
+#include <ctime>
 
+using namespace std;
 class Fecha{
     private:
         int dia, mes,anio;

@@ -56,8 +56,7 @@ class Historia{
         int buscarHistoria(int);
         bool guardarHistoria();
         bool leerHistoria(int);
-//        int cantidadRegistros();
-        bool leerHistoriaPorMascotaEID(const char*,int);
+
 
         ///CONSTRUCTOR
         Historia(){

@@ -123,6 +123,8 @@ void Cliente::listarClietes()
 
 
 
+
+
 	///GETs     TE HICE ESTE GET PARA PODER VALIDAR EL ID DEL CLIENTE AL INGRESAR LA HISTORIA CLINICA
 	int Cliente::getIDCliente(){
         return IDCliente;
@@ -130,3 +132,14 @@ void Cliente::listarClietes()
 	void Cliente::getApellido(char*cadena){
         strcpy(cadena,apellido);
 	}
+	int Cliente::getTelefono(){
+        return Telefono;
+	}
+	///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
+	void Cliente::mostrarTelefono(){
+	    cout << Telefono;
+	}
+	void Cliente::mostrarApellido(){
+	    cout << apellido;
+	}
+
