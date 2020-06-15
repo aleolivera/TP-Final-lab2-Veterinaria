@@ -27,6 +27,7 @@ bool buscarRepContiguos(const char*,char);
 char buscarUltCaracter(const char*);
 int contarSimbolos(const char*);
 int validarMail(const char*);
+bool validarTipoDePago(char);
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();
@@ -35,9 +36,11 @@ int buscarIDClientePorMascota(const char*);
 int cantidadRegistrosHistorias();
 int cantidadRegistrosClientes();
 int cantidadRegistrosMascotas();
-bool cargarVecHistorias(Historia*);
-bool cargarVecClientes(Cliente*);
-bool cargarVecMascotas(Mascotas*);
+int cantidadRegistrosArancel();
+bool cargarVecHistorias(Historia*,int);
+bool cargarVecClientes(Cliente*,int);
+bool cargarVecMascotas(Mascotas*,int);
+bool cargarVecArancel(Arancel*,int);
 
 ///SECCIONES DEL PROGRAMA
 ///CLIENTES
@@ -48,6 +51,7 @@ void menuClientes();
 
 void menuMascotas();
 void menuIngresoPaciente();
+
 ///HISTORIAS
 bool ingresoHistoria();
 bool mostrarEntradaHistoria();
@@ -55,10 +59,13 @@ bool mostrarHistoria();
 bool modificarHistoria();
 bool controlesPendientes();
 bool controlesAusentes();
-
 void menuHistorias();
-///ARANCELES
 
+///ARANCELES
+bool nuevoArancel();
+bool modificarArancel();
+bool mostrarArancelesDelDia();
+bool mostrarArancelesPorVisita();
 void menuAranceles();
 ///ADMINISTRACION
 

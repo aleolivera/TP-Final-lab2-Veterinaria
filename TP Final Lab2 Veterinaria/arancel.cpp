@@ -7,7 +7,9 @@ using namespace std;
 #include "arancel.h"
 
 ///MOSTRAR
-
+void Arancel::mostrarFechaArancel(){
+    fechaArancel.mostrarFecha();
+}
 void Arancel::mostrarIDArancel(){
     cout << IDArancel<< endl;
 }
@@ -36,6 +38,9 @@ void Arancel::mostrarAbonado(){
 }
 
 ///GETs
+Fecha Arancel::getFechaArancel(){
+    return fechaArancel;
+}
 int Arancel::getIDArancel(){
     return IDArancel;
 }
@@ -59,6 +64,9 @@ bool Arancel::getAbonado(){
 }
 
 ///SETs
+void Arancel::setFechaIngreso(){
+    fechaArancel.setFechaActual();
+}
 void Arancel::setIDArancel(int ID){
     IDArancel=ID;
 }
@@ -127,14 +135,7 @@ bool Arancel::leerArancel(int pos){
         return false;
     }
 }
-//int Arancel::cantidadRegistros(){
-//    FILE*p=fopen(ARCHIVOARANCELES,"rb");
-//    if(p==NULL){
-//        return -1;
-//    }
-//    fseek(p,0,2);
-//    return (ftell(p)/sizeof (Arancel));
-//}
+
 
 
 

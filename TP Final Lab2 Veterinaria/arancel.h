@@ -17,6 +17,7 @@ class Arancel{
         bool abonado;
     public:
         ///MOSTRAR
+        void mostrarFechaArancel();
         void mostrarIDArancel();
         void mostrarIDHistoria();
         void mostrarIDTipoVisita();
@@ -26,6 +27,7 @@ class Arancel{
         void mostrarAbonado();
 
         ///GETs
+        Fecha getFechaArancel();
         int getIDArancel();
         int getIDHistoria();
         int getIDTipoVisita();
@@ -35,6 +37,7 @@ class Arancel{
         bool getAbonado();
 
         ///SETs
+        void setFechaIngreso();
         void setIDArancel(int);
         void setIDHistoria(int);
         void setIDTipoVisita(int);
@@ -47,7 +50,6 @@ class Arancel{
         int buscarArancel(int);
         bool guardarArancel();
         bool leerArancel(int);
-//        int cantidadRegistros();
 };
 
 #endif // ARANCEL_H_INCLUDED

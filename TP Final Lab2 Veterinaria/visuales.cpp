@@ -55,11 +55,11 @@ void pantallaHistorias()
     cout << "|                 HISTORIA CLINICA                    |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|     1) INGRESO DE NUEVA VISITA                      |"<< endl;
-    cout << "|     1) MOSTRAR ENTRADA DE HISTORIA CLINICA (ID)     |"<< endl;
-    cout << "|     2) MOSTRAR HISTORIA CLINICA                     |"<< endl;
-    cout << "|     3) MODIFICAR HISTORIA   /|_/|        /|___/|    |"<< endl;
-    cout << "|     4) CONTROLES PENDIENTES (0_0)         (0_o)     |"<< endl;
-    cout << "|     5) CONTROLES AUSENTES  ==(Y)==         (V)      |"<< endl;
+    cout << "|     2) MOSTRAR ENTRADA DE HISTORIA CLINICA (ID)     |"<< endl;
+    cout << "|     3) MOSTRAR HISTORIA CLINICA                     |"<< endl;
+    cout << "|     4) MODIFICAR HISTORIA   /|_/|        /|___/|    |"<< endl;
+    cout << "|     5) CONTROLES PENDIENTES (0_0)         (0_o)     |"<< endl;
+    cout << "|     6) CONTROLES AUSENTES  ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
     cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
     cout << " ===================================================== "<< endl;

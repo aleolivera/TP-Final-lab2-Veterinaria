@@ -25,7 +25,7 @@ int compararFechas(Fecha fechaUno, Fecha fechaDos){ ///Devuelve 0 si son iguales
     return 0;
 
 }
-Fecha obtenerFechaActual(){
+Fecha obtenerFechaActual(){         ///LLamas a la funcion  te devuelve un objeto de clase Fecha con dia mes y anio
     Fecha reg;
     time_t timestamp;
     timestamp=time(NULL); //asigna a timestamp el tiempo actual
@@ -56,7 +56,7 @@ bool validarBisiesto(int dia, int mes, int anio){
     }
     return false;
 }
-bool validarFecha(int dia,int mes,int anio){
+bool validarFecha(int dia,int mes,int anio){        ///Valida que la fecha se ingrese bien usando "validarFebrero()" y "validarFebrero"
     if(validarBisiesto(dia,mes,anio)){
         return false;
     }
@@ -125,7 +125,7 @@ int contarSimbolos(const char*cadena){
     }
     return con;
 }
-int validarMail(const char* cadena){
+int validarMail(const char* cadena){    ///Usa la 5 funciones dde arriba para validar el mail como en el TP LARA
     int espacios;
     if(contarSimbolos(cadena)>0){
         return 5;
@@ -146,11 +146,16 @@ int validarMail(const char* cadena){
     }
     return 0;
 }
-
+bool validarTipoDePago(char tipoPago){
+    if(!(tipoPago=='e'||tipoPago=='E'|| tipoPago=='t'|| tipoPago=='T'|| tipoPago=='d'|| tipoPago=='D'|| tipoPago=='c'|| tipoPago=='C')){
+       return true;
+    }
+    return false;
+}
 
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVOS
-int asignarIDHistoria(){
+int asignarIDHistoria(){    ///Le pone solo el ID de manera secuencial
     Historia reg;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL){
@@ -167,7 +172,7 @@ int asignarIDHistoria(){
         return reg.getIDHistoria()+1;
     }
 }
-int asignarIDarancel(){
+int asignarIDarancel(){     ///Le pone solo el ID de manera secuencial
     Arancel reg;
     FILE*p=fopen(ARCHIVOARANCELES,"rb");
     if(p==NULL){
@@ -184,7 +189,7 @@ int asignarIDarancel(){
         return reg.getIDArancel()+1;
     }
 }
-bool validarIDcliente(int ID){
+bool validarIDcliente(int ID){ ///Busca el ID en ARCHIVOCLIENTES y devuelve true si lo encuentra
     Cliente aux;
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL) return false;
@@ -197,7 +202,7 @@ bool validarIDcliente(int ID){
     fclose(p);
     return false;
 }
-int cantidadRegistrosHistorias(){
+int cantidadRegistrosHistorias(){   ///Devuelve la cantidad de registros en ARCHIVOHISTORIAS
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL){
         return -1;
@@ -205,7 +210,7 @@ int cantidadRegistrosHistorias(){
     fseek(p,0,2);
     return ftell(p)/sizeof (Historia);
 }
-int cantidadRegistrosClientes(){
+int cantidadRegistrosClientes(){    ///Devuelve la cantidad de registros en ARCHIVOCLIENTES
      FILE*p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL){
         return -1;
@@ -213,7 +218,7 @@ int cantidadRegistrosClientes(){
     fseek(p,0,2);
     return ftell(p)/sizeof (Cliente);
 }
-int cantidadRegistrosMascotas(){
+int cantidadRegistrosMascotas(){    ///Devuelve la cantidad de registros en ARCHIVOMASCOTAS
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
     if(p==NULL){
         return -1;
@@ -221,42 +226,64 @@ int cantidadRegistrosMascotas(){
     fseek(p,0,2);
     return ftell(p)/sizeof (Mascotas);
 }
-bool cargarVecHistorias(Historia*vec){
+int cantidadRegistrosArancel(){    ///Devuelve la cantidad de registros en ARCHIVOARANCELES
+    FILE*p=fopen(ARCHIVOARANCELES,"rb");
+    if(p==NULL){
+        return -1;
+    }
+    fseek(p,0,2);
+    return ftell(p)/sizeof (Arancel);
+}
+bool cargarVecHistorias(Historia*vec,int tam){ ///Le mandas un vector de clase HISTORIA y su tamanio y te lo carga todo
     Historia reg;
     int i=0;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL){
         return false;
     }
-    while(fread(&reg,sizeof (Historia),1,p)==1){
+    while(fread(&reg,sizeof (Historia),1,p)==1 && i<tam){
         vec[i]=reg;
         i++;
     }
     fclose(p);
     return true;
 }
-bool cargarVecClientes(Cliente*vec){
+bool cargarVecClientes(Cliente*vec,int tam){    ///Le mandas un vector de clase CLIENTES y su tamanio y te lo carga todo
     Cliente reg;
     int i=0;
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL){
         return false;
     }
-    while(fread(&reg,sizeof (Cliente),1,p)==1){
+    while(fread(&reg,sizeof (Cliente),1,p)==1 && i<tam){
         vec[i]=reg;
         i++;
     }
     fclose(p);
     return true;
 }
-bool cargarVecMascotas(Mascotas*vec){
+bool cargarVecMascotas(Mascotas*vec,int tam){   ///Le mandas un vector de clase MASCOTAS y su tamanio y te lo carga todo
     Mascotas reg;
     int i=0;
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
     if(p==NULL){
         return false;
     }
-    while(fread(&reg,sizeof (Mascotas),1,p)==1){
+    while(fread(&reg,sizeof (Mascotas),1,p)==1 && i<tam){
+        vec[i]=reg;
+        i++;
+    }
+    fclose(p);
+    return true;
+}
+bool cargarVecArancel(Arancel*vec,int tam){   ///Le mandas un vector de clase ARANCEL y su tamanio y te lo carga todo
+    Arancel reg;
+    int i=0;
+    FILE*p=fopen(ARCHIVOARANCELES,"rb");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(&reg,sizeof (Arancel),1,p)==1 && i<tam){
         vec[i]=reg;
         i++;
     }
@@ -264,17 +291,22 @@ bool cargarVecMascotas(Mascotas*vec){
     return true;
 }
 
+
 ///SECCIONES DEL PROGRAMA
 ///CLIENTES
-
+///Para resolver las consignas del MENU CLIENTES
 
 
 void menuClientes(){
+    ///Para resolver las consignas del MENU CLIENTES
 
 }
-///MASCOTAS
 
+
+///MASCOTAS
+///Para resolver las consignas del MENU MASCOTAS
 void menuMascotas(){
+
 
 }
 void menuIngresoPaciente(){
@@ -283,6 +315,7 @@ void menuIngresoPaciente(){
 
 
 ///HISTORIAS
+///Para resolver las consignas del MENU HISTORIA
 bool ingresoHistoria(){
     Historia reg;
     int dia,mes,anio,valor;
@@ -290,8 +323,8 @@ bool ingresoHistoria(){
     reg.setIDHistoria(asignarIDHistoria());     ///Aca se asigna solo ID de manera secuencial
     reg.setFechaIngreso();                      ///Aca se asigna automaticamente la fecha del HOY
     ///EL ATRIBUTO 'Fecha fechaModificacion' LO ASIGNA EL CONSTRUCTOR EN ESTA ETAPA
-
-    cout << "INGRESE LA FECHA DE LA VISITA(DD/MM/AA):"<< endl;
+    cout << "INGRESO DE HISTORIAS CLINICAS" << endl << endl;
+    cout << "FECHA DE LA VISITA(DD/MM/AA):"<< endl;
     cin >> dia >> mes >> anio;
     if (!validarFecha(dia,mes,anio)){
         return false;
@@ -305,7 +338,7 @@ bool ingresoHistoria(){
     }
     reg.setIDCliente(valor);                ///Aca se ingresa el ID del cliente en el registro tras validarlo en disco
 
-    cout << "NOMBRE DE LA MASCOTA: ";
+    cout << endl << "NOMBRE DE LA MASCOTA: ";
     cin.ignore();
     cin.getline(cadena,20);
     reg.setNombreMascota(cadena);           ///Aca se ingresa el nombre de la mascota
@@ -389,7 +422,7 @@ bool mostrarHistoria(){
 
 
     ///CARGO LOS VECTORES
-    if(!cargarVecHistorias(vecHistoria)||(cargarVecClientes(vecClientes))){
+    if(!cargarVecHistorias(vecHistoria,tam1)||(cargarVecClientes(vecClientes,tam2))){
         free(vecClientes);
         free(vecHistoria);
         return false;
@@ -432,6 +465,7 @@ bool modificarHistoria(){
     cin>> ID;
     cout <<endl;
     pos=reg.buscarHistoria(ID);         ///PIDO EL ID, abro el archivo, busco esa entrada en particular y la leo
+    if(pos==-1) return false;
     reg.leerHistoria(pos);
 
     cout << "ANAMNESIS: ";              ///Despues se editan los Atributos de a uno.
@@ -473,7 +507,7 @@ bool controlesPendientes(){
         return false;
     }
 
-    if(!cargarVecHistorias(vecHistoria)||(cargarVecClientes(vecCliente))){
+    if(!cargarVecHistorias(vecHistoria,cantHistorias)||(cargarVecClientes(vecCliente,cantClientes))){
         free(vecCliente);
         free(vecHistoria);
         return false;
@@ -517,7 +551,7 @@ bool controlesAusentes(){
         free(vecHistoria);
         return false;
     }
-    if(!cargarVecHistorias(vecHistoria)||(cargarVecClientes(vecCliente))){
+    if(!cargarVecHistorias(vecHistoria,cantHistorias)||(cargarVecClientes(vecCliente,cantClientes))){
         free(vecCliente);
         free(vecHistoria);
         return false;
@@ -555,37 +589,234 @@ void menuHistorias(){
     limpiar();
     switch(op){
         case 1:{
-            ingresoHistoria();
+            if(!ingresoHistoria()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+
         }break;
         case 2:{
-            mostrarHistoria();
+            if(!mostrarEntradaHistoria()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+
         }break;
         case 3:{
-            modificarHistoria();
+            if(!mostrarHistoria()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
         }break;
         case 4:{
-            controlesPendientes();
+            if(!modificarHistoria()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
         }break;
         case 5:{
-            controlesAusentes();
+            if(!controlesPendientes()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+
+        }break;
+        case 6:{
+            if(!controlesAusentes()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
         }break;
         case 0:{
         }break;
     }
 }
-///ARANCELES
 
+///ARANCELES
+///Para resolver las consignas del MENU ARANCELES
+bool nuevoArancel(){
+    Arancel regArancel;
+    TipoVisita regTipoVisita;
+    char tipoPago;
+    int valor,pos;
+    float total;
+    regArancel.setFechaIngreso();
+    regArancel.setIDArancel(asignarIDarancel());
+    cout <<"INGRESO DE NUEVO ARANCEL." << endl << endl;
+    cout << "FECHA DE ARANCEL: ";
+    regArancel.mostrarFechaArancel();
+    cout << endl << "ID ARANCEL: Nº ";
+    regArancel.mostrarIDArancel();
+    cout<< "ID DE HISTORIA: ";
+    cin >> valor;
+    ///ACA DEBERIA VALIDAR QUE ESTE EN EL DISCO
+    regArancel.setIDHistoria(valor);
+    cout << "TIPO DE VISITA: ";
+    cin >> valor;
+    ///ACA DEBERIA VALIDAR QUE ESTE EN EL DISCO
+    regArancel.setIDTipoVisita(valor);
+
+    pos=regTipoVisita.buscarTipoVisita(valor);
+    if(pos==-1) return false;
+    regTipoVisita.leerTipoVisita(pos);
+    total=regTipoVisita.getImporte();
+    ///TENDRIA QUE VALIDAR EL TOTAL
+    regArancel.setTotalArancel(total);
+    cout <<"TOTAL DEL ARANCEL: " << endl;
+    regArancel.mostrarTotalArancel();
+
+
+    cout <<"E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
+    cout <<"TIPO DE PAGO: " << endl;
+    cin>> tipoPago;
+    if(validarTipoDePago(tipoPago)){
+       return false;
+    }
+
+    regArancel.setTipoPago(tipoPago);
+    if(tipoPago=='c'||tipoPago=='C'){
+        regArancel.setAbonado(false);
+    }
+    else{
+        regArancel.setAbonado(true);
+    }
+
+    regArancel.setPorcentajeHonorario(regTipoVisita.getPorcentajeHonorario());
+    regArancel.guardarArancel();
+    return true;
+}
+bool mostrarArancelesDelDia(){
+    Arancel*vec;
+    Fecha fechaDeHoy;
+    fechaDeHoy.setFechaActual();
+    cout << "ARANCELES DEL DIA:";
+    fechaDeHoy.mostrarFecha();
+    cout << endl<< endl;
+    int cantAranceles=cantidadRegistrosArancel();
+    vec=new Arancel[cantAranceles];
+    if(vec==NULL) return false;
+    cargarVecArancel(vec,cantAranceles);
+    for(int i=0;i<cantAranceles;i++){
+        if(compararFechas(vec[i].getFechaArancel(),obtenerFechaActual())==0){
+            cout<<"ID DE ARANCEL : ";
+            vec[i].mostrarIDArancel();
+            cout<< endl;
+            cout<<"TIPO DE VISITA: ";
+            vec[i].mostrarIDTipoVisita();
+            cout<< endl;
+            cout<<"TIPO DE PAGO  : ";
+            vec[i].mostrarTipoPago();
+            cout<< endl;
+            cout<<"         TOTAL: ";
+            vec[i].mostrarTotalArancel();
+            cout<< endl<< endl;
+        }
+    }
+    free(vec);
+    return true;
+}
+bool modificarArancel(){
+    limpiar();
+    Arancel reg;
+    int ID,pos;
+    char tipoDePago;
+    cout << "MODIFICAR ARANCEL."<< endl<< endl;
+    cout << "INGRESE ID DE ARANCEL:"<< endl;
+    cin >> ID;
+    pos=reg.buscarArancel(ID);
+    if (pos==-1) return false;
+    reg.leerArancel(pos);
+    cout << "  TIPO DE PAGO: ";
+    cin >> tipoDePago;
+    if(!validarTipoDePago(tipoDePago)) return false;
+    reg.setTipoPago(tipoDePago);
+    cout << endl;
+    return true;
+}
+bool mostrarArancelesPorVisita(){
+    Arancel reg;
+    int ID,pos;
+    cin >> ID;
+    pos=reg.buscarArancel(ID);
+    if (pos==-1) return false;
+    reg.leerArancel(pos);
+    cout << "TIPO DE VISITA: ";
+    reg.mostrarIDTipoVisita();
+    cout << endl;
+    cout << "    ID ARANCEL: ";
+    reg.mostrarIDArancel();
+    cout << endl;
+    cout << " TOTAL ARANDEL: ";
+    reg.mostrarTotalArancel();
+    cout << endl;
+    cout << "  TIPO DE PAGO: ";
+    reg.mostrarTipoPago();
+    cout << endl;
+    cout << "   ID HISTORIA: ";
+    reg.mostrarIDHistoria();
+    cout << endl<< endl;
+    return true;
+}
 
 void menuAranceles(){
+    limpiar();
+    pantallaAranceles();
+    int op;
+    cin >>op;
+    limpiar();
+    switch(op){
+        case 1:
+            if(!nuevoArancel()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+            break;
+        case 2:
+            if(!mostrarArancelesDelDia()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+            break;
+        case 3:
+            if(!modificarArancel()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+            break;
+        case 4:
+            if(!mostrarArancelesPorVisita()){
+                limpiar();
+                cout << "ERROR" << endl;
+                cin.get();
+            }
+            break;
+        case 0:
 
+            break;
+    }
 }
+
 ///ADMINISTRACION
+///Para resolver las consignas del MENU ADMINISTRACION
+
 
 void menuAdministracion(){
 
 }
+
 ///CONFIGURACION
+///Para resolver las consignas del MENU CONFIGURACION
 
 void menuConfiguracion(){
 
 }
+

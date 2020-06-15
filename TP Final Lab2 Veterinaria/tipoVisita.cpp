@@ -52,7 +52,7 @@ int TipoVisita::getPorcentajeHonorario(){
 int TipoVisita::buscarTipoVisita(int ID){
     FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
     if(p==NULL){
-        return false;
+        return -1;
     }
 
     while(fread(this,sizeof (TipoVisita),1,p)==1){
