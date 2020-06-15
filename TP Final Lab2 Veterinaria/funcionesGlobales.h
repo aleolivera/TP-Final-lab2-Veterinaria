@@ -32,15 +32,20 @@ bool validarTipoDePago(char);
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();
 int asignarIDarancel();
+bool validarIDcliente(int);
+bool validarIDarancel(int);
+bool validarIDTipoVisita(int);
 int buscarIDClientePorMascota(const char*);
 int cantidadRegistrosHistorias();
 int cantidadRegistrosClientes();
 int cantidadRegistrosMascotas();
 int cantidadRegistrosArancel();
+int cantidadRegistrosTipoVisita();
 bool cargarVecHistorias(Historia*,int);
 bool cargarVecClientes(Cliente*,int);
 bool cargarVecMascotas(Mascotas*,int);
 bool cargarVecArancel(Arancel*,int);
+bool cargarVecTipoVisita(TipoVisita*,int);
 
 ///SECCIONES DEL PROGRAMA
 ///CLIENTES
@@ -67,9 +72,15 @@ bool modificarArancel();
 bool mostrarArancelesDelDia();
 bool mostrarArancelesPorVisita();
 void menuAranceles();
-///ADMINISTRACION
 
+///ADMINISTRACION
+bool mostrarListaDePrecios();
+bool modificarImportes();
+bool ingresarItems();
+bool listarPorFecha();
+bool mostrarDeudores();
 void menuAdministracion();
+
 ///CONFIGURACION
 
 void menuConfiguracion();

@@ -94,12 +94,12 @@ bool TipoVisita::leerTipoVisita(int pos){
         return false;
     }
 }
-int TipoVisita::cantidadRegistros(){
-    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
-    if(p==NULL){
-        return -1;
-    }
-    fseek(p,0,2);
-    return (ftell(p)/sizeof (TipoVisita));
-}
+//int TipoVisita::cantidadRegistros(){
+//    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+//    if(p==NULL){
+//        return -1;
+//    }
+//    fseek(p,0,2);
+//    return (ftell(p)/sizeof (TipoVisita));
+//}
 
