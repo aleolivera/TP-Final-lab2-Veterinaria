@@ -28,6 +28,7 @@ char buscarUltCaracter(const char*);
 int contarSimbolos(const char*);
 int validarMail(const char*);
 bool validarTipoDePago(char);
+bool cad_vacia(char*);
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();

@@ -3,39 +3,60 @@
 #include <cstdio>
 #include <string.h>
 #include "clientes.h"
+#include "funcionesGlobales.h"
 
 using namespace std;
 
-/*int IDCliente;
-        char nombreCliente[30];
-        char nombreApellido[30];
-        char domicilio[50];
-        int Telefono;
-        char email[30];
-        bool deudor;
-        Fecha fechaDeuda;*/
 int buscarCliente(char*,char*);
+
+
+int Cliente::cantidad_Clientes()
+{
+    int cant;
+    FILE *p;
+    p = fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL)
+    {
+        return 0;
+    }
+    fseek(p,0,2);
+    cant = ftell(p)/sizeof(Cliente);
+    fclose(p);
+    return cant;
+}
 
 bool Cliente::cargarCliente()
 {
+    IDCliente=cantidad_Clientes()+1;
     int encontrado;
     cout<<" Nombre:";
     cin.getline(nombreCliente,30);
+    if(cad_vacia(nombreCliente))return false;
+
     cout<<" Apellido :";
     cin.getline(apellido,30);
-    encontrado=buscarCliente(nombreCliente,apellido);  //////NO FUNCIONA (( NO DETECTA SI REPITE EL NOMBRE.
+    if(cad_vacia(apellido))return false;
+
+    encontrado=buscarCliente(nombreCliente,apellido);
     if(encontrado==-1)
     {
         cout<<" Domicilio :";
         cin.getline(domicilio,30);
+
+
         cout<<" Telefono :";
         cin>>Telefono;
         cin.ignore();
+
+
+
         cout<<" Email :";
-        cin.getline(email,30);
+        cin>>email;
+        if(validarMail(email)){cout<<"email no valido"<<endl; system("pause"); return false;}  // retocar.
     }
     else{
-        cout<<" El cliente "<<apellido<<" "<<nombreCliente<<" esta registrado "<<endl;      //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
+        cout<<" El cliente "<<apellido<<" "<<nombreCliente<<" ya estaba registrado "<<endl; //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
+
         return false;
     }
         return true;
@@ -62,7 +83,6 @@ bool Cliente::LeerDiscoDeCliente(int pos)
     p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL)
     {
-        cout<<"No existe el archivo";
         return false;
     }
     fseek(p,pos*sizeof(Cliente),0);
@@ -71,13 +91,13 @@ bool Cliente::LeerDiscoDeCliente(int pos)
     return leido;
 }
 
-int Cliente::buscarCliente(char*nombre,char*apellido)
+int Cliente::buscarCliente(char*nombre,char*apellido) //COMPARA EL NOMBRE INGRESADO CON LOS REGISTRADOS.
 {
     int pos=0;
     Cliente reg;
     while(reg.LeerDiscoDeCliente(pos)==1)
     {
-        if(strcmp(nombre,reg.nombreCliente)==1&&strcmp(apellido,reg.apellido)==1)
+        if(strcmp(nombre,reg.nombreCliente)==0)if(strcmp(apellido,reg.apellido)==0)
             return pos;
         pos++;
     }
@@ -86,6 +106,7 @@ int Cliente::buscarCliente(char*nombre,char*apellido)
 
 void Cliente::mostrarCliente()
 {
+    cout<<" ID: "<<IDCliente<<endl;
     cout<<" Nombre :"<<nombreCliente<<endl;
     cout<<" Apellido :"<<apellido<<endl;
     cout<<" Domicilio :"<<domicilio<<endl;
@@ -100,29 +121,74 @@ void Cliente::listarClietes()
     while(LeerDiscoDeCliente(pos++)==1)
     {
         mostrarCliente();
+        cout<<endl;
     }
 }
-/*void listar_art()
-	{
-	Articulo reg;
-	int pos=0;
-	system("cls");
-	while(reg.Leer_de_disco(pos++)==1)
-		{
-			{reg.Mostrar();
-			system("pause>null");
-			}
-		}
-	if(pos==1)
-		{
-		cout<<"No existen registros"<<endl;
-		cout<<"Presione una tecla para continuar";
-		system("pause>null");
-		}
-	}*/
 
+int Cliente::buscraID_Cliente(int pos)
+{
+    Cliente reg;
+    LeerDiscoDeCliente(pos);
+    return reg.IDCliente;
+}
 
+bool Cliente::sobrescribir_Cliente(int pos) /// NO SOBREESCRIBE.
+{
+    bool guardado;
+    FILE *p;
+    p= fopen(ARCHIVOCLIENTES,"rb+");
+    if(p==NULL)
+    {
+        return false;
+    }
+    fseek(p,sizeof(Cliente)*pos,0);
+    guardado= fwrite(this,sizeof(Cliente),1,p);
+    fclose(p);
+    return guardado;
+}
 
+void Cliente::modificar_Cliente()
+{
+    Cliente reg;
+    int pos;
+    cout<<" Ingrese el Cliente que desea modificar :";
+    cout<<" Apellido :";
+    cin.getline(apellido,20);
+    cout<<" Nombre :";
+    cin.getline(nombreCliente,20);
+    pos= reg.buscarCliente(nombreCliente,apellido);
+    if(pos>=0)
+    {
+        LeerDiscoDeCliente(pos);
+        cout<<endl;
+        mostrarCliente();
+        cout<<endl;
+        cout<<" domicilio :";
+        cin.getline(domicilio,50);
+        cout<<endl;
+
+        cout<<" Telefono :";
+        cin>>Telefono;
+        cin.ignore();
+
+        cout<<" Email :";
+        cin.getline(email,30);
+        if(validarMail(email))cout<<"email no valido"<<endl; system("pause"); return;
+        if(sobrescribir_Cliente(pos))
+        {
+            cout<<" Cliente modificado. "<<endl;
+        }
+        else
+        {
+            cout<<" No se modifico el Cliente"<<endl;
+        }
+    }
+    else
+    {
+        cout<<" No existe el Cliente:";
+    }
+
+}
 
 
 	///GETs     TE HICE ESTE GET PARA PODER VALIDAR EL ID DEL CLIENTE AL INGRESAR LA HISTORIA CLINICA

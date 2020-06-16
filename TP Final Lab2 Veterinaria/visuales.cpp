@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <cstdlib>
 #include "clientes.h"
+#include "mascotas.h"
 #include "visuales.h"
 using namespace std;
 
@@ -42,10 +43,50 @@ void pantallaAgregar()
     switch(op)
     {
     case 1:
+    {
+        system("cls");
         Cliente reg;
-        if(reg.cargarCliente())if(reg.gurdarClienteEnDisco())cout<<" El nuevo cliente fue registrado "<<endl;
-        system("pause");
-        break;
+        Mascotas re;
+        if(reg.cargarCliente())
+        {
+            if(reg.gurdarClienteEnDisco())
+            {
+                cout<<" El nuevo cliente fue registrado "<<endl;
+                system("pause");
+            }
+        }
+        if(re.Cargar_Mascota())
+        {
+            if(re.gurdar_Mascota_EnDisco())
+            {
+                cout<<" La mascota fue registrada "<<endl;
+                system("pause");
+            }
+        }
+    }
+    break;
+    case 2:
+    {
+        char nombre[30];
+        char apellido[30];
+        Cliente reg;
+        int pos_cliente,ID_cliente;
+        system("cls");
+        cout<<" Ingresar cliente ya existente "<<endl;
+        cout<<" Nombre  :";
+        cin.getline(nombre,30);
+        cout<<" Apellido :";
+        cin.getline(apellido,30);
+        pos_cliente=reg.buscarCliente(nombre,apellido);
+        if(pos_cliente!=1)
+        {
+            ID_cliente=reg.buscraID_Cliente(pos_cliente);
+        }
+        else
+            cout<<" no existe el cliente "<<endl;
+
+    }
+    break;
     }
 }
 
@@ -68,12 +109,13 @@ void pantallaHistorias()
 }
 void pantallaMascotas()
 {
+    system("cls");
+    int op;
     cout << " ===================================================== "<< endl;
     cout << "|                    MASCOTAS                         |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|                                                     |"<< endl;
-    cout << "|     2) MOSTRAR MASCOTAS                             |"<< endl;
-    cout << "|                                                     |"<< endl;
+    cout << "|     1) MOSTRAR MASCOTAS                             |"<< endl;
     cout << "|     3) MODIFICAR MASCOTAS   /|_/|        /|___/|    |"<< endl;
     cout << "|     4) LISTAR VISITAS       (0_0)         (0_o)     |"<< endl;
     cout << "|     5) TRANSFERIR MASCOTA  ==(Y)==         (V)      |"<< endl;
@@ -82,6 +124,16 @@ void pantallaMascotas()
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
+    cin>>op;
+    switch(op)
+    {
+    case 1:
+
+        Mascotas reg;
+        reg.listar_Mascotas();
+        system("pause");
+        break;
+    }
 
 }
 void pantallaClientes()
@@ -103,9 +155,25 @@ void pantallaClientes()
     cout << " ===================================================== "<< endl;
 
     cin>>op;
-    switch(op){
-        case 1: Cliente reg;
-                reg.listarClietes(); break;
+    cin.ignore();
+    switch(op)
+    {
+    case 1:
+    {
+        Cliente reg;
+        system("cls");
+        reg.listarClietes();
+        system("pause");
+    }
+    break;
+    case 2:
+    {
+        Cliente reg;
+        system("cls");
+        reg.modificar_Cliente();
+        system("pause");
+    }
+    break;
     }
 }
 void pantallaAranceles()
@@ -157,7 +225,8 @@ void pantallaConfiguracion()
     cout << " ===================================================== "<< endl;
 }
 
-void limpiar(){
+void limpiar()
+{
     system("cls");
     cin.ignore();
 }

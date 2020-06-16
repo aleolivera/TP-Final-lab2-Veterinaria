@@ -32,14 +32,16 @@ int main()
     bool salir=false;
     while(!salir)
     {
-
+        system("cls");
         pantallaPrincipal();
         cin>>op;
         switch(op)
         {
             case 1:
                 {
-                    menuIngresoPaciente();
+                    system("cls");
+                    pantallaAgregar();
+                    //menuIngresoPaciente();
 
                 }
                 break;
@@ -50,13 +52,14 @@ int main()
                 break;
             case 3:
                 {
-//                    pantallaClientes();
-                    menuClientes();
+                    system("cls");
+                    pantallaClientes();
+                   // menuClientes();
                 }
                 break;
             case 4:
                 {
-                    menuMascotas();
+                    pantallaMascotas();
                 }
                 break;
             case 5:

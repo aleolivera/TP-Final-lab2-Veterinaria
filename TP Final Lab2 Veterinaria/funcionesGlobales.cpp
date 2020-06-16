@@ -161,6 +161,15 @@ bool validarNombres(const char* cadena){    ///True = a-z o A-Z , false=cualquie
     return true;
 }
 
+bool cad_vacia(char *cad)
+{
+    if(cad[0] == '\0')
+    {
+        return true;
+    }
+    return false;
+}
+
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVOS
 int asignarIDHistoria(){    ///Le pone solo el ID de manera secuencial
     Historia reg;
@@ -1013,6 +1022,9 @@ void menuAdministracion(){
 
 }
 
+int buscarIDClientePorMascota(const char*){
+
+}
 
 ///CONFIGURACION
 ///Para resolver las consignas del MENU CONFIGURACION

@@ -22,7 +22,10 @@ class Cliente{
         void mostrarCliente();
         int buscarCliente(char*,char*);
         void listarClietes();
-
+        int cantidad_Clientes();
+        int buscraID_Cliente(int);
+        void modificar_Cliente();
+        bool sobrescribir_Cliente(int);
 
         ///GETs
         int getIDCliente();
