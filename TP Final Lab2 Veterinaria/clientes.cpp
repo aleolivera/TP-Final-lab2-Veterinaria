@@ -31,11 +31,13 @@ bool Cliente::cargarCliente()
     int encontrado;
     cout<<" Nombre:";
     cin.getline(nombreCliente,30);
-    if(cad_vacia(nombreCliente))return false;
+    if(cad_vacia(nombreCliente))
+        return false;
 
     cout<<" Apellido :";
     cin.getline(apellido,30);
-    if(cad_vacia(apellido))return false;
+    if(cad_vacia(apellido))
+        return false;
 
     encontrado=buscarCliente(nombreCliente,apellido);
     if(encontrado==-1)
@@ -52,14 +54,20 @@ bool Cliente::cargarCliente()
 
         cout<<" Email :";
         cin>>email;
-        if(validarMail(email)){cout<<"email no valido"<<endl; system("pause"); return false;}  // retocar.
+        if(validarMail(email))
+        {
+            cout<<"email no valido"<<endl;    // retocar.
+            system("pause");
+            return false;
+        }
     }
-    else{
+    else
+    {
         cout<<" El cliente "<<apellido<<" "<<nombreCliente<<" ya estaba registrado "<<endl; //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
 
         return false;
     }
-        return true;
+    return true;
 }
 
 bool Cliente::gurdarClienteEnDisco()
@@ -97,8 +105,9 @@ int Cliente::buscarCliente(char*nombre,char*apellido) //COMPARA EL NOMBRE INGRES
     Cliente reg;
     while(reg.LeerDiscoDeCliente(pos)==1)
     {
-        if(strcmp(nombre,reg.nombreCliente)==0)if(strcmp(apellido,reg.apellido)==0)
-            return pos;
+        if(strcmp(nombre,reg.nombreCliente)==0)
+            if(strcmp(apellido,reg.apellido)==0)
+                return pos;
         pos++;
     }
     return -1;
@@ -141,7 +150,7 @@ bool Cliente::sobrescribir_Cliente(int pos) /// NO SOBREESCRIBE.
     {
         return false;
     }
-    fseek(p,sizeof(Cliente)*pos,0);
+    fseek(p,pos*sizeof(Cliente),0);
     guardado= fwrite(this,sizeof(Cliente),1,p);
     fclose(p);
     return guardado;
@@ -173,7 +182,12 @@ void Cliente::modificar_Cliente()
 
         cout<<" Email :";
         cin.getline(email,30);
-        if(validarMail(email))cout<<"email no valido"<<endl; system("pause"); return;
+        if(validarMail(email))
+        {
+            cout<<"email no valido"<<endl;
+            system("pause");
+            return;
+        }
         if(sobrescribir_Cliente(pos))
         {
             cout<<" Cliente modificado. "<<endl;
@@ -191,21 +205,26 @@ void Cliente::modificar_Cliente()
 }
 
 
-	///GETs     TE HICE ESTE GET PARA PODER VALIDAR EL ID DEL CLIENTE AL INGRESAR LA HISTORIA CLINICA
-	int Cliente::getIDCliente(){
-        return IDCliente;
-	}
-	void Cliente::getApellido(char*cadena){
-        strcpy(cadena,apellido);
-	}
-	int Cliente::getTelefono(){
-        return Telefono;
-	}
-	///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
-	void Cliente::mostrarTelefono(){
-	    cout << Telefono;
-	}
-	void Cliente::mostrarApellido(){
-	    cout << apellido;
-	}
+///GETs     TE HICE ESTE GET PARA PODER VALIDAR EL ID DEL CLIENTE AL INGRESAR LA HISTORIA CLINICA
+int Cliente::getIDCliente()
+{
+    return IDCliente;
+}
+void Cliente::getApellido(char*cadena)
+{
+    strcpy(cadena,apellido);
+}
+int Cliente::getTelefono()
+{
+    return Telefono;
+}
+///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
+void Cliente::mostrarTelefono()
+{
+    cout << Telefono;
+}
+void Cliente::mostrarApellido()
+{
+    cout << apellido;
+}
 

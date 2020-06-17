@@ -8,11 +8,9 @@
 
 using namespace std;
 
-Mascotas::Mascotas(){
 
-}
-
-bool Mascotas::Cargar_Mascota(){
+bool Mascotas::Cargar_Mascota()
+{
     int castrado_opcion;
     int vacunado_opcion;
     cout<<"-----REGISTRO--DE--MASCOTAS------"<<endl;
@@ -20,7 +18,8 @@ bool Mascotas::Cargar_Mascota(){
     cin.ignore();
     cout<<" Nombre de mascota :";
     cin.getline(nombreMascota,20);
-    if(cad_vacia(nombreMascota))return false;
+    if(cad_vacia(nombreMascota))
+        return false;
 
 
 
@@ -36,43 +35,58 @@ bool Mascotas::Cargar_Mascota(){
     cout<<" 2- NO.  ";
     cin>>castrado_opcion;
     cin.ignore();
-    switch (castrado_opcion){
-    case 1: castrado= true; break;
-    case 2: castrado= false; break;}
+    switch (castrado_opcion)
+    {
+    case 1:
+        castrado= true;
+        break;
+    case 2:
+        castrado= false;
+        break;
+    }
 
     cout<<" Vacunado? ";
     cout<<" 1- SI.  ";
     cout<<" 2- NO.  ";
     cin>>vacunado_opcion;
     cin.ignore();
-    switch(vacunado_opcion){
-    case 1: vacunado= true; break;
-    case 2: vacunado= false; break;
+    switch(vacunado_opcion)
+    {
+    case 1:
+        vacunado= true;
+        break;
+    case 2:
+        vacunado= false;
+        break;
     }
     cout<<" Especie :";
     cin.getline(especie,10);
-    if(cad_vacia(especie))return false;
+    if(cad_vacia(especie))
+        return false;
 
 
     cout<<" Raza :";
     cin.getline(raza,20);
-    if(cad_vacia(raza))return false;
+    if(cad_vacia(raza))
+        return false;
 
 
     int sexo_opcion;
     cout<<" Sexo :";
     cin.getline(sexo,14);
-    if(cad_vacia(sexo))return false;
+    if(cad_vacia(sexo))
+        return false;
 
 
     vivo=true;
     return true;
 }
 
-void Mascotas::mostrar_Mascota(){
+void Mascotas::mostrar_Mascota()
+{
     cout<<"-----MASCOTA-----"<<endl;
     if(vivo)
-    cout<<" Nombre :"<<nombreMascota<<endl;
+        cout<<" Nombre :"<<nombreMascota<<endl;
 
 
     //cout<<" Duenio :"<<<< endl;  //EL ID DEL CLIENTE.
@@ -80,11 +94,17 @@ void Mascotas::mostrar_Mascota(){
     cout<<" Edad :"<<edad<<endl;
 
 
-    cout<<" Castrado :";if(castrado)cout<<" SI. "<<endl;
-                           else cout<<" NO. "<<endl;
+    cout<<" Castrado :";
+    if(castrado)
+        cout<<" SI. "<<endl;
+    else
+        cout<<" NO. "<<endl;
 
-    cout<<" Vacunado :";if(vacunado)cout<<" SI. "<<endl;  /// HAY QUE REVEER ESTA INSTANCIA
-                           else cout<<" NO."<<endl;
+    cout<<" Vacunado :";
+    if(vacunado)
+        cout<<" SI. "<<endl;  /// HAY QUE REVEER ESTA INSTANCIA
+    else
+        cout<<" NO."<<endl;
 
     cout<<" Especie :"<<especie<<endl;
 
@@ -95,21 +115,142 @@ void Mascotas::mostrar_Mascota(){
     //cout<<" Fecha de vacuna:"<<fechaVacuna<<endl;
 }
 
-void Mascotas::listar_Mascotas(){
+void Mascotas::listar_Mascotas()
+{
     int pos=0;
     system("cls");
-    while(leerMascota(pos++)==1){
+    while(leerMascota(pos++)==1)
+    {
 
         mostrar_Mascota();
         cout<<endl;
     }
 }
 
+int Mascotas::buscarMascotaXNombre(char *nombre)
+{
+    int pos=0;
+    while(leerMascota(pos)==1)
+    {
+        if(strcmp(nombre,nombreMascota)==0)
+        {
+            return pos;
+            pos++;
+        }
+    }
+    return -1;
+}
+
+bool Mascotas::sobrescribir_mascota(int pos)
+{
+    bool guardado;
+    FILE *p;
+    p=fopen(ARCHIVOMASCOTAS,"rb+");
+    if(p==NULL)
+    {
+        return false;
+    }
+    fseek(p,pos*sizeof(Mascotas),0);
+    guardado=fwrite(this,sizeof(Mascotas),1,p);
+    fclose(p);
+    return guardado;
+}
+
+bool Mascotas::modificar_mascota()
+{
+    int pos;
+    cout<<" Ingrese el nombre de la mascota que desea modificar :";
+    cin.getline(nombreMascota,20);
+    /*cout<<" Apellido del duenio :";
+    cin.getline(apellido,30);*/
+    pos= buscarMascotaXNombre(nombreMascota);
+    if(pos>=0)
+    {
+        leerMascota(pos);
+        cout<<endl;
+        mostrar_Mascota();
+        cout<<endl;
+        cout<<"-----MODIFICAR-----"<<endl;
+        cout<<endl;
+        int opcastrado;
+        cout<<" Castrado :  1-SI.   2-NO. "<<endl;
+        cin>>opcastrado;
+        cin.ignore();
+        switch(opcastrado)
+        {
+        case 1:
+            castrado=true;
+            break;
+        case 2:
+            castrado=false;
+            break;
+        default:
+            cout<<" Opcion no valida. ";
+            return false;
+            break;
+        }
+
+        int opestado;
+        cout<<" Esta vivo? :  1-SI.  2-NO. "<<endl;
+        cin>>opestado;
+        cin.ignore();
+        switch(opestado)
+        {
+        case 1:
+            vivo=true;
+            break;
+        case 2:
+            vivo=false;
+            break;
+        default:
+            return false;
+            break;
+        }
+
+        int opnombre;
+        cout<<" Cambiar nombre : 1-SI."<<endl;
+        cin>>opnombre;
+        cin.ignore();
+        if(opnombre==1)
+        {
+            cout<<" Ingrese el nuevo Nombre: ";
+            cin.getline(nombreMascota,20);
+        }
+
+        int opsexo;
+        cout<<" Cambiar sexo : 1-SI."<<endl;
+        cin>>opsexo;
+        cin.ignore();
+        if(opsexo==1)
+        {
+            cout<<" Sexo :";
+            cin.getline(sexo,14);
+        }
+
+        if(sobrescribir_mascota(pos))
+        {
+            cout<<" Mascota modificada. "<<endl;
+            system("pause");
+        }
+        else
+        {
+            cout<<" No se modifico la mascota. "<<endl;
+            system("pause");
+        }
+    }
+    else
+    {
+        cout<<" No existe la mascota :";
+    }
+}
+
 ///GETS
-int Mascotas::getIDCliente(){
+int Mascotas::getIDCliente()
+{
     return IDCliente;
 }
-void Mascotas::getNombre(char*cadena){
+void Mascotas::getNombre(char*cadena)
+{
     strcpy(cadena,nombreMascota);
 }
 ///DISCO
@@ -129,17 +270,21 @@ bool Mascotas::gurdar_Mascota_EnDisco()
     return guardado;
 }
 
-bool Mascotas::leerMascota(int pos){
+bool Mascotas::leerMascota(int pos)
+{
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
-    if(p==NULL){
+    if(p==NULL)
+    {
         return false;
     }
     fseek(p, pos*sizeof (Mascotas),0);
-    if(fread(this,sizeof (Mascotas),1,p)==1){
+    if(fread(this,sizeof (Mascotas),1,p)==1)
+    {
         fclose(p);
         return true;
     }
-    else{
+    else
+    {
         fclose(p);
         return false;
     }

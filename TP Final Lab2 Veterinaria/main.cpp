@@ -35,6 +35,7 @@ int main()
         system("cls");
         pantallaPrincipal();
         cin>>op;
+        cin.ignore();
         switch(op)
         {
             case 1:

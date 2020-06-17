@@ -23,7 +23,6 @@ class Mascotas{
         Fecha fechaVacuna;
         bool vivo;
     public:
-        Mascotas();
         bool Cargar_Mascota();
         void mostrar_Mascota();
         void listar_Mascotas();
@@ -34,6 +33,9 @@ class Mascotas{
         ///DISCO
         bool leerMascota(int);
         bool gurdar_Mascota_EnDisco();
+        int buscarMascotaXNombre(char*);
+        bool modificar_mascota();
+        bool sobrescribir_mascota(int);
 };
 
 #endif // MASCOTAS_H_INCLUDED

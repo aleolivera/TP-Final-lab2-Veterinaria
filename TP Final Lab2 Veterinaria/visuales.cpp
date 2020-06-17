@@ -116,23 +116,30 @@ void pantallaMascotas()
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|                                                     |"<< endl;
     cout << "|     1) MOSTRAR MASCOTAS                             |"<< endl;
-    cout << "|     3) MODIFICAR MASCOTAS   /|_/|        /|___/|    |"<< endl;
-    cout << "|     4) LISTAR VISITAS       (0_0)         (0_o)     |"<< endl;
-    cout << "|     5) TRANSFERIR MASCOTA  ==(Y)==         (V)      |"<< endl;
+    cout << "|     2) MODIFICAR MASCOTAS   /|_/|        /|___/|    |"<< endl;
+    cout << "|     3) LISTAR VISITAS       (0_0)         (0_o)     |"<< endl;
+    cout << "|     4) TRANSFERIR MASCOTA  ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
     cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
     cin>>op;
+    cin.ignore();
     switch(op)
     {
-    case 1:
-
+    case 1:{
+        system("cls");
         Mascotas reg;
         reg.listar_Mascotas();
         system("pause");
-        break;
+        }break;
+    case 2: {
+        system("cls");
+        Mascotas reg;
+        reg.modificar_mascota();
+        system("pause");
+     }break;
     }
 
 }
