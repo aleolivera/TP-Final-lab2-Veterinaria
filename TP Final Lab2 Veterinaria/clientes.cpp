@@ -29,6 +29,11 @@ bool Cliente::cargarCliente()
 {
     IDCliente=cantidad_Clientes()+1;
     int encontrado;
+
+    cout<<" DNI :";
+    cin>>dni;
+    cin.ignore();
+
     cout<<" Nombre:";
     cin.getline(nombreCliente,30);
     if(cad_vacia(nombreCliente))
@@ -39,7 +44,7 @@ bool Cliente::cargarCliente()
     if(cad_vacia(apellido))
         return false;
 
-    encontrado=buscarCliente(nombreCliente,apellido);
+    encontrado=buscarClienteXDni(dni);
     if(encontrado==-1)
     {
         cout<<" Domicilio :";
@@ -99,14 +104,13 @@ bool Cliente::LeerDiscoDeCliente(int pos)
     return leido;
 }
 
-int Cliente::buscarCliente(char*nombre,char*apellido) //COMPARA EL NOMBRE INGRESADO CON LOS REGISTRADOS.
+int Cliente::buscarClienteXDni(int dni) //COMPARA EL NOMBRE INGRESADO CON LOS REGISTRADOS.
 {
     int pos=0;
     Cliente reg;
     while(reg.LeerDiscoDeCliente(pos)==1)
     {
-        if(strcmp(nombre,reg.nombreCliente)==0)
-            if(strcmp(apellido,reg.apellido)==0)
+            if(dni==reg.dni)
                 return pos;
         pos++;
     }
@@ -115,7 +119,8 @@ int Cliente::buscarCliente(char*nombre,char*apellido) //COMPARA EL NOMBRE INGRES
 
 void Cliente::mostrarCliente()
 {
-    cout<<" ID: "<<IDCliente<<endl;
+    cout<<" ID :"<<IDCliente<<endl;
+    cout<<" DNI :"<<dni<<endl;
     cout<<" Nombre :"<<nombreCliente<<endl;
     cout<<" Apellido :"<<apellido<<endl;
     cout<<" Domicilio :"<<domicilio<<endl;
@@ -160,12 +165,10 @@ void Cliente::modificar_Cliente()
 {
     Cliente reg;
     int pos;
-    cout<<" Ingrese el Cliente que desea modificar :";
-    cout<<" Apellido :";
-    cin.getline(apellido,20);
-    cout<<" Nombre :";
-    cin.getline(nombreCliente,20);
-    pos= reg.buscarCliente(nombreCliente,apellido);
+    cout<<" Ingrese el DNI del Cliente que desea modificar :";
+    cin>>dni;
+    cin.ignore();
+    pos= reg.buscarClienteXDni(dni);
     if(pos>=0)
     {
         LeerDiscoDeCliente(pos);

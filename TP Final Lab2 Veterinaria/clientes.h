@@ -8,6 +8,7 @@ const char ARCHIVOCLIENTESBKP[20]="clientes.bkp";
 class Cliente{
     private:
         int IDCliente;
+        int dni;
         char nombreCliente[30];
         char apellido[30]; ///TE LO CAMBIE!, ANTES DECIA "nombreApellido"
         char domicilio[50];
@@ -20,7 +21,7 @@ class Cliente{
         bool gurdarClienteEnDisco();
         bool LeerDiscoDeCliente(int);
         void mostrarCliente();
-        int buscarCliente(char*,char*);
+        int buscarClienteXDni(int);
         void listarClietes();
         int cantidad_Clientes();
         int buscraID_Cliente(int);

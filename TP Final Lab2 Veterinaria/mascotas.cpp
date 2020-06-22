@@ -5,6 +5,7 @@
 #include "clientes.h"
 #include "mascotas.h"
 #include "funcionesGlobales.h"
+#include "visuales.h"
 
 using namespace std;
 
@@ -21,9 +22,7 @@ bool Mascotas::Cargar_Mascota()
     if(cad_vacia(nombreMascota))
         return false;
 
-
-
-    //IDCliente
+    IDCliente;
 
     cout<<" Edad:";
     cin>>edad;
@@ -89,7 +88,7 @@ void Mascotas::mostrar_Mascota()
         cout<<" Nombre :"<<nombreMascota<<endl;
 
 
-    //cout<<" Duenio :"<<<< endl;  //EL ID DEL CLIENTE.
+    cout<<" ID de Duenio :"<<IDCliente<< endl;  //EL ID DEL CLIENTE.
 
     cout<<" Edad :"<<edad<<endl;
 
@@ -121,9 +120,9 @@ void Mascotas::listar_Mascotas()
     system("cls");
     while(leerMascota(pos++)==1)
     {
-
+        listardueno(IDCliente);
         mostrar_Mascota();
-        cout<<endl;
+        system("pause");
     }
 }
 

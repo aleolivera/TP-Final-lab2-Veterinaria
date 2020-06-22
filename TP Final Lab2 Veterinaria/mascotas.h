@@ -13,7 +13,7 @@ const char ARCHIVOMASCOTASBKP[20]="mascotas.bkp";
 class Mascotas{
     private:
         char nombreMascota[20];
-        int IDCliente;
+        int IDCliente;  ///UN SET = GET DE IDCLIENTE CLIENTE
         int edad;
         bool castrado;
         bool vacunado;
@@ -24,12 +24,14 @@ class Mascotas{
         bool vivo;
     public:
         bool Cargar_Mascota();
-        void mostrar_Mascota();
-        void listar_Mascotas();
+        void mostrar_Mascota(); ///INDIVIDUAL
+        void listar_Mascotas(); ///MUESTRA TODOS LOS REGISTROS
+        void mostrarDatosDelDueno(int );
         ///GETs
         int getIDCliente();
         void getNombre(char*);
-
+        ///SETs
+        void setIDcliente(int id){ IDCliente=id;}
         ///DISCO
         bool leerMascota(int);
         bool gurdar_Mascota_EnDisco();

@@ -29,6 +29,7 @@ int contarSimbolos(const char*);
 int validarMail(const char*);
 bool validarTipoDePago(char);
 bool cad_vacia(char*);
+void listardueno(int);
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();
