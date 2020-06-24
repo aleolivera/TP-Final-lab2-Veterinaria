@@ -38,6 +38,7 @@ bool validarIDcliente(int);
 bool validarIDarancel(int);
 bool validarIDTipoVisita(int);
 int buscarIDClientePorMascota(const char*);
+int buscarIDClienteEnHistorias(int);
 int cantidadRegistrosHistorias();
 int cantidadRegistrosClientes();
 int cantidadRegistrosMascotas();
@@ -84,7 +85,10 @@ bool mostrarDeudores();
 void menuAdministracion();
 
 ///CONFIGURACION
-
+bool backupHistorias();
+bool backupClientes();
+bool backupMascotas();
+bool backupAranceles();
 void menuConfiguracion();
 
 

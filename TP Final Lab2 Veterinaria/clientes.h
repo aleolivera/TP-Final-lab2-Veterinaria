@@ -30,11 +30,19 @@ class Cliente{
 
         ///GETs
         int getIDCliente();
+        bool getDeudor();
+        void getNombreCliente(char*);
         void getApellido(char*);
         int getTelefono();
+        ///SETs
+        void setDeudor(bool);
         ///MOSTRAR solo cout de un solo atributo
         void mostrarTelefono();
         void mostrarApellido();
+        ///DISCO        NECESITABA PONER COMO DEUDOR A UN CLIENTE DESDE ARANCELES
+        int buscarClientePorID(int);
+        bool guardarCliente();
+        bool leerCliente(int);
 };
 
 #endif // CLIENTES_H_INCLUDED

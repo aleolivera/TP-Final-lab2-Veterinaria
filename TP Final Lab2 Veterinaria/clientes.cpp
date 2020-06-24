@@ -213,6 +213,10 @@ int Cliente::getIDCliente()
 {
     return IDCliente;
 }
+void Cliente::getNombreCliente(char*cadena)
+{
+    strcpy(cadena,nombreCliente);
+}
 void Cliente::getApellido(char*cadena)
 {
     strcpy(cadena,apellido);
@@ -220,6 +224,13 @@ void Cliente::getApellido(char*cadena)
 int Cliente::getTelefono()
 {
     return Telefono;
+}
+bool Cliente::getDeudor(){
+    return deudor;
+}
+///SETs DEUDOR
+void Cliente::setDeudor(bool estado){
+    deudor=estado;
 }
 ///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
 void Cliente::mostrarTelefono()
@@ -230,4 +241,49 @@ void Cliente::mostrarApellido()
 {
     cout << apellido;
 }
+///DISCO        NECESITABA PONER COMO DEUDOR A UN CLIENTE DESDE ARANCELES
+int Cliente::buscarClientePorID(int ID){
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL){
+        return false;
+    }
 
+    if(fread(this,sizeof (Cliente),1,p)==1){
+        if(ID==IDCliente){
+            fclose(p);
+            return ftell(p)/sizeof (Cliente);
+        }
+    }
+    fclose(p);
+    return -1;
+}
+bool Cliente::guardarCliente(){
+    FILE*p=fopen(ARCHIVOCLIENTES,"ab");
+    if(p==NULL){
+        return false;
+    }
+
+    if(fwrite(this,sizeof (Cliente),1,p)==1){
+        fclose(p);
+        return true;
+    }
+    else{
+        fclose(p);
+        return false;
+    }
+}
+bool Cliente::leerCliente(int pos){
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL){
+        return false;
+    }
+    fseek(p, pos*sizeof (Cliente),0);
+    if(fread(this,sizeof (Cliente),1,p)==1){
+        fclose(p);
+        return true;
+    }
+    else{
+        fclose(p);
+        return false;
+    }
+}

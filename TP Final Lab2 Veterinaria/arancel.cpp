@@ -13,6 +13,9 @@ void Arancel::mostrarFechaArancel(){
 void Arancel::mostrarIDArancel(){
     cout << IDArancel<< endl;
 }
+void Arancel::mostrarIDCliente(){
+    cout << IDCliente << endl;
+}
 void Arancel::mostrarIDHistoria(){
     cout << IDHistoria<< endl;
 }
@@ -44,6 +47,9 @@ Fecha Arancel::getFechaArancel(){
 int Arancel::getIDArancel(){
     return IDArancel;
 }
+int Arancel::getIDCliente(){
+    return IDCliente;
+}
 int Arancel::getIDHistoria(){
     return IDHistoria;
 }
@@ -69,6 +75,9 @@ void Arancel::setFechaIngreso(){
 }
 void Arancel::setIDArancel(int ID){
     IDArancel=ID;
+}
+void Arancel::setIDCliente(int ID){
+    IDCliente=ID;
 }
 void Arancel::setIDHistoria(int ID){
     IDHistoria=ID;
@@ -135,7 +144,20 @@ bool Arancel::leerArancel(int pos){
         return false;
     }
 }
-
+bool Arancel::guardarArancelModificado(int ID){
+    FILE*p=fopen(ARCHIVOARANCELES,"ab");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Arancel),1,p)==1){
+        if(ID==IDArancel){
+            fseek(p,-sizeof (Arancel),1);
+            fwrite(this,sizeof(Arancel),1,p);
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

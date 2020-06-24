@@ -9,6 +9,7 @@ class Arancel{
     private:
         Fecha fechaArancel;
         int IDArancel;
+        int IDCliente;
         int IDHistoria;
         int IDTipoVisita;
         float totalArancel;
@@ -19,6 +20,7 @@ class Arancel{
         ///MOSTRAR
         void mostrarFechaArancel();
         void mostrarIDArancel();
+        void mostrarIDCliente();
         void mostrarIDHistoria();
         void mostrarIDTipoVisita();
         void mostrarTotalArancel();
@@ -29,6 +31,7 @@ class Arancel{
         ///GETs
         Fecha getFechaArancel();
         int getIDArancel();
+        int getIDCliente();
         int getIDHistoria();
         int getIDTipoVisita();
         float getTotalArancel();
@@ -39,6 +42,7 @@ class Arancel{
         ///SETs
         void setFechaIngreso();
         void setIDArancel(int);
+        void setIDCliente(int);
         void setIDHistoria(int);
         void setIDTipoVisita(int);
         void setTotalArancel(float);
@@ -49,6 +53,7 @@ class Arancel{
         ///DISCO
         int buscarArancel(int);
         bool guardarArancel();
+        bool guardarArancelModificado(int);
         bool leerArancel(int);
 };
 
