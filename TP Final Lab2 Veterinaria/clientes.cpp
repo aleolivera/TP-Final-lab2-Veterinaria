@@ -287,3 +287,17 @@ bool Cliente::leerCliente(int pos){
         return false;
     }
 }
+bool Cliente::modificarCliente(int ID){
+    FILE*p=fopen(ARCHIVOCLIENTES,"ab");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Cliente),1,p)==1){
+        if(ID==IDCliente){
+            fseek(p,ftell(p)-sizeof (Cliente),1);
+            fwrite(this,sizeof(Cliente),1,p);
+            return true;
+        }
+    }
+    return false;
+}

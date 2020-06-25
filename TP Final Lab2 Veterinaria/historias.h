@@ -56,7 +56,7 @@ class Historia{
         int buscarHistoria(int);
         bool guardarHistoria();
         bool leerHistoria(int);
-
+        bool modificarHistoria(int);
 
         ///CONSTRUCTOR
         Historia(){

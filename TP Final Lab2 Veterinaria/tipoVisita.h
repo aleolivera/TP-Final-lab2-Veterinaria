@@ -35,8 +35,8 @@ class TipoVisita{
         int buscarTipoVisita(int);
         bool guardarTipoVisita();
         bool leerTipoVisita(int);
-        int cantidadRegistros();
-
+//        int cantidadRegistros();
+        bool modificarTipoVisita(int);
 };
 
 #endif // TIPOVISITA_H_INCLUDED

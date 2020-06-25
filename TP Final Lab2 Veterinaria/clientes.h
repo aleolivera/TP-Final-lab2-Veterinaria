@@ -43,6 +43,7 @@ class Cliente{
         int buscarClientePorID(int);
         bool guardarCliente();
         bool leerCliente(int);
+        bool modificarCliente(int);
 };
 
 #endif // CLIENTES_H_INCLUDED

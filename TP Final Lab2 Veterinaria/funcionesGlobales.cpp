@@ -708,7 +708,7 @@ bool modificarHistoria(){
         reg.setControl(false);
         reg.setFechaControl(0,0,0);
     }
-    reg.guardarHistoria();
+    reg.modificarHistoria(reg.getIDHistoria());
     return true;
 }
 bool controlesPendientes(){
@@ -950,7 +950,7 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
     {
         regArancel.setAbonado(false);                                    ///PONGO EL ARANCEL COMO IMPAGO
         pos=regCliente.buscarClientePorID(regArancel.getIDCliente());
-        if(pos=-1) return false;
+        if(pos==-1) return false;
         regCliente.leerCliente(pos);
         regCliente.setDeudor(true);                                     ///BUSCO AL CLIENTE Y LO PONGO COMO DEUDOR
     }
@@ -995,7 +995,7 @@ bool mostrarArancelesDelDia(){
     free(vec);
     return true;
 }
-bool modificarArancel(){ ///FALTA CAMBIAR ESTADO DEL CLIENTE Y FSEEK PARA MODIFICAR
+bool modificarArancel(){ ///CREO QUE VOY A CAMBIAR EL BOOLEANO DEUDOR DEL CLIENTE
     limpiar();
     Arancel regArancel;
     Cliente regCliente;
@@ -1017,7 +1017,7 @@ bool modificarArancel(){ ///FALTA CAMBIAR ESTADO DEL CLIENTE Y FSEEK PARA MODIFI
     {
         regArancel.setAbonado(false);                                    ///PONGO EL ARANCEL COMO IMPAGO
         pos=regCliente.buscarClientePorID(regArancel.getIDCliente());
-        if(pos=-1) return false;
+        if(pos==-1) return false;
         regCliente.leerCliente(pos);
         regCliente.setDeudor(true);                                     ///BUSCO AL CLIENTE Y LO PONGO COMO DEUDOR
     }
@@ -1025,12 +1025,11 @@ bool modificarArancel(){ ///FALTA CAMBIAR ESTADO DEL CLIENTE Y FSEEK PARA MODIFI
     {
         regArancel.setAbonado(true);            ///LO TENGO QUE CAMBIAAAAAAAAAAAAAAAAAAAAAAAAAAar
         pos=regCliente.buscarClientePorID(regArancel.getIDCliente());
-        if(pos=-1) return false;
+        if(pos==-1) return false;
         regCliente.leerCliente(pos);
         regCliente.setDeudor(false);
     }
-
-                                                        ///CAMBIAR ESTADO DEL CLIENTE
+    if(!regArancel.modificarArancel(ID) || !regCliente.modificarCliente(ID)) return false;
     cout << endl;
     return true;
 }
@@ -1160,7 +1159,7 @@ bool modificarImportes(){
     if(ID<1||ID>100) return false;
     reg.setPorcentajeHonorario(ID);
 
-    reg.guardarTipoVisita();                ///GUARDO EL REGISTRO
+    reg.modificarTipoVisita(reg.getIDTipoVisita());                ///GUARDO EL REGISTRO
     return true;
 }
 bool ingresarItems(){
@@ -1297,6 +1296,70 @@ bool mostrarDeudores(){
     return true;
 }
 void menuAdministracion(){
+    limpiar();
+    pantallaAdministracion();
+    int op;
+    cin >>op;
+    limpiar();
+    switch(op)
+    {
+    case 1:
+    {
+        if(!mostrarListaDePrecios())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+
+    }
+    break;
+    case 2:
+    {
+        if(!modificarImportes())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+
+    }
+    break;
+    case 3:
+    {
+        if(!ingresarItems())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+    }
+    break;
+    case 4:
+    {
+        if(!listarPorFecha())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+    }
+    break;
+    case 5:
+    {
+        if(!mostrarDeudores())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+
+    }
+    break;
+    case 0:
+    {
+    } break;
+    }
 
 }
 
@@ -1375,7 +1438,88 @@ bool backupAranceles(){
     fclose(pBackup);
     return true;
 }
+bool backupTipoVisita(){
+    Arancel reg;
+    FILE*pArchivo=fopen(ARCHIVOTIPOVISITA,"rb");
+    if(pArchivo==NULL) return false;
+
+    FILE*pBackup=fopen(ARCHIVOTIPOVISITABKP,"wb");
+    if(pBackup==NULL){
+        fclose(pArchivo);
+        return false;
+    }
+    while(fread(&reg,sizeof reg,1,pArchivo)==1){
+        fwrite(&reg,sizeof reg,1,pBackup);
+    }
+    fclose(pArchivo);
+    fclose(pBackup);
+    return true;
+}
 void menuConfiguracion(){
+    limpiar();
+    pantallaAdministracion();
+    int op;
+    cin >>op;
+    limpiar();
+    switch(op)
+    {
+    case 1:
+    {
+        if(!backupClientes())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+
+    }
+    break;
+    case 2:
+    {
+        if(!backupMascotas())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+
+    }
+    break;
+    case 3:
+    {
+        if(!backupHistorias())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+    }
+    break;
+    case 4:
+    {
+        if(!backupTipoVisita())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+    }
+    break;
+    case 5:
+    {
+        if(!backupAranceles())
+        {
+            limpiar();
+            cout << "ERROR" << endl;
+            cin.get();
+        }
+
+    }
+    break;
+    case 0:
+    {
+    } break;
+    }
 
 }
 

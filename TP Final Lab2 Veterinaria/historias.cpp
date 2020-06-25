@@ -139,7 +139,20 @@ bool Historia::leerHistoria(int pos){
         return false;
     }
 }
-
+bool Historia::modificarHistoria(int ID){
+    FILE*p=fopen(ARCHIVOHISTORIAS,"ab");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Historia),1,p)==1){
+        if(ID==IDHistoria){
+            fseek(p,-sizeof (Historia),1);
+            fwrite(this,sizeof(Historia),1,p);
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

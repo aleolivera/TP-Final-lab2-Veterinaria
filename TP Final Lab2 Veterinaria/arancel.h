@@ -53,7 +53,7 @@ class Arancel{
         ///DISCO
         int buscarArancel(int);
         bool guardarArancel();
-        bool guardarArancelModificado(int);
+        bool modificarArancel(int);
         bool leerArancel(int);
 };
 

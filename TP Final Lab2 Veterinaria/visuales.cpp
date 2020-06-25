@@ -296,7 +296,9 @@ void pantallaConfiguracion()
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|     1) BACKUP CLIENTES                              |"<< endl;
     cout << "|     2) BACKUP MASCOTAS                              |"<< endl;
-    cout << "|     3) BACKUP HISTORIAS     /|_/|        /|___/|    |"<< endl;
+    cout << "|     3) BACKUP HISTORIAS                             |"<< endl;
+    cout << "|     4) BACKUP LISTA DE PRECIOS                      |"<< endl;
+    cout << "|     5) BACKUP ARANCELES     /|_/|        /|___/|    |"<< endl;
     cout << "|                             (0_0)         (0_o)     |"<< endl;
     cout << "|                            ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;

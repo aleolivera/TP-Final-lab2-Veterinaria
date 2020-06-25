@@ -114,7 +114,7 @@ int Arancel::buscarArancel(int ID){
     fclose(p);
     return -1;
 }
-bool Arancel::guardarArancel(){
+bool Arancel::guardarArancel(){         ///GUARDA EL REGISTRO EN EL ARCHIVO EN LA ULTIMA POSICION
     FILE*p=fopen(ARCHIVOARANCELES,"ab");
     if(p==NULL){
         return false;
@@ -144,7 +144,7 @@ bool Arancel::leerArancel(int pos){
         return false;
     }
 }
-bool Arancel::guardarArancelModificado(int ID){
+bool Arancel::modificarArancel(int ID){ ///GUARDA EL REGISTRO EN EL ARCHIVO EN LA POSICION CORRESPONDIENTE A ESE ID
     FILE*p=fopen(ARCHIVOARANCELES,"ab");
     if(p==NULL){
         return false;
