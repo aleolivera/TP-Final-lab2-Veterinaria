@@ -311,5 +311,5 @@ void pantallaConfiguracion()
 void limpiar()
 {
     system("cls");
-    cin.ignore();
+//    cin.ignore();
 }

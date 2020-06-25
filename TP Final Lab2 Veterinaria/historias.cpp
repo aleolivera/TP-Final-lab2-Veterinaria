@@ -5,6 +5,7 @@ using namespace std;
 #include <string.h>
 #include "historias.h"
 #include "fecha.h"
+#include "funcionesGlobales.h"
 
 
 ///MOSTRAR
@@ -59,7 +60,14 @@ void Historia::setNombreMascota(const char*cadena){
    strcpy(nombreMascota,cadena);
 }
 void Historia::setAnamnesis(){
-    cin.getline(anamnesis,299);
+    char cadena[300];
+    cin.getline(cadena,299);
+    if(cad_vacia(cadena)){
+       strcpy(anamnesis,"NO SE REALIZO NINGUN INGRESO POR TECLADO.");
+    }
+    else{
+        strcpy(anamnesis,cadena);
+    }
 }
 void Historia::setControl(bool valor){
     control=valor;

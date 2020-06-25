@@ -2,34 +2,97 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="clientes.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="arancel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2988" topLine="137" />
-		</Cursor>
-	</File>
-	<File name="funcionesGlobales.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="22514" topLine="60" />
+			<Cursor1 position="3523" topLine="53" />
 		</Cursor>
 		<Folding>
-			<Collapse line="4" />
+			<Collapse line="9" />
+			<Collapse line="12" />
+			<Collapse line="15" />
+			<Collapse line="18" />
+			<Collapse line="21" />
+			<Collapse line="24" />
 			<Collapse line="27" />
-			<Collapse line="39" />
-			<Collapse line="50" />
+			<Collapse line="30" />
+			<Collapse line="33" />
+			<Collapse line="43" />
+			<Collapse line="46" />
+			<Collapse line="49" />
+			<Collapse line="52" />
+			<Collapse line="55" />
 			<Collapse line="58" />
-			<Collapse line="83" />
-			<Collapse line="94" />
-			<Collapse line="102" />
-			<Collapse line="112" />
-			<Collapse line="116" />
-			<Collapse line="127" />
-			<Collapse line="148" />
-			<Collapse line="154" />
+			<Collapse line="61" />
+			<Collapse line="64" />
+			<Collapse line="67" />
 		</Folding>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1998" topLine="53" />
+		</Cursor>
+	</File>
+	<File name="tipoVisita.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1073" topLine="21" />
+		</Cursor>
+	</File>
+	<File name="clientes.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1414" topLine="28" />
+		</Cursor>
+	</File>
+	<File name="clientes.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2669" topLine="20" />
+		</Cursor>
+		<Folding>
+			<Collapse line="28" />
+			<Collapse line="78" />
+			<Collapse line="92" />
+			<Collapse line="107" />
+			<Collapse line="120" />
+			<Collapse line="131" />
+			<Collapse line="142" />
+			<Collapse line="149" />
+			<Collapse line="164" />
+			<Collapse line="212" />
+			<Collapse line="216" />
+			<Collapse line="220" />
+			<Collapse line="224" />
+			<Collapse line="236" />
+			<Collapse line="244" />
+			<Collapse line="259" />
+		</Folding>
+	</File>
+	<File name="arancel.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1565" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="fecha.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="332" topLine="2" />
+		</Cursor>
+	</File>
+	<File name="historias.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1922" topLine="43" />
+		</Cursor>
+	</File>
+	<File name="funcionesGlobales.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2297" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="mascotas.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="183" topLine="0" />
+		</Cursor>
 	</File>
 	<File name="tipoVisita.cpp" open="0" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2260" topLine="19" />
+			<Cursor1 position="2163" topLine="12" />
 		</Cursor>
 		<Folding>
 			<Collapse line="9" />
@@ -47,52 +110,61 @@
 			<Collapse line="51" />
 			<Collapse line="66" />
 			<Collapse line="81" />
+			<Collapse line="96" />
 		</Folding>
 	</File>
-	<File name="historias.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="historias.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="204" topLine="0" />
+			<Cursor1 position="1530" topLine="43" />
 		</Cursor>
-	</File>
-	<File name="mascotas.h" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="555" topLine="12" />
-		</Cursor>
+		<Folding>
+			<Collapse line="46" />
+			<Collapse line="49" />
+			<Collapse line="52" />
+			<Collapse line="55" />
+			<Collapse line="58" />
+			<Collapse line="71" />
+			<Collapse line="74" />
+			<Collapse line="80" />
+			<Collapse line="83" />
+			<Collapse line="86" />
+			<Collapse line="89" />
+			<Collapse line="92" />
+			<Collapse line="95" />
+			<Collapse line="98" />
+			<Collapse line="104" />
+			<Collapse line="119" />
+			<Collapse line="134" />
+			<Collapse line="149" />
+		</Folding>
 	</File>
 	<File name="visuales.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="296" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="mascotas.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="555" topLine="23" />
+		</Cursor>
+	</File>
 	<File name="visuales.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5060" topLine="109" />
+			<Cursor1 position="12767" topLine="13" />
 		</Cursor>
 		<Folding>
-			<Collapse line="93" />
+			<Collapse line="10" />
+			<Collapse line="29" />
+			<Collapse line="70" />
+			<Collapse line="100" />
+			<Collapse line="117" />
+			<Collapse line="220" />
+			<Collapse line="260" />
+			<Collapse line="276" />
+			<Collapse line="292" />
 		</Folding>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1130" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="tipoVisita.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="189" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="mascotas.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="183" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="clientes.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="887" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="fecha.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="fecha.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="258" topLine="0" />
 		</Cursor>
@@ -105,56 +177,59 @@
 			<Collapse line="24" />
 		</Folding>
 	</File>
-	<File name="fecha.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="funcionesGlobales.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="332" topLine="2" />
-		</Cursor>
-	</File>
-	<File name="arancel.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="898" topLine="64" />
+			<Cursor1 position="38231" topLine="104" />
 		</Cursor>
 		<Folding>
-			<Collapse line="9" />
-			<Collapse line="12" />
-			<Collapse line="15" />
-			<Collapse line="18" />
-			<Collapse line="21" />
-			<Collapse line="24" />
-			<Collapse line="27" />
-			<Collapse line="30" />
-		</Folding>
-	</File>
-	<File name="funcionesGlobales.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2040" topLine="56" />
-		</Cursor>
-	</File>
-	<File name="arancel.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="405" topLine="3" />
-		</Cursor>
-	</File>
-	<File name="historias.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2630" topLine="89" />
-		</Cursor>
-		<Folding>
-			<Collapse line="45" />
+			<Collapse line="5" />
+			<Collapse line="35" />
 			<Collapse line="48" />
-			<Collapse line="51" />
-			<Collapse line="54" />
-			<Collapse line="57" />
-			<Collapse line="60" />
+			<Collapse line="50" />
+			<Collapse line="56" />
 			<Collapse line="63" />
-			<Collapse line="66" />
-			<Collapse line="72" />
-			<Collapse line="75" />
-			<Collapse line="78" />
-			<Collapse line="81" />
-			<Collapse line="84" />
-			<Collapse line="87" />
-			<Collapse line="90" />
+			<Collapse line="73" />
+			<Collapse line="107" />
+			<Collapse line="121" />
+			<Collapse line="130" />
+			<Collapse line="143" />
+			<Collapse line="148" />
+			<Collapse line="162" />
+			<Collapse line="188" />
+			<Collapse line="208" />
+			<Collapse line="217" />
+			<Collapse line="231" />
+			<Collapse line="252" />
+			<Collapse line="326" />
+			<Collapse line="342" />
+			<Collapse line="376" />
+			<Collapse line="395" />
+			<Collapse line="405" />
+			<Collapse line="456" />
+			<Collapse line="514" />
+			<Collapse line="586" />
+			<Collapse line="674" />
+			<Collapse line="714" />
+			<Collapse line="818" />
+			<Collapse line="898" />
+			<Collapse line="998" />
+			<Collapse line="1036" />
+			<Collapse line="1062" />
+			<Collapse line="1110" />
+			<Collapse line="1138" />
+			<Collapse line="1165" />
+			<Collapse line="1202" />
+			<Collapse line="1250" />
+			<Collapse line="1263" />
+			<Collapse line="1267" />
+			<Collapse line="1298" />
+			<Collapse line="1366" />
+			<Collapse line="1373" />
+			<Collapse line="1390" />
+			<Collapse line="1407" />
+			<Collapse line="1424" />
+			<Collapse line="1441" />
+			<Collapse line="1458" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>

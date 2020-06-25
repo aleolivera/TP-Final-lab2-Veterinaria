@@ -539,6 +539,7 @@ bool ingresoHistoria(){
     cout << endl << "NOMBRE DE LA MASCOTA: ";
     cin.ignore();
     cin.getline(cadena,20);
+    if(cad_vacia(cadena)) return false;
     reg.setNombreMascota(cadena);           ///Aca se ingresa el nombre de la mascota
 
     cout << "ANAMNESIS: ";
@@ -1457,7 +1458,7 @@ bool backupTipoVisita(){
 }
 void menuConfiguracion(){
     limpiar();
-    pantallaAdministracion();
+    pantallaConfiguracion();
     int op;
     cin >>op;
     limpiar();
