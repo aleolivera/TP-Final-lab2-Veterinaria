@@ -72,6 +72,7 @@ bool Cliente::cargarCliente()
 
         return false;
     }
+    saldo=0;
     return true;
 }
 
@@ -225,12 +226,12 @@ int Cliente::getTelefono()
 {
     return Telefono;
 }
-bool Cliente::getDeudor(){
-    return deudor;
+float Cliente::getSaldo(){
+    return saldo;
 }
 ///SETs DEUDOR
-void Cliente::setDeudor(bool estado){
-    deudor=estado;
+void Cliente::setSaldo(float importe){
+    saldo=importe;
 }
 ///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
 void Cliente::mostrarTelefono()

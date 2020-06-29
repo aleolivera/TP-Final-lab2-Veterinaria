@@ -14,8 +14,7 @@ class Cliente{
         char domicilio[50];
         int Telefono;
         char email[30];
-        bool deudor;
-        Fecha fechaDeuda;
+        float saldo;
     public:
         bool cargarCliente();
         bool gurdarClienteEnDisco();
@@ -30,12 +29,12 @@ class Cliente{
 
         ///GETs
         int getIDCliente();
-        bool getDeudor();
+        float getSaldo();
         void getNombreCliente(char*);
         void getApellido(char*);
         int getTelefono();
         ///SETs
-        void setDeudor(bool);
+        void setSaldo(float);
         ///MOSTRAR solo cout de un solo atributo
         void mostrarTelefono();
         void mostrarApellido();
