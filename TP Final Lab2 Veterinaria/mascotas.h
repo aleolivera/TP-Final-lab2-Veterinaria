@@ -14,7 +14,7 @@ class Mascotas{
     private:
         char nombreMascota[20];
         int IDCliente;  ///UN SET = GET DE IDCLIENTE CLIENTE
-        int edad;
+        int anios,mes;
         bool castrado;
         bool vacunado;
         char especie [10];

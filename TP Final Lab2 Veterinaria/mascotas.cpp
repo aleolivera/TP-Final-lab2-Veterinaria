@@ -24,8 +24,11 @@ bool Mascotas::Cargar_Mascota()
 
     IDCliente;
 
-    cout<<" Edad:";
-    cin>>edad;
+    cout<<"---Edad---";
+    cout<<" anios :";
+    cin>>anios;
+    cout<<" mes :";
+    cin>>mes;
 
     IDCliente;
 
@@ -90,7 +93,8 @@ void Mascotas::mostrar_Mascota()
 
     cout<<" ID de Duenio :"<<IDCliente<< endl;  //EL ID DEL CLIENTE.
 
-    cout<<" Edad :"<<edad<<endl;
+    cout<<"---Edad---"<<endl;
+    cout<<" anios :"<<anios<<" meses: "<<mes<<endl;
 
 
     cout<<" Castrado :";
@@ -116,9 +120,10 @@ void Mascotas::mostrar_Mascota()
 
 void Mascotas::listar_Mascotas()
 {
+    Mascotas reg;
     int pos=0;
     system("cls");
-    while(leerMascota(pos++)==1)
+    while(leerMascota(pos++))
     {
         listardueno(IDCliente);
         mostrar_Mascota();
@@ -126,10 +131,11 @@ void Mascotas::listar_Mascotas()
     }
 }
 
+
 int Mascotas::buscarMascotaXNombre(char *nombre)
 {
     int pos=0;
-    while(leerMascota(pos)==1)
+    while(leerMascota(pos))
     {
         if(strcmp(nombre,nombreMascota)==0)
         {
@@ -144,12 +150,12 @@ bool Mascotas::sobrescribir_mascota(int pos)
 {
     bool guardado;
     FILE *p;
-    p=fopen(ARCHIVOMASCOTAS,"rb+");
+    p= fopen(ARCHIVOMASCOTAS,"rb+");
     if(p==NULL)
     {
         return false;
     }
-    fseek(p,pos*sizeof(Mascotas),0);
+    fseek(p,pos*sizeof(ARCHIVOMASCOTAS),0);
     guardado=fwrite(this,sizeof(Mascotas),1,p);
     fclose(p);
     return guardado;

@@ -54,8 +54,7 @@ void pantallaAgregar()
             {
                 cout<<" El nuevo cliente fue registrado "<<endl;
                 system("pause");
-            }
-        }
+
         re.setIDcliente(reg.getIDCliente());
         if(re.Cargar_Mascota())
         {
@@ -65,7 +64,7 @@ void pantallaAgregar()
                 system("pause");
             }
         }
-    }
+    }}}
     break;
     case 2:
     {
@@ -176,36 +175,43 @@ void pantallaMascotas()
                     cout<<" El nuevo cliente fue registrado "<<endl;
                     system("pause");
                     cin.ignore();
+                    cout<<" Nombre de la mascota que desa transferir :";
+                    cin.getline(nombre,20);
+                    cin.ignore();
+                    int pos;
+                    pos=re.buscarMascotaXNombre(nombre);
+                    re.setIDcliente(reg.getIDCliente());
+                    if(re.sobrescribir_mascota(pos))
+                    {
+                        cout<<" Transferencia completada "<<endl;
 
+                    }
+                    else
+                    {
+                        cout<<" No se pudo transferir "<<endl;
+                    }
                 }
-            }
-            re.setIDcliente(reg.getIDCliente());
-            cout<<" Nombre de la mascota que desa transferir :";
-            cin.getline(nombre,20);
-            cin.ignore();
-            int pos=re.buscarMascotaXNombre(nombre);
-            re.setIDcliente(reg.getIDCliente());
-            if(re.sobrescribir_mascota(pos))
-            {
-                cout<<" Transferencia completada "<<endl;
             }
         }
         break;
         case 2:
         {
-            int dni;
+             int dni;
             char nombre[20];
             Cliente reg;
             Mascotas re;
-            cout<<" Ingrese el DNI del cliente :";
+            cout<<" Ingrese el DNI del nuevo duenio :";
             cin>>dni;
             cin.ignore();
             cout<<" Nombre de la mascota que desa transferir :";
             cin.getline(nombre,20);
             cin.ignore();
-            int pos=reg.buscarClienteXDni(dni);
+            int pos=0;
+            pos=reg.buscarClienteXDni(dni);
+            reg.LeerDiscoDeCliente(pos);
+            int posmascota=re.buscarMascotaXNombre(nombre);
             re.setIDcliente(reg.getIDCliente());
-            if(re.sobrescribir_mascota(pos))
+            if(re.sobrescribir_mascota(posmascota))
             {
                 cout<<" Transferencia completada "<<endl;
             }

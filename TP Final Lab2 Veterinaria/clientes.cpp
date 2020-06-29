@@ -72,7 +72,6 @@ bool Cliente::cargarCliente()
 
         return false;
     }
-    saldo=0;
     return true;
 }
 
@@ -105,14 +104,14 @@ bool Cliente::LeerDiscoDeCliente(int pos)
     return leido;
 }
 
-int Cliente::buscarClienteXDni(int dni) //COMPARA EL NOMBRE INGRESADO CON LOS REGISTRADOS.
+int Cliente::buscarClienteXDni(int dni) //COMPARA EL DNI INGRESADO CON LOS REGISTRADOS.
 {
     int pos=0;
     Cliente reg;
-    while(reg.LeerDiscoDeCliente(pos)==1)
+    while(reg.LeerDiscoDeCliente(pos))
     {
-            if(dni==reg.dni)
-                return pos;
+        if(dni==reg.dni)
+            {return pos;}
         pos++;
     }
     return -1;
@@ -140,11 +139,12 @@ void Cliente::listarClietes()
     }
 }
 
-int Cliente::buscraID_Cliente(int pos)
+int Cliente::buscraID_Cliente(int pos)// NO FUNCIONA.
 {
     Cliente reg;
-    LeerDiscoDeCliente(pos);
-    return reg.IDCliente;
+    if(LeerDiscoDeCliente(pos))
+        {return reg.IDCliente;}
+    return -1;
 }
 
 bool Cliente::sobrescribir_Cliente(int pos) /// NO SOBREESCRIBE.
@@ -226,13 +226,7 @@ int Cliente::getTelefono()
 {
     return Telefono;
 }
-float Cliente::getSaldo(){
-    return saldo;
-}
-///SETs DEUDOR
-void Cliente::setSaldo(float importe){
-    saldo=importe;
-}
+
 ///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
 void Cliente::mostrarTelefono()
 {
@@ -278,8 +272,8 @@ bool Cliente::leerCliente(int pos){
     if(p==NULL){
         return false;
     }
-    fseek(p, pos*sizeof (Cliente),0);
-    if(fread(this,sizeof (Cliente),1,p)==1){
+    fseek(p, pos*sizeof*this,0);
+    if(fread(this,sizeof* this,1,p)==1){
         fclose(p);
         return true;
     }
@@ -287,18 +281,4 @@ bool Cliente::leerCliente(int pos){
         fclose(p);
         return false;
     }
-}
-bool Cliente::modificarCliente(int ID){
-    FILE*p=fopen(ARCHIVOCLIENTES,"ab");
-    if(p==NULL){
-        return false;
-    }
-    while(fread(this,sizeof (Cliente),1,p)==1){
-        if(ID==IDCliente){
-            fseek(p,ftell(p)-sizeof (Cliente),1);
-            fwrite(this,sizeof(Cliente),1,p);
-            return true;
-        }
-    }
-    return false;
 }
