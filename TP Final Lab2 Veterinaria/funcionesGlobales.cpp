@@ -234,19 +234,19 @@ int asignarIDHistoria()     ///Le pone solo el ID de manera secuencial
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL)
     {
-        return 0;
+        return -1;
     }
-    if(fread(&reg,sizeof (Historia),1,p)!=1)  ///tal vez deberia preguntar si !=1
+    if(fread(&reg,sizeof (Historia),1,p)==0)  ///tal vez deberia preguntar si !=1
     {
         fclose(p);
-        return 0;
+        return 1;
     }
     else
     {
         fseek(p,-sizeof (Historia),2);
         fread(&reg,sizeof (Historia),1,p);
         fclose(p);
-        return reg.getIDHistoria();
+        return reg.getIDHistoria()+1;
     }
 }
 int asignarIDarancel()      ///Le pone solo el ID de manera secuencial
@@ -257,7 +257,7 @@ int asignarIDarancel()      ///Le pone solo el ID de manera secuencial
     {
         return -1;
     }
-    if(fread(&reg,sizeof (Arancel),1,p)!=1)
+    if(fread(&reg,sizeof (Arancel),1,p)==0)
     {
         fclose(p);
         return 1;
@@ -278,7 +278,7 @@ int asignarIDTipoVisita()      ///Le pone solo el ID de manera secuencial
     {
         return -1;
     }
-    if(fread(&reg,sizeof (TipoVisita),1,p)!=1)
+    if(fread(&reg,sizeof (TipoVisita),1,p)==0)
     {
         fclose(p);
         return 1;
@@ -516,12 +516,10 @@ bool ingresoHistoria(){
     Historia reg;
     int dia,mes,anio,valor;
     char cadena[20];
-    char cadena2[3];
-    reg.setIDHistoria(asignarIDHistoria()+1);     ///Aca se asigna solo ID de manera secuencial
+    reg.setIDHistoria(asignarIDHistoria());     ///Aca se asigna solo ID de manera secuencial
     reg.setFechaIngreso();                      ///Aca se asigna automaticamente la fecha del HOY
     ///EL ATRIBUTO 'Fecha fechaModificacion' LO ASIGNA EL CONSTRUCTOR EN ESTA ETAPA
     cout << "INGRESO DE HISTORIAS CLINICAS" << endl << endl;
-    cout << "         ID HISTORIA CLINICA: "<< reg.getIDHistoria() << endl;
     cout << "FECHA DE LA VISITA(DD/MM/AA):"<< endl;
     cin >> dia >> mes >> anio;
     if (!validarFecha(dia,mes,anio))
@@ -532,7 +530,7 @@ bool ingresoHistoria(){
 
     cout << "ID DEL CLIENTE: ";
     cin >> valor;
-    if(!validarIDcliente(valor))
+    if(validarIDcliente(valor))
     {
         return false;
     }
@@ -549,11 +547,24 @@ bool ingresoHistoria(){
     reg.setAnamnesis();                     ///Aca la Anamnesis (detalles de la visita)
 
     cout << "REQUIERE VOLVER A CONTROL?: ";
-//    cin.ignore();
-    cin.getline(cadena2,3);
-    if(strcmp(cadena2,"SI")==0||strcmp(cadena2,"si")==0)
+    cin.ignore();
+    cin.getline(cadena,2);
+    if(strcmp(cadena,"SI")||strcmp(cadena,"si"))
     {
         reg.setControl(true);                ///al ingresar SI o NO se cambia el estado del booleano
+    }
+    else if(strcmp(cadena,"NO")||strcmp(cadena,"no"))
+    {
+        reg.setControl(false);
+    }
+    else
+    {
+        cout << "'" <<cadena << "' " << " NO ES UN INGRESO VALIDO." << endl;
+        cin.get();
+        return false;
+    }
+    if(reg.getControl())
+    {
         cout << "INGRESE LA FECHA DEL CONTROL(DD/MM/AA):"<< endl;
         cin >> dia >> mes >> anio;
         if (!validarFecha(dia,mes,anio))  ///Se valida que no se ingrese 42/9/2500 o 29/2 si no es anio biciesto
@@ -566,17 +577,6 @@ bool ingresoHistoria(){
             return false;
         }
     }
-    else if(strcmp(cadena2,"NO")==0||strcmp(cadena2,"no")==0)
-    {
-        reg.setControl(false);
-    }
-    else
-    {
-        cout << "'" <<cadena2 << "' " << " NO ES UN INGRESO VALIDO." << endl;
-        cin.get();
-        return false;
-    }
-
     ///EL CAMPO QUE RESTA ES 'int IDArancel' QUE SE CARGA CON EL ARANCEL
     if(!reg.guardarHistoria())
     {
@@ -599,8 +599,6 @@ bool mostrarEntradaHistoria(){
     reg.mostrarFechaModificacion(); ///Despues se muestran los registros de a uno
     reg.mostrarNombreMascota();
     reg.mostrarAnamnesis();
-    cin.ignore();
-    system("pause");
     return true;
 }
 bool mostrarHistoria(){
@@ -621,7 +619,6 @@ bool mostrarHistoria(){
         free(vecHistoria);
         return false;
     }
-    cout << "NOMBRE DE MASCOTA: ";
     char nombreMascota[20];
     char apellidoCliente[30];
     cin.ignore();                       ///PIDO nombreMascota (clase mascota)
@@ -671,7 +668,6 @@ bool mostrarHistoria(){
             cout << "      ---------------      " << endl;
         }
     }
-    system("pause");
     free(vecHistoria);      ///tal vez necesite un DESTRUCTOR
     free(vecClientes);
     return true;
