@@ -214,6 +214,9 @@ int Cliente::getIDCliente()
 {
     return IDCliente;
 }
+float Cliente::getSaldo(){
+    return saldo;
+}
 void Cliente::getNombreCliente(char*cadena)
 {
     strcpy(cadena,nombreCliente);
@@ -226,6 +229,12 @@ int Cliente::getTelefono()
 {
     return Telefono;
 }
+
+///SETs
+void Cliente::setSaldo(float importe){
+    saldo=importe;
+}
+
 
 ///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
 void Cliente::mostrarTelefono()
@@ -281,4 +290,18 @@ bool Cliente::leerCliente(int pos){
         fclose(p);
         return false;
     }
+}
+bool Cliente::modificarClienteDisco(int ID){
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb+");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Cliente),1,p)==1){
+        if(ID==IDCliente){
+            fseek(p,-sizeof (Cliente),1);
+            fwrite(this,sizeof(Cliente),1,p);
+            return true;
+        }
+    }
+    return false;
 }

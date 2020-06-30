@@ -95,7 +95,7 @@ bool TipoVisita::leerTipoVisita(int pos){
     }
 }
 bool TipoVisita::modificarTipoVisita(int ID){
-    FILE*p=fopen(ARCHIVOTIPOVISITA,"ab");
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"ab+");
     if(p==NULL){
         return false;
     }

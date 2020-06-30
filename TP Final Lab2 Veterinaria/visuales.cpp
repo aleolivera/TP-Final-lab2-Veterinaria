@@ -320,3 +320,47 @@ void limpiar()
     system("cls");
 //    cin.ignore();
 }
+void pausar(){
+    system("pause");
+}
+///ERRORES
+void errorFechaInvalida(){
+    limpiar();
+    cout << "ERROR: FECHA INVALIDA." << endl;
+    pausar();
+}
+void errorArchivo(){
+    limpiar();
+    cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO." << endl;
+    pausar();
+}
+void errorIngresoInvalido(){
+    limpiar();
+    cout << "ERROR: INGRESO INVALIDO."<< endl;
+    pausar();
+}
+void volviendoMenu(){
+    limpiar();
+    cout << "VOLVIENDO AL MENU..."<< endl;
+    pausar();
+}
+void guardadoExitoso(){
+    limpiar();
+    cout << "GUARDADO EXITOSO." << endl;
+    pausar();
+}
+void errorRegistro(){
+    limpiar();
+    cout << "NO SE ENCUENTRA EL REGISTRO EN EL ARCHIVO." << endl;
+    pausar();
+}
+void errorAsignacionMemoria(){
+    limpiar();
+    cout << "NO HAY MEMORIA SUFICIENTE." << endl;
+    pausar();
+}
+void errorCargarRegistros(){
+    limpiar();
+    cout << "NO SE PUDIERON CARGAR EL/LOS REGISTRO/S." << endl;
+    pausar();
+}

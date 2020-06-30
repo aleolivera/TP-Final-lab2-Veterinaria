@@ -12,3 +12,6 @@ TP Final Lab2 Veterinaria/bin/Debug/TP Final Lab2 Veterinaria.exe
 *.exe
 *.layout
 *.o
+*.dat
+*.layout
+*.exe

@@ -2,7 +2,7 @@
 
 ///MOSTRAR
 void Fecha::mostrarFecha(){
-    cout << dia <<"/"<< mes << "/" << anio << endl;
+    cout << dia <<"/"<< mes << "/" << anio;
 }
 
 ///GETs

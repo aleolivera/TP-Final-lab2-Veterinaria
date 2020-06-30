@@ -33,7 +33,7 @@ class Historia{
         void setIDHistoria(int); /// no la hice, no se hacerla aun
         void setIDCliente(int);
         void setFechaIngreso(); /// No se si esta bien
-        void setFechaModificacion(int,int,int);
+        void setFechaModificacion();
         void setFechaVisita(int,int,int); /// No se si esta bien
         void setNombreMascota(const char*cadena);
         void setAnamnesis(); /// la carga el usuario

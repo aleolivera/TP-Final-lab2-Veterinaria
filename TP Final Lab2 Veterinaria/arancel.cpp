@@ -145,7 +145,7 @@ bool Arancel::leerArancel(int pos){
     }
 }
 bool Arancel::modificarArancel(int ID){ ///GUARDA EL REGISTRO EN EL ARCHIVO EN LA POSICION CORRESPONDIENTE A ESE ID
-    FILE*p=fopen(ARCHIVOARANCELES,"ab");
+    FILE*p=fopen(ARCHIVOARANCELES,"ab+");
     if(p==NULL){
         return false;
     }

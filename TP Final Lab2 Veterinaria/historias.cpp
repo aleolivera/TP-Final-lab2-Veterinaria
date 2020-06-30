@@ -53,6 +53,9 @@ void Historia::setIDCliente(int ID){
 void Historia::setFechaIngreso(){
     fechaIngreso.setFechaActual();
 }
+void Historia::setFechaModificacion(){
+    fechaModificacion=obtenerFechaActual();
+}
 void Historia::setFechaVisita(int d, int m, int a){     ///no se si esta bien
     fechaVisita.setFecha(d,m,a);
 }
@@ -103,15 +106,16 @@ Fecha Historia::getFechaControl(){
 
 ///DISCO
 int Historia::buscarHistoria(int ID){
+    int n;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL){
-        return false;
+        return -1;
     }
-
     while(fread(this,sizeof (Historia),1,p)==1){
         if(ID==IDHistoria){
+            n=(ftell(p)/sizeof (Historia));
             fclose(p);
-            return ftell(p)/sizeof (Historia);
+            return n;
         }
     }
     fclose(p);
@@ -137,7 +141,7 @@ bool Historia::leerHistoria(int pos){
     if(p==NULL){
         return false;
     }
-    fseek(p, pos*sizeof (Historia),0);
+    fseek(p, (pos*sizeof (Historia)-sizeof (Historia)),0);
     if(fread(this,sizeof (Historia),1,p)==1){
         fclose(p);
         return true;
@@ -148,13 +152,13 @@ bool Historia::leerHistoria(int pos){
     }
 }
 bool Historia::modificarHistoria(int ID){
-    FILE*p=fopen(ARCHIVOHISTORIAS,"ab");
+    FILE*p=fopen(ARCHIVOHISTORIAS,"rb+");
     if(p==NULL){
         return false;
     }
     while(fread(this,sizeof (Historia),1,p)==1){
         if(ID==IDHistoria){
-            fseek(p,-sizeof (Historia),1);
+            fseek(p,ftell(p)- sizeof (Historia),1);
             fwrite(this,sizeof(Historia),1,p);
             return true;
         }
