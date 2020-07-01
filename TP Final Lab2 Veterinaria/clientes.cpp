@@ -249,13 +249,14 @@ void Cliente::mostrarApellido()
 int Cliente::buscarClientePorID(int ID){
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL){
-        return false;
+        return -1;
     }
-
+    int n;
     if(fread(this,sizeof (Cliente),1,p)==1){
         if(ID==IDCliente){
+            n=(ftell(p)/sizeof (Cliente));
             fclose(p);
-            return ftell(p)/sizeof (Cliente);
+            return n;
         }
     }
     fclose(p);
@@ -291,17 +292,17 @@ bool Cliente::leerCliente(int pos){
         return false;
     }
 }
-bool Cliente::modificarClienteDisco(int ID){
+bool Cliente::modificarClienteDisco(int pos){
     FILE*p=fopen(ARCHIVOCLIENTES,"rb+");
     if(p==NULL){
         return false;
     }
-    while(fread(this,sizeof (Cliente),1,p)==1){
-        if(ID==IDCliente){
-            fseek(p,-sizeof (Cliente),1);
-            fwrite(this,sizeof(Cliente),1,p);
-            return true;
-        }
+    pos--;
+    fseek(p,(pos*sizeof (Cliente)),0);
+    if(fwrite(this,sizeof (Cliente),1,p)==1){
+        fclose(p);
+        return true;
     }
+    fclose(p);
     return false;
 }

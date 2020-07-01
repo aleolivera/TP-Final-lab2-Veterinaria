@@ -20,6 +20,9 @@ int Fecha::getAnio(){
 void Fecha::setFecha(int d,int m,int a){
     dia=d;
     mes=m;
+    if(a<100){
+        a+=2000;
+    }
     anio=a;
 }
 void Fecha::setFechaActual(){

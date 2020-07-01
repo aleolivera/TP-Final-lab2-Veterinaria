@@ -220,6 +220,9 @@ void pantallaMascotas()
         }
     }
     break;
+        case 0:
+            Mascotas reg;
+            reg.mostrarTodoElArchivo();
     }
 
 }
@@ -364,3 +367,4 @@ void errorCargarRegistros(){
     cout << "NO SE PUDIERON CARGAR EL/LOS REGISTRO/S." << endl;
     pausar();
 }
+

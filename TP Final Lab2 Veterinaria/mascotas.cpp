@@ -22,15 +22,11 @@ bool Mascotas::Cargar_Mascota()
     if(cad_vacia(nombreMascota))
         return false;
 
-    IDCliente;
 
     cout<<"---Edad---";
     cout<<" anios :";
     cin>>anios;
-    cout<<" mes :";
-    cin>>mes;
 
-    IDCliente;
 
     cout<<" Castrado? ";
     cout<<" 1- SI.  ";
@@ -52,38 +48,42 @@ bool Mascotas::Cargar_Mascota()
     cout<<" 2- NO.  ";
     cin>>vacunado_opcion;
     cin.ignore();
-    switch(vacunado_opcion)
-    {
-    case 1:
+    if (vacunado_opcion==1){
         vacunado= true;
-        break;
-    case 2:
+    }
+    else if(vacunado_opcion==2){
         vacunado= false;
-        break;
+    }
+    else{
+        errorIngresoInvalido();
+        return false;
     }
     cout<<" Especie :";
     cin.getline(especie,10);
-    if(cad_vacia(especie))
+    if(cad_vacia(especie)){
+        errorIngresoInvalido();
         return false;
-
+    }
 
     cout<<" Raza :";
     cin.getline(raza,20);
-    if(cad_vacia(raza))
+    if(cad_vacia(raza)){
+        errorIngresoInvalido();
         return false;
+    }
 
 
-    int sexo_opcion;
-    cout<<" Sexo :";
-    cin.getline(sexo,14);
-    if(cad_vacia(sexo))
+//    int sexo_opcion;
+    cout<<" Sexo 'M': macho | 'H':hembra :";
+    cin>> sexo;
+    if(!(sexo=='M' || sexo=='m'|| sexo!='H'|| sexo!='h')){
+        errorIngresoInvalido();
         return false;
-
+    }
 
     vivo=true;
     return true;
 }
-
 void Mascotas::mostrar_Mascota()
 {
     cout<<"-----MASCOTA-----"<<endl;
@@ -94,7 +94,7 @@ void Mascotas::mostrar_Mascota()
     cout<<" ID de Duenio :"<<IDCliente<< endl;  //EL ID DEL CLIENTE.
 
     cout<<"---Edad---"<<endl;
-    cout<<" anios :"<<anios<<" meses: "<<mes<<endl;
+    cout<<" anios :"<<anios<<endl;
 
 
     cout<<" Castrado :";
@@ -111,16 +111,18 @@ void Mascotas::mostrar_Mascota()
 
     cout<<" Especie :"<<especie<<endl;
 
-    cout<<" Raza :"<<raza<<endl;
+    cout<<" Raza : "<<raza<<endl;
 
-    cout<<" Sexo :"<<sexo<<endl;
-
+    cout<<" Sexo : ";
+    if(sexo=='m'||sexo=='M')
+        cout << "macho";
+    if(sexo=='h'||sexo=='H')
+        cout << "hembra";
     //cout<<" Fecha de vacuna:"<<fechaVacuna<<endl;
 }
-
 void Mascotas::listar_Mascotas()
 {
-    Mascotas reg;
+//    Mascotas reg;
     int pos=0;
     system("cls");
     while(leerMascota(pos++))
@@ -145,7 +147,6 @@ int Mascotas::buscarMascotaXNombre(char *nombre)
     }
     return -1;
 }
-
 bool Mascotas::sobrescribir_mascota(int pos)
 {
     bool guardado;
@@ -160,7 +161,6 @@ bool Mascotas::sobrescribir_mascota(int pos)
     fclose(p);
     return guardado;
 }
-
 bool Mascotas::modificar_mascota()
 {
     int pos;
@@ -228,8 +228,12 @@ bool Mascotas::modificar_mascota()
         cin.ignore();
         if(opsexo==1)
         {
-            cout<<" Sexo :";
-            cin.getline(sexo,14);
+            cout<<" Sexo 'M': macho | 'H':hembra :";
+            cin>> sexo;
+            if(!(sexo=='M' || sexo=='m'|| sexo!='H'|| sexo!='h')){
+            errorIngresoInvalido();
+            return false;
+            }
         }
 
         if(sobrescribir_mascota(pos))
@@ -247,6 +251,7 @@ bool Mascotas::modificar_mascota()
     {
         cout<<" No existe la mascota :";
     }
+    return true;
 }
 
 ///GETS
@@ -295,3 +300,19 @@ bool Mascotas::leerMascota(int pos)
     }
 }
 
+bool Mascotas::mostrarTodoElArchivo(){
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL){
+        return -1;
+    }
+    while(fread(this,sizeof (Mascotas),1,p)==1){
+        cout <<"IDcliente: "<< this->IDCliente<< endl;
+        cout <<"sexo: "<< this->sexo<< endl;
+        cout <<"especie: " << this->especie<< endl;
+        cout <<"nombre: " << this->nombreMascota<< endl;
+        cout << "................" << endl;
+    }
+    pausar();
+    fclose(p);
+    return false;
+}

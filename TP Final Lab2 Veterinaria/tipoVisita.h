@@ -37,6 +37,7 @@ class TipoVisita{
         bool leerTipoVisita(int);
 //        int cantidadRegistros();
         bool modificarTipoVisita(int);
+        bool mostrarTodoElArchivo();
 };
 
 #endif // TIPOVISITA_H_INCLUDED

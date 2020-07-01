@@ -14,12 +14,12 @@ class Mascotas{
     private:
         char nombreMascota[20];
         int IDCliente;  ///UN SET = GET DE IDCLIENTE CLIENTE
-        int anios,mes;
+        int anios;
         bool castrado;
         bool vacunado;
         char especie [10];
         char raza [20];
-        char sexo[14];
+        char sexo;
         Fecha fechaVacuna;
         bool vivo;
     public:
@@ -38,6 +38,7 @@ class Mascotas{
         int buscarMascotaXNombre(char*);
         bool modificar_mascota();
         bool sobrescribir_mascota(int);
+        bool mostrarTodoElArchivo();
 };
 
 #endif // MASCOTAS_H_INCLUDED

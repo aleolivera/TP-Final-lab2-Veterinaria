@@ -57,13 +57,14 @@ class Historia{
         bool guardarHistoria();
         bool leerHistoria(int);
         bool modificarHistoria(int);
+        bool mostrarTodoElArchivo();
 
-        ///CONSTRUCTOR
-        Historia(){
-            fechaModificacion.setFechaActual();
-            fechaControl.setFecha(0,0,0);
-            IDArancel=0;
-        }
+//        ///CONSTRUCTOR
+//        Historia(){
+//            fechaModificacion.setFechaActual();
+//            fechaControl.setFecha(0,0,0);
+//            IDArancel=0;
+//        }
 
 };
 

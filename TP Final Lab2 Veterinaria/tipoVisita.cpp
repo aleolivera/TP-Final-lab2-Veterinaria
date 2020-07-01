@@ -3,6 +3,7 @@ using namespace std;
 #include <cstdio>
 #include <cstdlib>
 #include <string.h>
+#include "visuales.h"
 #include "fecha.h"
 #include "tipoVisita.h"
 
@@ -54,11 +55,12 @@ int TipoVisita::buscarTipoVisita(int ID){
     if(p==NULL){
         return -1;
     }
-
+    int n;
     while(fread(this,sizeof (TipoVisita),1,p)==1){
         if(ID==IDTipoVisita){
+            n=(ftell(p)/sizeof (TipoVisita));
             fclose(p);
-            return ftell(p)/sizeof (TipoVisita);
+            return n;
         }
     }
     fclose(p);
@@ -94,18 +96,33 @@ bool TipoVisita::leerTipoVisita(int pos){
         return false;
     }
 }
-bool TipoVisita::modificarTipoVisita(int ID){
-    FILE*p=fopen(ARCHIVOTIPOVISITA,"ab+");
+bool TipoVisita::modificarTipoVisita(int pos){
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb+");
     if(p==NULL){
         return false;
     }
-    while(fread(this,sizeof (TipoVisita),1,p)==1){
-        if(ID==IDTipoVisita){
-            fseek(p,-sizeof (TipoVisita),1);
-            fwrite(this,sizeof(TipoVisita),1,p);
-            return true;
-        }
+    pos--;
+    fseek(p,(pos*sizeof (TipoVisita)),0);
+    if(fwrite(this,sizeof (TipoVisita),1,p)==1){
+        fclose(p);
+        return true;
     }
+    fclose(p);
     return false;
 }
-
+bool TipoVisita::mostrarTodoElArchivo(){
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+    if(p==NULL){
+        return -1;
+    }
+    while(fread(this,sizeof (TipoVisita),1,p)==1){
+        this->mostrarIDTipoVisita();
+        this->mostrarNombreTipoVisita();
+        this->mostrarImporte();
+        this->mostrarPorcentajeHonorario();
+        cout << "................" << endl;
+    }
+    pausar();
+    fclose(p);
+    return false;
+}

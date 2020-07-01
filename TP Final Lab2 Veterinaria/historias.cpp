@@ -115,6 +115,8 @@ int Historia::buscarHistoria(int ID){
         if(ID==IDHistoria){
             n=(ftell(p)/sizeof (Historia));
             fclose(p);
+            cout << "EL METODO BUSCAR DEVUELVE:" << n<< endl;
+            pausar();
             return n;
         }
     }
@@ -126,7 +128,6 @@ bool Historia::guardarHistoria(){
     if(p==NULL){
         return false;
     }
-
     if(fwrite(this,sizeof (Historia),1,p)==1){
         fclose(p);
         return true;
@@ -141,7 +142,7 @@ bool Historia::leerHistoria(int pos){
     if(p==NULL){
         return false;
     }
-    fseek(p, (pos*sizeof (Historia)-sizeof (Historia)),0);
+    fseek(p,(pos*sizeof (Historia)),0);
     if(fread(this,sizeof (Historia),1,p)==1){
         fclose(p);
         return true;
@@ -151,21 +152,37 @@ bool Historia::leerHistoria(int pos){
         return false;
     }
 }
-bool Historia::modificarHistoria(int ID){
+bool Historia::modificarHistoria(int pos){
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb+");
     if(p==NULL){
         return false;
     }
-    while(fread(this,sizeof (Historia),1,p)==1){
-        if(ID==IDHistoria){
-            fseek(p,ftell(p)- sizeof (Historia),1);
-            fwrite(this,sizeof(Historia),1,p);
-            return true;
-        }
+    pos--;
+    fseek(p,(pos*sizeof (Historia)),0);
+    if(fwrite(this,sizeof (Historia),1,p)==1){
+        fclose(p);
+        return true;
     }
+    fclose(p);
+    return false;
+
+}
+bool Historia::mostrarTodoElArchivo(){
+    FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Historia),1,p)==1){
+        this->mostrarFechaIngreso();
+        this->mostrarIDHistoria();
+        this->mostrarAnamnesis();
+        this->mostrarIDCliente();
+        cout << "................" << endl;
+    }
+    pausar();
+    fclose(p);
     return false;
 }
-
 
 
 

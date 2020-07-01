@@ -102,13 +102,14 @@ void Arancel::setAbonado(bool estado){
 int Arancel::buscarArancel(int ID){
     FILE*p=fopen(ARCHIVOARANCELES,"rb");
     if(p==NULL){
-        return false;
+        return -1;
     }
-
+    int n;
     if(fread(this,sizeof (Arancel),1,p)==1){
         if(ID==IDArancel){
+            n=(ftell(p)/sizeof (Arancel));
             fclose(p);
-            return ftell(p)/sizeof (Arancel);
+            return n;
         }
     }
     fclose(p);
@@ -144,18 +145,18 @@ bool Arancel::leerArancel(int pos){
         return false;
     }
 }
-bool Arancel::modificarArancel(int ID){ ///GUARDA EL REGISTRO EN EL ARCHIVO EN LA POSICION CORRESPONDIENTE A ESE ID
-    FILE*p=fopen(ARCHIVOARANCELES,"ab+");
+bool Arancel::modificarArancel(int pos){ ///GUARDA EL REGISTRO EN EL ARCHIVO EN LA POSICION CORRESPONDIENTE A ESE ID
+    FILE*p=fopen(ARCHIVOARANCELES,"rb+");
     if(p==NULL){
         return false;
     }
-    while(fread(this,sizeof (Arancel),1,p)==1){
-        if(ID==IDArancel){
-            fseek(p,-sizeof (Arancel),1);
-            fwrite(this,sizeof(Arancel),1,p);
-            return true;
-        }
+    pos--;
+    fseek(p,(pos*sizeof (Arancel)),0);
+    if(fwrite(this,sizeof (Arancel),1,p)==1){
+        fclose(p);
+        return true;
     }
+    fclose(p);
     return false;
 }
 
