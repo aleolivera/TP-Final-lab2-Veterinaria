@@ -72,6 +72,7 @@ bool Cliente::cargarCliente()
 
         return false;
     }
+    saldo=0;
     return true;
 }
 
@@ -252,7 +253,7 @@ int Cliente::buscarClientePorID(int ID){
         return -1;
     }
     int n;
-    if(fread(this,sizeof (Cliente),1,p)==1){
+    while(fread(this,sizeof (Cliente),1,p)==1){
         if(ID==IDCliente){
             n=(ftell(p)/sizeof (Cliente));
             fclose(p);
@@ -303,6 +304,22 @@ bool Cliente::modificarClienteDisco(int pos){
         fclose(p);
         return true;
     }
+    fclose(p);
+    return false;
+}
+bool Cliente::mostrarTodoElArchivo(){
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Cliente),1,p)==1){
+        cout <<"    IDcliente: "<< IDCliente << endl;
+        cout <<"nombre/Apelli: "<< nombreCliente << " " << apellido << endl;
+        cout <<"     Telefono: "<< Telefono << endl;
+        cout <<"        Saldo: "<< saldo << endl;
+        cout << "................" << endl;
+    }
+    pausar();
     fclose(p);
     return false;
 }

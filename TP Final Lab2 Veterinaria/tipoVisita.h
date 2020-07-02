@@ -27,7 +27,7 @@ class TipoVisita{
 
         ///GETs
         int getIDTipoVisita();
-        void getNombreTipoVisita(char*);
+        const char*getNombreTipoVisita();
         float getImporte();
         int getPorcentajeHonorario();
 

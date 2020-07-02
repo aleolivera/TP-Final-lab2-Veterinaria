@@ -55,6 +55,7 @@ class Arancel{
         bool guardarArancel();
         bool modificarArancel(int);
         bool leerArancel(int);
+        bool mostrarTodoElArchivo();
 };
 
 #endif // ARANCEL_H_INCLUDED

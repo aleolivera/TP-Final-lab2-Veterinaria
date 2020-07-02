@@ -5,6 +5,7 @@ using namespace std;
 #include <string.h>
 #include "fecha.h"
 #include "arancel.h"
+#include "visuales.h"
 
 ///MOSTRAR
 void Arancel::mostrarFechaArancel(){
@@ -105,7 +106,7 @@ int Arancel::buscarArancel(int ID){
         return -1;
     }
     int n;
-    if(fread(this,sizeof (Arancel),1,p)==1){
+    while(fread(this,sizeof (Arancel),1,p)==1){
         if(ID==IDArancel){
             n=(ftell(p)/sizeof (Arancel));
             fclose(p);
@@ -159,7 +160,22 @@ bool Arancel::modificarArancel(int pos){ ///GUARDA EL REGISTRO EN EL ARCHIVO EN 
     fclose(p);
     return false;
 }
-
+bool Arancel::mostrarTodoElArchivo(){
+    FILE*p=fopen(ARCHIVOARANCELES,"rb");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(this,sizeof (Arancel),1,p)==1){
+        cout << "IDArancel: "<< IDArancel << endl;
+        cout << "IDCliente: "<< IDCliente << endl;
+        cout << "    TOTAL: $"<< totalArancel << endl;
+        cout << "Tipo Pago: "<< tipoPago << endl;
+        cout << "................" << endl;
+    }
+    pausar();
+    fclose(p);
+    return false;
+}
 
 
 

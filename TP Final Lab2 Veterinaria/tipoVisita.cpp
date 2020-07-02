@@ -39,8 +39,8 @@ void TipoVisita::setPorcentajeHonorario(int valor){
 int TipoVisita::getIDTipoVisita(){
     return IDTipoVisita;
 }
-void TipoVisita::getNombreTipoVisita(char*cadena){
-    strcpy(cadena,nombreTipoVisita);
+const char*TipoVisita::getNombreTipoVisita(){
+    return nombreTipoVisita;
 }
 float TipoVisita::getImporte(){
     return importe;

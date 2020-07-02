@@ -19,9 +19,10 @@ bool Mascotas::Cargar_Mascota()
     cin.ignore();
     cout<<" Nombre de mascota :";
     cin.getline(nombreMascota,20);
-    if(cad_vacia(nombreMascota))
+    if(cad_vacia(nombreMascota)){
+        errorIngresoInvalido();
         return false;
-
+    }
 
     cout<<"---Edad---";
     cout<<" anios :";

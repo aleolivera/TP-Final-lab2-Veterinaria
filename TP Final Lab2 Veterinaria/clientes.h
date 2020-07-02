@@ -43,6 +43,7 @@ class Cliente{
         bool guardarCliente();
         bool leerCliente(int);
         bool modificarClienteDisco(int);
+        bool mostrarTodoElArchivo();
 };
 
 #endif // CLIENTES_H_INCLUDED

@@ -30,6 +30,7 @@ int validarMail(const char*);
 bool validarTipoDePago(char);
 bool cad_vacia(char*);
 void listardueno(int);
+const char*TipoDePagoACadena(char);
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();

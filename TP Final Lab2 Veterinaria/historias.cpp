@@ -115,8 +115,6 @@ int Historia::buscarHistoria(int ID){
         if(ID==IDHistoria){
             n=(ftell(p)/sizeof (Historia));
             fclose(p);
-            cout << "EL METODO BUSCAR DEVUELVE:" << n<< endl;
-            pausar();
             return n;
         }
     }

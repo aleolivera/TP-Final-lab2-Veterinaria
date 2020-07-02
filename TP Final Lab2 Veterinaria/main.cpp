@@ -40,9 +40,7 @@ int main()
         {
             case 1:
                 {
-                    system("cls");
-                    pantallaAgregar();
-                    //menuIngresoPaciente();
+                    menuIngresoPaciente();
 
                 }
                 break;
@@ -53,14 +51,12 @@ int main()
                 break;
             case 3:
                 {
-                    system("cls");
-                    pantallaClientes();
-                   // menuClientes();
+                    menuClientes();
                 }
                 break;
             case 4:
                 {
-                    pantallaMascotas();
+                    menuMascotas();
                 }
                 break;
             case 5:

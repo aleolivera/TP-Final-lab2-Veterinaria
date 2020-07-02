@@ -188,7 +188,7 @@ int validarMail(const char* cadena)     ///Usa la 5 funciones dde arriba para va
 }
 bool validarTipoDePago(char tipoPago)
 {
-    if(!(tipoPago=='e'||tipoPago=='E'|| tipoPago=='t'|| tipoPago=='T'|| tipoPago=='d'|| tipoPago=='D'|| tipoPago=='c'|| tipoPago=='C'))
+    if(tipoPago=='e'||tipoPago=='E'|| tipoPago=='t'|| tipoPago=='T'|| tipoPago=='d'|| tipoPago=='D'|| tipoPago=='c'|| tipoPago=='C')
     {
         return true;
     }
@@ -205,7 +205,6 @@ bool validarNombres(const char* cadena)     ///True = a-z o A-Z , false=cualquie
     }
     return true;
 }
-
 bool cad_vacia(char *cad)
 {
     if(cad[0] == '\0')
@@ -214,7 +213,6 @@ bool cad_vacia(char *cad)
     }
     return false;
 }
-
 void listardueno(int IDcliente)
 {
     Cliente reg;
@@ -226,6 +224,36 @@ void listardueno(int IDcliente)
     cout<<endl;
 
 }
+const char* tipoDePagoACadena(char tipoPago){
+    switch(tipoPago){
+    case 'e':
+    case 'E': return "EFECTIVO";
+        break;
+    case 't':
+    case 'T':return "TARJETA DE CREDITO";
+        break;
+    case 'd':
+    case 'D':return "DEBITO";
+        break;
+    case 'c':
+    case 'C':return "CUENTA CORRIENTE";
+        break;
+    }
+    return "INDEFINIDO";
+}
+void ListarTiposDeVisita(){
+    TipoVisita reg;
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+    if (p==NULL) return;
+    int i=1;
+    while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+        cout<<i <<"- "<<reg.getNombreTipoVisita()<< " | ";
+        i++;
+    }
+    fclose(p);
+    return;
+}
+
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVOS
 int asignarIDHistoria()     ///Le pone solo el ID de manera secuencial
@@ -264,8 +292,8 @@ int asignarIDarancel()      ///Le pone solo el ID de manera secuencial
     }
     else
     {
-        fseek(p,sizeof (Arancel),2);
-        fread(&reg,-sizeof (Arancel),1,p);
+        fseek(p,-sizeof (Arancel),2);
+        fread(&reg,sizeof (Arancel),1,p);
         fclose(p);
         return reg.getIDArancel()+1;
     }
@@ -495,19 +523,215 @@ bool cargarVecTipoVisita(TipoVisita*vec,int tam)    ///Le mandas un vector de cl
 
 void menuClientes(){
     ///Para resolver las consignas del MENU CLIENTES
+    limpiar();
+    pantallaClientes();
+    int op;
+    cin >>op;
+    limpiar();
+    Cliente reg;
+    switch(op)
+    {
+    case 1:
+    {
+        system("cls");
+        reg.listarClietes();
+        system("pause");
+    }
+    break;
+    case 2:
+    {
+        system("cls");
+        reg.modificar_Cliente();
+        system("pause");
+    }
+    break;
+    case 3:
+    {
+        ///LISTAR VISITAS
+    }
+    break;
+    case 0:{
+        reg.mostrarTodoElArchivo();
+    } break;
+    }
 
 }
 
 
 ///MASCOTAS
 ///Para resolver las consignas del MENU MASCOTAS
+
+
 void menuMascotas(){
+    limpiar();
+    pantallaMascotas();
+    int op;
+    cin >>op;
+    limpiar();
+    Mascotas reg;
+    switch(op)
+    {
+    case 1:
+    {
+        system("cls");
+        reg.listar_Mascotas();
+        system("pause");
+    }
+    break;
+    case 2:
+    {
+        system("cls");
+        reg.modificar_mascota();
+        system("pause");
+    }
+    break;
+    case 4:
+    {
+        system("cls");
+//        Mascotas reg;
+//        Cliente p;
+        int op;
+        cout<<endl;
+        cout<<" 1-Registrar nuevo dueno "<<endl;
+        cout<<" 2-Dueno ya existente  "<<endl;
+        cin>>op;
+        cin.ignore();
+        switch(op)
+        {
+        case 1:
+        {
+            Mascotas re;
+            Cliente reg;
+            char nombre[20];
+            if(reg.cargarCliente())
+            {
+                if(reg.gurdarClienteEnDisco())
+                {
+                    cout<<" El nuevo cliente fue registrado "<<endl;
+                    system("pause");
+                    cin.ignore();
+                    cout<<" Nombre de la mascota que desa transferir :";
+                    cin.getline(nombre,20);
+                    cin.ignore();
+                    int pos;
+                    pos=re.buscarMascotaXNombre(nombre);
+                    re.setIDcliente(reg.getIDCliente());
+                    if(re.sobrescribir_mascota(pos))
+                    {
+                        cout<<" Transferencia completada "<<endl;
 
-
+                    }
+                    else
+                    {
+                        cout<<" No se pudo transferir "<<endl;
+                    }
+                }
+            }
+        }
+        break;
+        case 2:
+        {
+             int dni;
+            char nombre[20];
+            Cliente reg;
+            Mascotas re;
+            cout<<" Ingrese el DNI del nuevo duenio :";
+            cin>>dni;
+            cin.ignore();
+            cout<<" Nombre de la mascota que desa transferir :";
+            cin.getline(nombre,20);
+            cin.ignore();
+            int pos=0;
+            pos=reg.buscarClienteXDni(dni);
+            reg.LeerDiscoDeCliente(pos);
+            int posmascota=re.buscarMascotaXNombre(nombre);
+            re.setIDcliente(reg.getIDCliente());
+            if(re.sobrescribir_mascota(posmascota))
+            {
+                cout<<" Transferencia completada "<<endl;
+            }
+        }
+        break;
+        }
+    }
+    break;
+        case 0:
+            Mascotas reg;
+            reg.mostrarTodoElArchivo();
+    }
 }
 void menuIngresoPaciente(){
+    limpiar();
+    pantallaAgregar();
+    int op;
+    cin >>op;
+    limpiar();
+    switch(op)
+    {
+    case 1:
+    {
+        system("cls");
+        Cliente reg;
+        Mascotas re;
+        if(reg.cargarCliente())
+        {
+            if(reg.gurdarClienteEnDisco())
+            {
+                cout<<" El nuevo cliente fue registrado "<<endl;
+                system("pause");
+                re.setIDcliente(reg.getIDCliente());
+                if(re.Cargar_Mascota())
+                {
+                    if(re.gurdar_Mascota_EnDisco())
+                    {
+                        cout<<" La mascota fue registrada "<<endl;
+                        system("pause");
+                    }
+                }
+            }
+        }
+    }
+    break;
+    case 2:
+    {
+        int dni;
+        Cliente reg;
+        Mascotas p;
+        int pos_cliente,ID_cliente;
+        system("cls");
+        cout<<" Ingrese el DNI del cliente ya existente "<<endl;
+        cin>>dni;
+
+        pos_cliente=reg.buscarClienteXDni(dni);
+        if(pos_cliente!=-1){
+            ID_cliente=reg.buscraID_Cliente(pos_cliente);
+            listardueno(ID_cliente);
+            p.setIDcliente(ID_cliente);
+            if(p.Cargar_Mascota()){
+                if(p.gurdar_Mascota_EnDisco()){
+                    cout<<" La mascota fue registrada "<<endl;
+//                    system("pause");
+                }
+            }
+        }
+        else
+            cout<<" no existe el cliente "<<endl;
+        system("pause");
+    }
+    break;
+    case 3:
+    {
+        ///LISTAR VISITAS
+    }
+    break;
+    case 0:{
+        Cliente reg;
+        reg.mostrarTodoElArchivo();
+    } break;
+    }
 
 }
+
 
 
 ///HISTORIAS
@@ -523,13 +747,18 @@ bool ingresoHistoria(){
     cout << "INGRESO DE HISTORIAS CLINICAS" << endl << endl;
     cout << "                          ID: "<< reg.getIDHistoria() << endl;
     cout << "FECHA DE LA VISITA(DD/MM/AA): "<< endl;
-    cin >> dia >> mes >> anio;
-    if (!validarFecha(dia,mes,anio))
+    cout << "                         DIA: ";
+    cin >> dia;
+    cout << "                         MES: ";
+    cin >> mes;
+    cout << "                        ANIO: ";
+    cin >> anio;
+    reg.setFechaVisita(dia,mes,anio);
+    if (!validarFecha(dia,mes,anio)||compararFechas(reg.getFechaVisita(),obtenerFechaActual())==2)
     {
         errorFechaInvalida();
         return false;
     }
-    reg.setFechaVisita(dia,mes,anio);       ///Aca se ingresa la fecha de visita tras validarla
 
     cout << "              ID DEL CLIENTE: ";
     cin >> valor;
@@ -549,11 +778,12 @@ bool ingresoHistoria(){
     }
     reg.setNombreMascota(cadena);           ///Aca se ingresa el nombre de la mascota
 
+    cout << endl;
     cout << "                  ANAMNESIS: ";
 //    cin.ignore();
     reg.setAnamnesis();                     ///Aca la Anamnesis (detalles de la visita)
 
-    cout << "  REQUIERE VOLVER A CONTROL?: 'SI' o 'NO'";
+    cout << "VISITA DE CONTROL? 'SI' o 'NO' :";
 //    cin.ignore();
     cin.getline(cadena2,3);
 //    cin.ignore();
@@ -596,8 +826,6 @@ bool mostrarEntradaHistoria(){
     cout << "ID DE ENTRADA DE HISTORIA CLINICA." << endl;
     cin >> ID;
     pos=reg.buscarHistoria(ID);
-    cout << "EN LA GLOBAL POS: " << pos << endl;
-                pausar();
     if(pos==-1)
     {
         errorRegistro();
@@ -708,7 +936,6 @@ bool modificarHistoria(){
         errorRegistro();
         return false;
         }
-    cout << reg.getIDHistoria();
     cin.ignore();
     cout << "              ANAMNESIS: ";              ///Despues se editan los Atributos de a uno.
     reg.setAnamnesis();
@@ -937,7 +1164,7 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
     regArancel.mostrarFechaArancel();
     cout << endl;
 
-    cout << "             ID ARANCEL: Nº " << regArancel.getIDArancel();
+    cout << "             ID ARANCEL: " << regArancel.getIDArancel();
     cout << "         ID DE HISTORIA: ";
     cin >> valor;                           ///PIDO ID Y VALIDO SU PRESENCIA EN EL ARCHIVO HISTORIAS
     pos=regHistoria.buscarHistoria(valor);
@@ -946,8 +1173,11 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
         return false;
     }
     regArancel.setIDHistoria(valor);
+    cout << "valor tiene: " << valor << endl;
+    cout << "regHistoria.getIDCliente= "<< regHistoria.getIDCliente() << endl;
 
-    cout<< "          ID DE CLIENTE: ";               ///PIDO ID Y VALIDO SU PRESENCIA EN EL ARCHIVOCLIENTES
+    valor=regHistoria.getIDCliente();
+    cout<< "          ID DE CLIENTE: " << valor << endl;  ///ASIGNO AUTOMATICAMENTE ID Y VALIDO SU PRESENCIA EN EL ARCHIVOCLIENTES
     pos=buscarIDClienteEnHistorias(valor);
     if(pos==-1){
         errorRegistro();
@@ -963,7 +1193,6 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
         errorRegistro();
         return false;           ///SI NO ESTA EN DISCO POS=-1 Y SALE
     }
-    regTipoVisita.leerTipoVisita(pos);
     total=regTipoVisita.getImporte();   ///CARGO Y VALIDO EL IMPORTE DE LA VISITA SEGUN EL ARCHIVOTIPOVISITAS
     if(total<0){
         errorIngresoInvalido();
@@ -971,15 +1200,18 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
     }
     regArancel.setIDTipoVisita(valor);
     regArancel.setTotalArancel(total);
-    cout <<"      TOTAL DEL ARANCEL: $" << endl;
+    cout <<"         TIPO DE VISITA: ";
+    regTipoVisita.mostrarNombreTipoVisita();
+    cout <<"      TOTAL DEL ARANCEL: $";
     regArancel.mostrarTotalArancel();
 
-
-    cout <<"E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cout <<"           TIPO DE PAGO: " << endl;
+    cout <<"E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cin>> tipoPago;
     if(!validarTipoDePago(tipoPago))                                     ///VALIDA QUE SE INGRESEN 'E,T,D,C'
     {
+        cout << "NO VALIDO : " << tipoPago << endl;
+        pausar();
         errorIngresoInvalido();
         return false;
     }
@@ -987,13 +1219,12 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
 
     if(tipoPago=='c'||tipoPago=='C')                                    ///EL PAGO QUEDA A CUENTA ENTONCES..
     {
-        regArancel.setAbonado(false);                                    ///PONGO EL ARANCEL COMO IMPAGO
+        regArancel.setAbonado(false);                                   ///PONGO EL ARANCEL COMO IMPAGO
         pos=regCliente.buscarClientePorID(regArancel.getIDCliente());
         if(pos==-1){
             errorRegistro();
             return false;
         }
-        regCliente.leerCliente(pos);
         regCliente.setSaldo(regArancel.getTotalArancel()+regCliente.getSaldo()); ///BUSCO AL CLIENTE Y ACUMULO SU SALDO
         regCliente.modificarClienteDisco(pos);
     }
@@ -1042,15 +1273,19 @@ bool modificarArancel(){
     int ID,pos;
     char tipoPago;
     cout << "MODIFICAR ARANCEL."<< endl<< endl;
-    cout << "  INGRESE ID DE ARANCEL: "<< endl;
+    cout << "  INGRESE ID DE ARANCEL: ";
     cin >> ID;
     pos=regArancel.buscarArancel(ID);
     if (pos==-1){
         errorRegistro();
         return false;
     }
-    regArancel.leerArancel(pos);
-
+    cout << "                  FECHA: ";
+    regArancel.mostrarFechaArancel();
+    cout << endl;
+    cout << "           TIPO DE PAGO: " << tipoDePagoACadena(regArancel.getTipoPago()) << endl;
+    cout << "         TIPO DE VISITA: " << regArancel.getIDTipoVisita() << endl;
+    cout << "                  TOTAL: " << regArancel.getTotalArancel() << endl;
     cout << "           TIPO DE PAGO: ";
     cin >> tipoPago;
     if(!validarTipoDePago(tipoPago)){
@@ -1064,7 +1299,6 @@ bool modificarArancel(){
         errorRegistro();
         return false;
     }
-    regCliente.leerCliente(pos);
 
     if(tipoPago=='c'||tipoPago=='C')                                 ///EL PAGO QUEDA A CUENTA ENTONCES..
     {
@@ -1087,34 +1321,77 @@ bool modificarArancel(){
     return true;
 }
 bool mostrarArancelesPorVisita(){
-    Arancel reg;
-    int ID,pos;
-    cin >> ID;
-    pos=reg.buscarArancel(ID);
-    if (pos==-1){
-        errorRegistro();
+//    Arancel reg;
+//    int ID,pos;
+//    cin >> ID;
+//    pos=reg.buscarArancel(ID);
+//    if (pos==-1){
+//        errorRegistro();
+//        return false;
+//    }
+//    cout << "TIPO DE VISITA: ";
+//    reg.mostrarIDTipoVisita();
+//    cout << endl;
+//    cout << "    ID ARANCEL: ";
+//    reg.mostrarIDArancel();
+//    cout << endl;
+//    cout << " TOTAL ARANDEL: ";
+//    reg.mostrarTotalArancel();
+//    cout << endl;
+//    cout << "  TIPO DE PAGO: ";
+//    reg.mostrarTipoPago();
+//    cout << endl;
+//    cout << "   ID HISTORIA: ";
+//    reg.mostrarIDHistoria();
+//    cout << endl<< endl;
+//    pausar();
+//    return true;
+    Arancel *vecArancel;
+    TipoVisita *vecTipoVisita;
+    int cantAranceles=cantidadRegistrosArancel();
+    int cantTipoVisita=cantidadRegistrosTipoVisita();
+    vecArancel=new Arancel[cantidadRegistrosArancel()];
+    vecTipoVisita=new TipoVisita [cantidadRegistrosTipoVisita()];
+
+    if(vecArancel==NULL||vecTipoVisita==NULL){
+        errorAsignacionMemoria();
+        delete(vecArancel);
+        delete(vecTipoVisita);
         return false;
     }
-    reg.leerArancel(pos);
-    cout << "TIPO DE VISITA: ";
-    reg.mostrarIDTipoVisita();
+
+    if(!cargarVecArancel(vecArancel,cantAranceles)||!cargarVecTipoVisita(vecTipoVisita,cantTipoVisita)){
+        errorCargarRegistros();
+        delete(vecArancel);
+        delete(vecTipoVisita);
+        return false;
+
+    }
+    int ID;
+    float acu=0;
+    cout << "ARANCELES POR TIPO DE VISITA"<< endl<< endl;
+    ListarTiposDeVisita();
     cout << endl;
-    cout << "    ID ARANCEL: ";
-    reg.mostrarIDArancel();
+    cout << "INGRESE EL TIPO DE VISITA: ";
+    cin >> ID;
     cout << endl;
-    cout << " TOTAL ARANDEL: ";
-    reg.mostrarTotalArancel();
+    for(int i=0;i<cantTipoVisita;i++){
+        if(vecTipoVisita[i].getIDTipoVisita()==ID){
+            for (int j=0;j<cantAranceles;j++){
+                if(vecArancel[j].getIDTipoVisita()==ID){
+                cout <<"ID N " << vecArancel[j].getIDArancel()<<" | "<< vecTipoVisita[i].getNombreTipoVisita()<< " | $"<<vecArancel[j].getTotalArancel()<< endl;
+                acu+=vecArancel[j].getTotalArancel();
+                }
+            }
+
+        }
+    }
     cout << endl;
-    cout << "  TIPO DE PAGO: ";
-    reg.mostrarTipoPago();
-    cout << endl;
-    cout << "   ID HISTORIA: ";
-    reg.mostrarIDHistoria();
-    cout << endl<< endl;
-    pausar();
+    cout << "        TOTAL: $" << acu << endl;
+    cin.ignore();
+    cin.get();
     return true;
 }
-
 void menuAranceles(){
     limpiar();
     pantallaAranceles();
@@ -1133,7 +1410,7 @@ void menuAranceles(){
     case 2:
         if(mostrarArancelesDelDia())
         {
-            guardadoExitoso();
+            volviendoMenu();
             cin.get();
         }
         break;
@@ -1152,7 +1429,8 @@ void menuAranceles(){
         }
         break;
     case 0:
-
+        Arancel reg;
+        reg.mostrarTodoElArchivo();
         break;
     }
 }
