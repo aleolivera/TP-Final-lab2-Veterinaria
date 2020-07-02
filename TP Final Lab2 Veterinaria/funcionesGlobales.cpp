@@ -739,10 +739,10 @@ void menuIngresoPaciente(){
         cin>>dni;
 
         pos_cliente=reg.buscarClienteXDni(dni);
-        if(pos_cliente!=-1){
+        if(pos_cliente!=(-1)){
             ID_cliente=reg.buscraID_Cliente(pos_cliente);
             listardueno(ID_cliente);
-            p.setIDcliente(ID_cliente);
+            p.setIDcliente(reg.getIDCliente());
             if(p.Cargar_Mascota()){
                 if(p.gurdar_Mascota_EnDisco()){
                     cout<<" La mascota fue registrada "<<endl;
