@@ -111,10 +111,11 @@ void pantallaAdministracion()
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|       1) MOSTRAR LISTA DE PRECIOS                   |"<< endl;
     cout << "|       2) MODIFICAR IMPORTES                         |"<< endl;
-    cout << "|       3) INGRESAR ITEM                              |"<< endl;
-    cout << "|       4) LISTAR POR FECHA     /|_/|        /|___/|  |"<< endl;
-    cout << "|       5) MOSTRAR DEUDORES     (0_0)         (0_o)   |"<< endl;
-    cout << "|       6) COMISIONES          ==(Y)==         (V)    |"<< endl;
+    cout << "|       3) NUEVO SERVICIO                             |"<< endl;
+    cout << "|       4) ALTA Y BAJA DE SERVICIOS                   |"<< endl;
+    cout << "|       5) LISTAR POR FECHA     /|_/|        /|___/|  |"<< endl;
+    cout << "|       6) MOSTRAR DEUDORES     (0_0)         (0_o)   |"<< endl;
+    cout << "|       7) COMISIONES          ==(Y)==         (V)    |"<< endl;
     cout << "|-----------------------------(u)---(u)----oOo--U--oOo|"<< endl;
     cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -189,4 +190,8 @@ void errorCargarRegistros(){
     cout << "NO SE PUDIERON CARGAR EL/LOS REGISTRO/S." << endl;
     pausar();
 }
-
+void errorGuardado(){
+    limpiar();
+    cout << "NO SE PUDO GUARDAR EL ARCHIVO." << endl;
+    pausar();
+}

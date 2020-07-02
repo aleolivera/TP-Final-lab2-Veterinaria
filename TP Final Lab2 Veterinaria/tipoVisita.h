@@ -12,6 +12,7 @@ class TipoVisita{
         char nombreTipoVisita[15];
         float importe;
         float porcentajeHonorario;
+        bool estado;
     public:
         ///MOSTRAR
         void mostrarIDTipoVisita();
@@ -24,18 +25,19 @@ class TipoVisita{
         void setNombreTipoVisita(const char*);
         void setImporte(float);
         void setPorcentajeHonorario(int);
+        void setEstado(bool);
 
         ///GETs
         int getIDTipoVisita();
         const char*getNombreTipoVisita();
         float getImporte();
         int getPorcentajeHonorario();
+        bool getEstado();
 
         ///DISCO
         int buscarTipoVisita(int);
         bool guardarTipoVisita();
         bool leerTipoVisita(int);
-//        int cantidadRegistros();
         bool modificarTipoVisita(int);
         bool mostrarTodoElArchivo();
 };

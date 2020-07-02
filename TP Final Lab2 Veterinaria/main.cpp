@@ -9,6 +9,7 @@
 #include "mascotas.h"
 #include "tipoVisita.h"
 #include "visuales.h"
+#include "menuSwitches.h"
 #include "funcionesGlobales.h"
 
 using namespace std;

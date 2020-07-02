@@ -19,5 +19,6 @@ void guardadoExitoso();
 void errorRegistro();
 void errorAsignacionMemoria();
 void errorCargarRegistros();
+void errorGuardado();
 
 #endif // VISUALES_H_INCLUDED

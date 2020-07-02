@@ -1,10 +1,7 @@
 #include "funcionesGlobales.h"
-#include <ctime>
-#include "visuales.h"
 
 ///VALIDACIONES
-int compararFechas(Fecha fechaUno, Fecha fechaDos)  ///Devuelve 0 si son iguales, 1 si la primera es anterior a la segunda, o 2 si la segunda es anterior a la primera
-{
+int compararFechas(Fecha fechaUno, Fecha fechaDos){ /// 0=son iguales, 1=la primera es anterior a la segunda, o 2=la segunda es anterior a la primera
 
     if((fechaUno.getAnio()-fechaDos.getAnio())<0)
     {
@@ -33,8 +30,7 @@ int compararFechas(Fecha fechaUno, Fecha fechaDos)  ///Devuelve 0 si son iguales
     return 0;
 
 }
-Fecha obtenerFechaActual()          ///LLamas a la funcion  te devuelve un objeto de clase Fecha con dia mes y anio
-{
+Fecha obtenerFechaActual(){///LLamas a la funcion  te devuelve un objeto de clase Fecha con dia mes y anio
     Fecha reg;
     time_t timestamp;
     timestamp=time(NULL); //asigna a timestamp el tiempo actual
@@ -46,8 +42,7 @@ Fecha obtenerFechaActual()          ///LLamas a la funcion  te devuelve un objet
     reg.setFecha(dia,mes,anio);
     return reg;
 }
-bool validarFebrero(int dia,int anio)
-{
+bool validarFebrero(int dia,int anio){
     if ((anio%400==0) || (!anio%100==0 && anio%4==0))
     {
         if(dia>0 && dia<30)
@@ -61,8 +56,7 @@ bool validarFebrero(int dia,int anio)
     }
     return false;
 }
-bool validarBisiesto(int dia, int mes, int anio)
-{
+bool validarBisiesto(int dia, int mes, int anio){
     Fecha aux;
     aux.setFechaActual();
     if (((anio>aux.getAnio())||(anio<=aux.getAnio()&&mes>aux.getMes())||(anio<=aux.getAnio()&&mes<=aux.getMes()&&dia>aux.getDia())) || (mes>12))
@@ -71,8 +65,7 @@ bool validarBisiesto(int dia, int mes, int anio)
     }
     return false;
 }
-bool validarFecha(int dia,int mes,int anio)         ///Valida que la fecha se ingrese bien usando "validarFebrero()" y "validarFebrero"
-{
+bool validarFecha(int dia,int mes,int anio){///Valida que la fecha se ingrese bien usando "validarFebrero()" y "validarFebrero"
 //    if(validarBisiesto(dia,mes,anio))
 //    {
 //        return false;
@@ -105,8 +98,7 @@ bool validarFecha(int dia,int mes,int anio)         ///Valida que la fecha se in
     }
     return true;
 }
-int buscarCaracter(const char*cadena,char caracter)
-{
+int buscarCaracter(const char*cadena,char caracter){
     int i=0;
     int con=0;
     while(cadena[i]!='\0')
@@ -119,8 +111,7 @@ int buscarCaracter(const char*cadena,char caracter)
     }
     return con;
 }
-bool ultimoCaracteresArroba (const char*cadena)
-{
+bool ultimoCaracteresArroba (const char*cadena){
     int i=strlen(cadena);
     if(cadena[i-1]=='@')
     {
@@ -128,8 +119,7 @@ bool ultimoCaracteresArroba (const char*cadena)
     }
     return false;
 }
-bool buscarRepContiguos(const char*cadena,char caracter)
-{
+bool buscarRepContiguos(const char*cadena,char caracter){
     int i=0;
     while (cadena[i]!='\0')
     {
@@ -141,13 +131,11 @@ bool buscarRepContiguos(const char*cadena,char caracter)
     }
     return false;
 }
-char buscarUltCaracter(const char*cadena)
-{
+char buscarUltCaracter(const char*cadena){
     int i=strlen(cadena);
     return cadena[i-1];
 }
-int contarSimbolos(const char*cadena)
-{
+int contarSimbolos(const char*cadena){
     int con=0;
     int i=0;
     while(cadena[i]!='\0')
@@ -160,8 +148,7 @@ int contarSimbolos(const char*cadena)
     }
     return con;
 }
-int validarMail(const char* cadena)     ///Usa la 5 funciones dde arriba para validar el mail como en el TP LARA
-{
+int validarMail(const char* cadena){///Usa la 5 funciones dde arriba para validar el mail como en el TP LARA
     int espacios;
     if(contarSimbolos(cadena)>0)
     {
@@ -186,16 +173,14 @@ int validarMail(const char* cadena)     ///Usa la 5 funciones dde arriba para va
     }
     return 0;
 }
-bool validarTipoDePago(char tipoPago)
-{
+bool validarTipoDePago(char tipoPago){
     if(tipoPago=='e'||tipoPago=='E'|| tipoPago=='t'|| tipoPago=='T'|| tipoPago=='d'|| tipoPago=='D'|| tipoPago=='c'|| tipoPago=='C')
     {
         return true;
     }
     return false;
 }
-bool validarNombres(const char* cadena)     ///True = a-z o A-Z , false=cualquier otra cosa
-{
+bool validarNombres(const char* cadena){///True = a-z o A-Z , false=cualquier otra cosa
     int i=0;
     while(cadena[i]!= '\0'){
         if((cadena[i]>0 && cadena[i]<65)||(cadena[i]>90 && cadena[i]<97)||(cadena[i]>122)){
@@ -205,16 +190,14 @@ bool validarNombres(const char* cadena)     ///True = a-z o A-Z , false=cualquie
     }
     return true;
 }
-bool cad_vacia(char *cad)
-{
+bool cad_vacia(char *cad){
     if(cad[0] == '\0')
     {
         return true;
     }
     return false;
 }
-void listardueno(int IDcliente)
-{
+void listardueno(int IDcliente){
     Cliente reg;
     system("cls");
     reg.LeerDiscoDeCliente(IDcliente-1);
@@ -241,27 +224,66 @@ const char* tipoDePagoACadena(char tipoPago){
     }
     return "INDEFINIDO";
 }
-void listarTiposDeVisita(){
+int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=todos || retornos -1=no hay registros , 1=hay registros
     TipoVisita reg;
     FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
-    if (p==NULL) return;
+    if (p==NULL){
+        errorArchivo();
+        return -1;
+    }
     int i=1;
     cout <<"                       ";
-    while(fread(&reg,sizeof (TipoVisita),1,p)==1){
-        cout<<i <<"- "<<reg.getNombreTipoVisita();
-        i++;
-        if(i%4==0){
-            cout << endl;
-            cout<<"                       ";
-        }
-        else{
-            cout << " | ";
-        }
-
+    switch(op){
+        case 0:
+            while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+                if(!reg.getEstado()){
+                    cout<<i <<"- "<<reg.getNombreTipoVisita();
+                    i++;
+                    if(i%4==0){
+                        cout << endl;
+                        cout<<"                       ";
+                    }
+                    else{
+                        cout << " | ";
+                    }
+                }
+            }
+            break;
+        case 1:
+            while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+                if(reg.getEstado()){
+                    cout<<i <<"- "<<reg.getNombreTipoVisita();
+                    i++;
+                    if(i%4==0){
+                        cout << endl;
+                        cout<<"                       ";
+                    }
+                    else{
+                        cout << " | ";
+                    }
+                }
+            }
+            break;
+        case 2:
+            while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+                cout<<i <<"- "<<reg.getNombreTipoVisita();
+                i++;
+                if(i%4==0){
+                    cout << endl;
+                    cout<<"                       ";
+                }
+                else{
+                    cout << " | ";
+                }
+            }
+            break;
     }
     cout << endl;
     fclose(p);
-    return;
+    if(i==0){
+        return -1;
+    }
+    return 1;
 }
 void listarMascotasConIDCliente(int ID){
     Mascotas reg;
@@ -276,10 +298,22 @@ void listarMascotasConIDCliente(int ID){
     fclose(p);
     return;
 }
+void listarClientesConIDMascotas(int ID){
+    Mascotas reg;
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if (p==NULL) return;
+    cout <<"         LISTA DE MASCOTAS: ";
+    while(fread(&reg,sizeof (Mascotas),1,p)==1){
+        if(ID==reg.getIDCliente()){
+            cout << reg.getNombre()<< " | ";
+        }
+    }
+    fclose(p);
+    return;
+}
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVOS
-int asignarIDHistoria()     ///Le pone solo el ID de manera secuencial
-{
+int asignarIDHistoria(){///Le pone solo el ID de manera secuencial
     Historia reg;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL)
@@ -299,8 +333,7 @@ int asignarIDHistoria()     ///Le pone solo el ID de manera secuencial
         return reg.getIDHistoria()+1;
     }
 }
-int asignarIDarancel()      ///Le pone solo el ID de manera secuencial
-{
+int asignarIDarancel(){///Le pone solo el ID de manera secuencial
     Arancel reg;
     FILE*p=fopen(ARCHIVOARANCELES,"rb");
     if(p==NULL)
@@ -320,8 +353,7 @@ int asignarIDarancel()      ///Le pone solo el ID de manera secuencial
         return reg.getIDArancel()+1;
     }
 }
-int asignarIDTipoVisita()      ///Le pone solo el ID de manera secuencial
-{
+int asignarIDTipoVisita(){///Le pone solo el ID de manera secuencial
     TipoVisita reg;
     FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
     if(p==NULL)
@@ -341,8 +373,41 @@ int asignarIDTipoVisita()      ///Le pone solo el ID de manera secuencial
         return reg.getIDTipoVisita()+1;
     }
 }
-bool validarIDcliente(int ID)  ///Busca el ID en ARCHIVOCLIENTES y devuelve true si lo encuentra
-{
+bool validarTipoVisita(const char*nombre){
+    TipoVisita reg;
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+    if(p==NULL){
+        return false;
+    }
+    if(!validarNombres(nombre)){
+        return false;
+    }
+    while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+        if(strcmp(reg.getNombreTipoVisita(),nombre)==0){
+            fclose(p);
+            return false;
+        }
+    }
+    fclose(p);
+    return true;
+}
+bool validarIDTipoVisita(int ID){
+    TipoVisita aux;
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+    if(p==NULL)
+        return false;
+    while(fread(&aux,sizeof (TipoVisita),1,p)==1)
+    {
+        if(ID==aux.getIDTipoVisita())
+        {
+            fclose(p);
+            return true;
+        }
+    }
+    fclose(p);
+    return false;
+}
+bool validarIDcliente(int ID){///Busca el ID en ARCHIVOCLIENTES y devuelve true si lo encuentra
     Cliente aux;
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL)
@@ -388,22 +453,6 @@ bool validarMascotaConCliente(const char*nombre,int ID){
     }
     return false;
 }
-bool validarIDTipoVisita(int ID){
-    TipoVisita aux;
-    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
-    if(p==NULL)
-        return false;
-    while(fread(&aux,sizeof (TipoVisita),1,p)==1)
-    {
-        if(ID==aux.getIDTipoVisita())
-        {
-            fclose(p);
-            return true;
-        }
-    }
-    fclose(p);
-    return false;
-}
 int buscarIDClienteEnHistorias(int IDHistoria){
     Historia reg;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
@@ -417,8 +466,7 @@ int buscarIDClienteEnHistorias(int IDHistoria){
     fclose(p);
     return -1;
 }
-int cantidadRegistrosHistorias()    ///Devuelve la cantidad de registros en ARCHIVOHISTORIAS
-{
+int cantidadRegistrosHistorias(){   ///Devuelve la cantidad de registros en ARCHIVOHISTORIAS
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
     if(p==NULL)
     {
@@ -427,8 +475,7 @@ int cantidadRegistrosHistorias()    ///Devuelve la cantidad de registros en ARCH
     fseek(p,0,2);
     return ftell(p)/sizeof (Historia);
 }
-int cantidadRegistrosClientes()     ///Devuelve la cantidad de registros en ARCHIVOCLIENTES
-{
+int cantidadRegistrosClientes(){    ///Devuelve la cantidad de registros en ARCHIVOCLIENTES
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
     if(p==NULL)
     {
@@ -437,8 +484,7 @@ int cantidadRegistrosClientes()     ///Devuelve la cantidad de registros en ARCH
     fseek(p,0,2);
     return ftell(p)/sizeof (Cliente);
 }
-int cantidadRegistrosMascotas()     ///Devuelve la cantidad de registros en ARCHIVOMASCOTAS
-{
+int cantidadRegistrosMascotas(){    ///Devuelve la cantidad de registros en ARCHIVOMASCOTAS
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
     if(p==NULL)
     {
@@ -447,8 +493,7 @@ int cantidadRegistrosMascotas()     ///Devuelve la cantidad de registros en ARCH
     fseek(p,0,2);
     return ftell(p)/sizeof (Mascotas);
 }
-int cantidadRegistrosArancel()     ///Devuelve la cantidad de registros en ARCHIVOARANCELES
-{
+int cantidadRegistrosArancel(){ ///Devuelve la cantidad de registros en ARCHIVOARANCELES
     FILE*p=fopen(ARCHIVOARANCELES,"rb");
     if(p==NULL)
     {
@@ -466,8 +511,7 @@ int cantidadRegistrosTipoVisita(){
     fseek(p,0,2);
     return ftell(p)/sizeof (TipoVisita);
 }
-bool cargarVecHistorias(Historia*vec,int tam)  ///Le mandas un vector de clase HISTORIA y su tamanio y te lo carga todo
-{
+bool cargarVecHistorias(Historia*vec,int tam){///Le mandas un vector de clase HISTORIA y su tamanio y te lo carga todo
     Historia reg;
     int i=0;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
@@ -483,8 +527,7 @@ bool cargarVecHistorias(Historia*vec,int tam)  ///Le mandas un vector de clase H
     fclose(p);
     return true;
 }
-bool cargarVecClientes(Cliente*vec,int tam)     ///Le mandas un vector de clase CLIENTES y su tamanio y te lo carga todo
-{
+bool cargarVecClientes(Cliente*vec,int tam){///Le mandas un vector de clase CLIENTES y su tamanio y te lo carga todo
     Cliente reg;
     int i=0;
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
@@ -500,8 +543,7 @@ bool cargarVecClientes(Cliente*vec,int tam)     ///Le mandas un vector de clase 
     fclose(p);
     return true;
 }
-bool cargarVecMascotas(Mascotas*vec,int tam)    ///Le mandas un vector de clase MASCOTAS y su tamanio y te lo carga todo
-{
+bool cargarVecMascotas(Mascotas*vec,int tam){///Le mandas un vector de clase MASCOTAS y su tamanio y te lo carga todo
     Mascotas reg;
     int i=0;
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
@@ -517,8 +559,7 @@ bool cargarVecMascotas(Mascotas*vec,int tam)    ///Le mandas un vector de clase 
     fclose(p);
     return true;
 }
-bool cargarVecArancel(Arancel*vec,int tam)    ///Le mandas un vector de clase ARANCEL y su tamanio y te lo carga todo
-{
+bool cargarVecArancel(Arancel*vec,int tam){///Le mandas un vector de clase ARANCEL y su tamanio y te lo carga todo
     Arancel reg;
     int i=0;
     FILE*p=fopen(ARCHIVOARANCELES,"rb");
@@ -534,8 +575,7 @@ bool cargarVecArancel(Arancel*vec,int tam)    ///Le mandas un vector de clase AR
     fclose(p);
     return true;
 }
-bool cargarVecTipoVisita(TipoVisita*vec,int tam)    ///Le mandas un vector de clase ARANCEL y su tamanio y te lo carga todo
-{
+bool cargarVecTipoVisita(TipoVisita*vec,int tam){///Le mandas un vector de clase ARANCEL y su tamanio y te lo carga todo
     TipoVisita reg;
     int i=0;
     FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
@@ -553,223 +593,6 @@ bool cargarVecTipoVisita(TipoVisita*vec,int tam)    ///Le mandas un vector de cl
 }
 
 ///SECCIONES DEL PROGRAMA
-///CLIENTES
-///Para resolver las consignas del MENU CLIENTES
-
-
-void menuClientes(){
-    ///Para resolver las consignas del MENU CLIENTES
-    limpiar();
-    pantallaClientes();
-    int op;
-    cin >>op;
-    limpiar();
-    Cliente reg;
-    switch(op)
-    {
-    case 1:
-    {
-        system("cls");
-        reg.listarClietes();
-        system("pause");
-    }
-    break;
-    case 2:
-    {
-        system("cls");
-        reg.modificar_Cliente();
-        system("pause");
-    }
-    break;
-    case 3:
-    {
-        ///LISTAR VISITAS
-    }
-    break;
-    case 0:{
-        reg.mostrarTodoElArchivo();
-    } break;
-    }
-
-}
-
-
-///MASCOTAS
-///Para resolver las consignas del MENU MASCOTAS
-
-
-void menuMascotas(){
-    limpiar();
-    pantallaMascotas();
-    int op;
-    cin >>op;
-    limpiar();
-    Mascotas reg;
-    switch(op)
-    {
-    case 1:
-    {
-        system("cls");
-        reg.listar_Mascotas();
-        system("pause");
-    }
-    break;
-    case 2:
-    {
-        system("cls");
-        reg.modificar_mascota();
-        system("pause");
-    }
-    break;
-    case 4:
-    {
-        system("cls");
-//        Mascotas reg;
-//        Cliente p;
-        int op;
-        cout<<endl;
-        cout<<" 1-Registrar nuevo dueno "<<endl;
-        cout<<" 2-Dueno ya existente  "<<endl;
-        cin>>op;
-        cin.ignore();
-        switch(op)
-        {
-        case 1:
-        {
-            Mascotas re;
-            Cliente reg;
-            char nombre[20];
-            if(reg.cargarCliente())
-            {
-                if(reg.gurdarClienteEnDisco())
-                {
-                    cout<<" El nuevo cliente fue registrado "<<endl;
-                    system("pause");
-                    cin.ignore();
-                    cout<<" Nombre de la mascota que desa transferir :";
-                    cin.getline(nombre,20);
-                    cin.ignore();
-                    int pos;
-                    pos=re.buscarMascotaXNombre(nombre);
-                    re.setIDcliente(reg.getIDCliente());
-                    if(re.sobrescribir_mascota(pos))
-                    {
-                        cout<<" Transferencia completada "<<endl;
-
-                    }
-                    else
-                    {
-                        cout<<" No se pudo transferir "<<endl;
-                    }
-                }
-            }
-        }
-        break;
-        case 2:
-        {
-             int dni;
-            char nombre[20];
-            Cliente reg;
-            Mascotas re;
-            cout<<" Ingrese el DNI del nuevo duenio :";
-            cin>>dni;
-            cin.ignore();
-            cout<<" Nombre de la mascota que desa transferir :";
-            cin.getline(nombre,20);
-            cin.ignore();
-            int pos=0;
-            pos=reg.buscarClienteXDni(dni);
-            reg.LeerDiscoDeCliente(pos);
-            int posmascota=re.buscarMascotaXNombre(nombre);
-            re.setIDcliente(reg.getIDCliente());
-            if(re.sobrescribir_mascota(posmascota))
-            {
-                cout<<" Transferencia completada "<<endl;
-            }
-        }
-        break;
-        }
-    }
-    break;
-        case 0:
-            Mascotas reg;
-            reg.mostrarTodoElArchivo();
-    }
-}
-void menuIngresoPaciente(){
-    limpiar();
-    pantallaAgregar();
-    int op;
-    cin >>op;
-    limpiar();
-    switch(op)
-    {
-    case 1:
-    {
-        system("cls");
-        Cliente reg;
-        Mascotas re;
-        if(reg.cargarCliente())
-        {
-            if(reg.gurdarClienteEnDisco())
-            {
-                cout<<" El nuevo cliente fue registrado "<<endl;
-                system("pause");
-                re.setIDcliente(reg.getIDCliente());
-                if(re.Cargar_Mascota())
-                {
-                    if(re.gurdar_Mascota_EnDisco())
-                    {
-                        cout<<" La mascota fue registrada "<<endl;
-                        system("pause");
-                    }
-                }
-            }
-        }
-    }
-    break;
-    case 2:
-    {
-        int dni;
-        Cliente reg;
-        Mascotas p;
-        int pos_cliente,ID_cliente;
-        system("cls");
-        cout<<" Ingrese el DNI del cliente ya existente "<<endl;
-        cin>>dni;
-
-        pos_cliente=reg.buscarClienteXDni(dni);
-        if(pos_cliente!=(-1)){
-            ID_cliente=reg.buscraID_Cliente(pos_cliente);
-            listardueno(ID_cliente);
-            p.setIDcliente(reg.getIDCliente());
-            if(p.Cargar_Mascota()){
-                if(p.gurdar_Mascota_EnDisco()){
-                    cout<<" La mascota fue registrada "<<endl;
-//                    system("pause");
-                }
-            }
-        }
-        else
-            cout<<" no existe el cliente "<<endl;
-        system("pause");
-    }
-    break;
-    case 3:
-    {
-        ///LISTAR VISITAS
-    }
-    break;
-    case 0:{
-        Cliente reg;
-        reg.mostrarTodoElArchivo();
-    } break;
-    }
-
-}
-
-
-
 ///HISTORIAS
 ///Para resolver las consignas del MENU HISTORIA
 bool ingresoHistoria(){
@@ -798,8 +621,7 @@ bool ingresoHistoria(){
 
     cout << "              ID DEL CLIENTE: ";
     cin >> valor;
-    if(!validarIDcliente(valor))
-    {
+    if(!validarIDcliente(valor)){
         errorIngresoInvalido();
         return false;
     }
@@ -1109,77 +931,6 @@ bool controlesAusentes(){
     delete(vecCliente);
     return true;
 }
-void menuHistorias(){
-    limpiar();
-    pantallaHistorias();
-    int op;
-    cin >>op;
-    limpiar();
-    Historia reg;
-    switch(op)
-    {
-    case 1:
-    {
-        if(ingresoHistoria())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-
-    }
-    break;
-    case 2:
-    {
-        if(mostrarEntradaHistoria())
-        {
-            volviendoMenu();
-            cin.get();
-        }
-    }
-    break;
-    case 3:
-    {
-        if(mostrarHistoria())
-        {
-            volviendoMenu();
-            cin.get();
-        }
-    }
-    break;
-    case 4:
-    {
-        if(modificarHistoria())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-    }
-    break;
-    case 5:
-    {
-        if(controlesPendientes())
-        {
-            volviendoMenu();
-            cin.get();
-        }
-
-    }
-    break;
-    case 6:
-    {
-        if(controlesAusentes())
-        {
-            volviendoMenu();
-            cin.get();
-        }
-    }
-    break;
-    case 0:
-    {
-       reg.mostrarTodoElArchivo();
-    } break;
-    }
-}
 
 ///ARANCELES
 ///Para resolver las consignas del MENU ARANCELES
@@ -1217,7 +968,7 @@ bool nuevoArancel(){
     }
     regArancel.setIDCliente(valor);
 
-    listarTiposDeVisita();
+    listarTiposDeVisita(1);
     cout<< "         TIPO DE VISITA: ";             ///PIDO TIPO DE VISITA Y VALIDO SU PRESENCIA EN EL ARCHIVOTIPOVISITAS
     cin >> valor;
     pos=regTipoVisita.buscarTipoVisita(valor);
@@ -1237,8 +988,8 @@ bool nuevoArancel(){
     cout <<"      TOTAL DEL ARANCEL: $";
     regArancel.mostrarTotalArancel();
 
+    cout <<"           E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cout <<"           TIPO DE PAGO: " << endl;
-    cout <<"E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cin>> tipoPago;
     if(!validarTipoDePago(tipoPago))                                     ///VALIDA QUE SE INGRESEN 'E,T,D,C'
     {
@@ -1376,7 +1127,7 @@ bool mostrarArancelesPorVisita(){
     int ID;
     float acu=0;
     cout << "ARANCELES POR TIPO DE VISITA"<< endl<< endl;
-    listarTiposDeVisita();
+    listarTiposDeVisita(2);
     cout << endl;
     cout << "INGRESE EL TIPO DE VISITA: ";
     cin >> ID;
@@ -1398,48 +1149,7 @@ bool mostrarArancelesPorVisita(){
     cin.get();
     return true;
 }
-void menuAranceles(){
-    limpiar();
-    pantallaAranceles();
-    int op;
-    cin >>op;
-    limpiar();
-    switch(op)
-    {
-    case 1:
-        if(nuevoArancel())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-        break;
-    case 2:
-        if(mostrarArancelesDelDia())
-        {
-            volviendoMenu();
-            cin.get();
-        }
-        break;
-    case 3:
-        if(modificarArancel())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-        break;
-    case 4:
-        if(mostrarArancelesPorVisita())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-        break;
-    case 0:
-        Arancel reg;
-        reg.mostrarTodoElArchivo();
-        break;
-    }
-}
+
 
 ///ADMINISTRACION
 ///Para resolver las consignas del MENU ADMINISTRACION
@@ -1476,30 +1186,39 @@ bool modificarImportes(){
     TipoVisita reg;
     int ID, pos;
     float importe;
-    cout << "MODIFICAR IMPORTES." <<endl << endl;
-    cout << "           INGRESE ID: ";
+    cout << "MODIFICAR IMPORTES" <<endl << endl;
+    listarTiposDeVisita(1);
+    cout << endl << endl<< "           INGRESE ID: ";
     cin >> ID;                              ///PIDO EL ID,
     pos=reg.buscarTipoVisita(ID);           ///BUSCO ESE REGISTRO EN ARCHIVOTIPOVISITAS
-    if (pos==-1)
-        return false;              ///VALIDO LA POSICION
+    if (pos==-1 || !reg.getEstado()){                           ///VALIDO LA POSICION
+        errorRegistro();
+        return false;
+    }
     cout << "NOMBRE TIPO DE VISITA: ";
-    reg.mostrarIDTipoVisita();
-    cout << endl;
+    cout << reg.getNombreTipoVisita() << endl;
     cout << "              IMPORTE: $";///MODIFICO LOS ATRIBUTOS Y LOS VALIDO
     cin >> importe;
-    if(importe <0)
+    if(importe <0){
+        errorIngresoInvalido();
         return false;
+    }
     reg.setImporte(importe);
 
     cout << " PORCENTAJE HONORARIO: %";
     cin >> ID;
-    if(ID<1||ID>100) return false;
+    if(ID<1||ID>100){
+        errorIngresoInvalido();
+        return false;
+    }
     reg.setPorcentajeHonorario(ID);
-
-    reg.modificarTipoVisita(pos);                ///GUARDO EL REGISTRO
+    if(!reg.modificarTipoVisita(pos)){
+        errorArchivo();
+        return false;
+    }                ///GUARDO EL REGISTRO
     return true;
 }
-bool ingresarItems(){
+bool nuevoServicio(){
     limpiar();
     TipoVisita reg;
     int ID;
@@ -1512,14 +1231,13 @@ bool ingresarItems(){
         return false;
     }
     reg.setIDTipoVisita(ID);
-    cout << "                  ID: ";
-    reg.mostrarIDTipoVisita();
-    cout << endl;
-    cout << "              NOMBRE:";        ///PIDO LOS DEMAS ATRIBUTOS Y LOS VALIDO
+    cout << "                  ID: " << reg.getIDTipoVisita()<< endl;
+    cout << "              NOMBRE: ";        ///PIDO LOS DEMAS ATRIBUTOS Y LOS VALIDO
     cin.ignore();
     cin.getline(cadena,15);
-    if (!validarNombres(cadena)){
+    if (!validarTipoVisita(cadena)){
         errorIngresoInvalido();
+        cout << "PUEDE QUE ESE SERVICIO ESTE DADO DE BAJA" << endl;
         return false;
     }
     reg.setNombreTipoVisita(cadena);
@@ -1540,7 +1258,64 @@ bool ingresarItems(){
         return false;
     }
     reg.setPorcentajeHonorario(ID);
+    reg.setEstado(true);
     reg.guardarTipoVisita();                ///GUARDO EL REGISTRO
+    return true;
+}
+bool AltaBajaServicio(){
+    limpiar();
+    TipoVisita regTipoVisita;
+    int ID,pos;
+    char cadena[3];
+    cout << " ALTA Y BAJA DE TIPO DE VISITA" <<endl << endl;
+    cout << "   SERVICIOS EN BAJA:" << endl;
+    listarTiposDeVisita(0);
+    cout << endl;
+    cout << "   SERVICIOS EN ALTA:" << endl;
+    listarTiposDeVisita(1);
+    cout << endl<< endl << "   TIPO DE VISITA ID: ";
+    cin >> ID;
+    pos=regTipoVisita.buscarTipoVisita(ID);
+    if(pos==-1){
+        errorRegistro();
+        return false;
+    }
+    if(regTipoVisita.getEstado()){
+        cout << " ESTA SEGURO QUE DESEA DAR DE BAJA?"<< endl;
+        cout << "                       'SI' o 'NO':";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"si")||strcmp(cadena,"SI")){
+            regTipoVisita.setEstado(true);
+        }
+        else if (strcmp(cadena,"no")||strcmp(cadena,"NO")){
+            volviendoMenu();
+            return false;
+        }
+        else{
+            errorIngresoInvalido();
+            return false;
+        }
+    }
+    else{
+        cout << " ESTA SEGURO QUE DESEA DAR DE ALTA?"<< endl;
+        cout << "                       'SI' o 'NO':";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"si")||strcmp(cadena,"SI")){
+            regTipoVisita.setEstado(true);
+        }
+        else if (strcmp(cadena,"no")||strcmp(cadena,"NO")){
+            volviendoMenu();
+            return false;
+        }
+        else{
+            errorIngresoInvalido();
+            return false;
+        }
+    }
+    if(!regTipoVisita.modificarTipoVisita(pos)){
+        errorArchivo();
+        return false;
+    }
     return true;
 }
 bool listarPorFecha(){
@@ -1649,6 +1424,7 @@ bool mostrarDeudores(){
                     vecArancel[j].mostrarFechaArancel();           ///SI ENCUENTRO MUESTRO LOS DATOS DE ESE ARANCEL Y ACUMULO EL TOTAL $.
                     cout << endl << "    ID ARANCEL: " << vecArancel[j].getIDArancel() << endl;
                     cout << "         TOTAL: $" << vecArancel[j].getTotalArancel() << endl;
+                    acu+=vecArancel[j].getTotalArancel();
                 }
 
             }
@@ -1711,98 +1487,9 @@ bool comisiones(){
     delete(vecArancel);
     return true;
 }
-void menuAdministracion(){
-    limpiar();
-    pantallaAdministracion();
-    TipoVisita reg;
-    int op;
-    cin >>op;
-    limpiar();
-    switch(op)
-    {
-    case 1:
-    {
-        if(mostrarListaDePrecios())
-        {
-            volviendoMenu();
-            cin.get();
-        }
-
-    }
-    break;
-    case 2:
-    {
-        if(modificarImportes())
-        {
-            guardadoExitoso();
-        }
-        else{
-            errorRegistro();
-        }
-        cin.get();
-
-    }
-    break;
-    case 3:
-    {
-        if(ingresarItems())
-        {
-            guardadoExitoso();
-        }
-        else{
-            errorArchivo();
-        }
-        cin.get();
-    }
-    break;
-    case 4:
-    {
-        if(listarPorFecha())
-        {
-            volviendoMenu();
-        }
-        else{
-            errorRegistro();
-        }
-        cin.get();
-    }
-    break;
-    case 5:
-    {
-        if(mostrarDeudores())
-        {
-            volviendoMenu();
-        }
-        else{
-            errorRegistro();
-        }
-        cin.get();
-
-    }
-    break;
-    case 6:
-    {
-        if(comisiones())
-        {
-            guardadoExitoso();
-
-        }
-        errorRegistro();
-        cin.get();
-    }
-    break;
-    case 0:
-    {
-        reg.mostrarTodoElArchivo();
-    } break;
-    }
-
-}
-
 
 ///CONFIGURACION
 ///Para resolver las consignas del MENU CONFIGURACION
-
 bool backupHistorias(){
     Historia reg;
     FILE*pArchivo=fopen(ARCHIVOHISTORIAS,"rb");
@@ -1888,65 +1575,3 @@ bool backupTipoVisita(){
     fclose(pBackup);
     return true;
 }
-void menuConfiguracion(){
-    limpiar();
-    pantallaConfiguracion();
-    int op;
-    cin >>op;
-    limpiar();
-    switch(op)
-    {
-    case 1:
-    {
-        if(backupClientes())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-
-    }
-    break;
-    case 2:
-    {
-        if(backupMascotas())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-
-    }
-    break;
-    case 3:
-    {
-        if(backupHistorias())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-    }
-    break;
-    case 4:
-    {
-        if(backupTipoVisita())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-    }
-    break;
-    case 5:
-    {
-        if(backupAranceles())
-        {
-            guardadoExitoso();
-            cin.get();
-        }
-    }
-    break;
-    case 0:
-    {
-    } break;
-    }
-
-}
-

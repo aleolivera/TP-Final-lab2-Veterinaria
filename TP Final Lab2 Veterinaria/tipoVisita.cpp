@@ -34,6 +34,9 @@ void TipoVisita::setImporte(float valor){
 void TipoVisita::setPorcentajeHonorario(int valor){
     porcentajeHonorario=valor;
 }
+void TipoVisita::setEstado(bool e){
+    estado=e;
+}
 
     ///GETs
 int TipoVisita::getIDTipoVisita(){
@@ -47,6 +50,9 @@ float TipoVisita::getImporte(){
 }
 int TipoVisita::getPorcentajeHonorario(){
     return porcentajeHonorario;
+}
+bool TipoVisita::getEstado(){
+    return estado;
 }
 
     ///DISCO

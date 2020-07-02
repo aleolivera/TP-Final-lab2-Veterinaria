@@ -5,6 +5,7 @@ using namespace std;
 #include <cstdlib>
 #include <cstdio>
 #include <string.h>
+#include <ctime>
 
 #include "fecha.h"
 #include "arancel.h"
@@ -31,11 +32,16 @@ bool validarTipoDePago(char);
 bool cad_vacia(char*);
 void listardueno(int);
 const char*TipoDePagoACadena(char);
+int listarTiposDeVisita(int);
 void listarMascotasConIDCliente(int);
+void listarClientesConIDMascotas(int);
+
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();
 int asignarIDarancel();
+int asignarIDTipoVisita();
+bool validarTipoVisita(const char*);
 bool validarIDcliente(int);
 bool validarIDarancel(int);
 bool validarMascotaConCliente(const char*,int);
@@ -82,14 +88,17 @@ void menuAranceles();
 ///ADMINISTRACION
 bool mostrarListaDePrecios();
 bool modificarImportes();
-bool ingresarItems();
+bool nuevoServicio();
+bool AltaBajaServicio();
 bool listarPorFecha();
 bool mostrarDeudores();
+bool comisiones();
 void menuAdministracion();
 
 ///CONFIGURACION
 bool backupHistorias();
 bool backupClientes();
+bool backupTipoVisita();
 bool backupMascotas();
 bool backupAranceles();
 void menuConfiguracion();
