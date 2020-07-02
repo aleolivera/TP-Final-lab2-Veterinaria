@@ -30,8 +30,8 @@ class Cliente{
         ///GETs
         int getIDCliente();
         float getSaldo();
-        void getNombreCliente(char*);
-        void getApellido(char*);
+        const char* getNombreCliente();
+        const char* getApellido();
         int getTelefono();
         ///SETs
         void setSaldo(float);

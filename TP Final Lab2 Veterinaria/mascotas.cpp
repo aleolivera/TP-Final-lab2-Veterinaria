@@ -260,9 +260,12 @@ int Mascotas::getIDCliente()
 {
     return IDCliente;
 }
-void Mascotas::getNombre(char*cadena)
+const char* Mascotas::getNombre()
 {
-    strcpy(cadena,nombreMascota);
+    return nombreMascota;
+}
+bool Mascotas::getVivo(){
+    return vivo;
 }
 ///DISCO
 

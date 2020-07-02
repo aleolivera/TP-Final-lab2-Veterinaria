@@ -241,19 +241,41 @@ const char* tipoDePagoACadena(char tipoPago){
     }
     return "INDEFINIDO";
 }
-void ListarTiposDeVisita(){
+void listarTiposDeVisita(){
     TipoVisita reg;
     FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
     if (p==NULL) return;
     int i=1;
+    cout <<"                       ";
     while(fread(&reg,sizeof (TipoVisita),1,p)==1){
-        cout<<i <<"- "<<reg.getNombreTipoVisita()<< " | ";
+        cout<<i <<"- "<<reg.getNombreTipoVisita();
         i++;
+        if(i%4==0){
+            cout << endl;
+            cout<<"                       ";
+        }
+        else{
+            cout << " | ";
+        }
+
+    }
+    cout << endl;
+    fclose(p);
+    return;
+}
+void listarMascotasConIDCliente(int ID){
+    Mascotas reg;
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if (p==NULL) return;
+    cout <<"                SUS MASCOTAS:";
+    while(fread(&reg,sizeof (Mascotas),1,p)==1){
+        if(reg.getIDCliente()==ID&&reg.getVivo()){
+            cout << reg.getNombre()<< " | ";
+        }
     }
     fclose(p);
     return;
 }
-
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVOS
 int asignarIDHistoria()     ///Le pone solo el ID de manera secuencial
@@ -350,6 +372,20 @@ bool validarIDarancel(int ID){
         }
     }
     fclose(p);
+    return false;
+}
+bool validarMascotaConCliente(const char*nombre,int ID){
+    Mascotas regMascotas;
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL){
+        return false;
+    }
+    while(fread(&regMascotas,sizeof (Mascotas),1,p)==1){
+        if(regMascotas.getIDCliente()==ID&&strcmp(regMascotas.getNombre(),nombre)==0){
+            fclose(p);
+            return true;
+        }
+    }
     return false;
 }
 bool validarIDTipoVisita(int ID){
@@ -768,11 +804,11 @@ bool ingresoHistoria(){
         return false;
     }
     reg.setIDCliente(valor);                ///Aca se ingresa el ID del cliente en el registro tras validarlo en disco
-
-    cout << "        NOMBRE DE LA MASCOTA: ";
+    listarMascotasConIDCliente(valor);
+    cout << endl << "        NOMBRE DE LA MASCOTA: ";
     cin.ignore();
     cin.getline(cadena,20);
-    if(cad_vacia(cadena)){
+    if(!validarMascotaConCliente(cadena,reg.getIDCliente())){
         errorIngresoInvalido();
         return false;
     }
@@ -888,10 +924,9 @@ bool mostrarHistoria(){
         vecHistoria[i].getNombreMascota(aux);
         if(strcmp(nombreMascota,aux)==0)          ///Recorro el vecHistoria hasta encontrar el nombre de mascota ingresado
         {
-            for(int j=0; j<tam2; j++)
+            for(int j=0; j<tam2; j++)       ///ahora vuelvo a recorrer pero el vecCliente hasta que coincida del apellido ingresado con el del REG
             {
-                vecClientes[j].getApellido(aux);    ///ahora vuuelvo a recorrer pero el vecCliente hasta que coincida del apellido ingresado con el del REG
-                if((vecHistoria[i].getIDCliente() == vecClientes[j].getIDCliente())&&(strcmp(apellidoCliente,aux)))
+                if((vecHistoria[i].getIDCliente() == vecClientes[j].getIDCliente())&&(strcmp(apellidoCliente,vecClientes[j].getApellido())))
                 {
                     ID=vecHistoria[i].getIDCliente();   ///al poder tener varios clientes con el mismo apellido, asi se puede obtener el ID correcto
                 }
@@ -1148,8 +1183,7 @@ void menuHistorias(){
 
 ///ARANCELES
 ///Para resolver las consignas del MENU ARANCELES
-bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
-{
+bool nuevoArancel(){
     Historia regHistoria;
     Arancel regArancel;
     TipoVisita regTipoVisita;
@@ -1173,8 +1207,6 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
         return false;
     }
     regArancel.setIDHistoria(valor);
-    cout << "valor tiene: " << valor << endl;
-    cout << "regHistoria.getIDCliente= "<< regHistoria.getIDCliente() << endl;
 
     valor=regHistoria.getIDCliente();
     cout<< "          ID DE CLIENTE: " << valor << endl;  ///ASIGNO AUTOMATICAMENTE ID Y VALIDO SU PRESENCIA EN EL ARCHIVOCLIENTES
@@ -1184,9 +1216,9 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
         return false;
     }
     regArancel.setIDCliente(valor);
-    cout << endl;
 
-    cout << "         TIPO DE VISITA: ";             ///PIDO TIPO DE VISITA Y VALIDO SU PRESENCIA EN EL ARCHIVOTIPOVISITAS
+    listarTiposDeVisita();
+    cout<< "         TIPO DE VISITA: ";             ///PIDO TIPO DE VISITA Y VALIDO SU PRESENCIA EN EL ARCHIVOTIPOVISITAS
     cin >> valor;
     pos=regTipoVisita.buscarTipoVisita(valor);
     if(pos==-1){
@@ -1210,8 +1242,6 @@ bool nuevoArancel()   ///ME QUEDA RESOLVER EL TEMA DE DEUDORES
     cin>> tipoPago;
     if(!validarTipoDePago(tipoPago))                                     ///VALIDA QUE SE INGRESEN 'E,T,D,C'
     {
-        cout << "NO VALIDO : " << tipoPago << endl;
-        pausar();
         errorIngresoInvalido();
         return false;
     }
@@ -1258,7 +1288,7 @@ bool mostrarArancelesDelDia(){
         if(compararFechas(vec[i].getFechaArancel(),obtenerFechaActual())==0){
             cout<<" ID DE ARANCEL: "<< vec[i].getIDArancel()<< endl;
             cout<<"TIPO DE VISITA: "<< vec[i].getIDTipoVisita()<< endl;
-            cout<<"  TIPO DE PAGO: "<< vec[i].getTipoPago()<< endl;
+            cout<<"  TIPO DE PAGO: "<< tipoDePagoACadena(vec[i].getTipoPago())<< endl;
             cout<<"         TOTAL: "<< vec[i].getTotalArancel()<< endl;
             cout<<"----------------------------------" << endl;
         }
@@ -1270,13 +1300,14 @@ bool mostrarArancelesDelDia(){
 bool modificarArancel(){
     Arancel regArancel;
     Cliente regCliente;
-    int ID,pos;
+
+    int ID,posArancel,posCliente;
     char tipoPago;
     cout << "MODIFICAR ARANCEL."<< endl<< endl;
     cout << "  INGRESE ID DE ARANCEL: ";
     cin >> ID;
-    pos=regArancel.buscarArancel(ID);
-    if (pos==-1){
+    posArancel=regArancel.buscarArancel(ID);
+    if (posArancel==-1){
         errorRegistro();
         return false;
     }
@@ -1286,6 +1317,7 @@ bool modificarArancel(){
     cout << "           TIPO DE PAGO: " << tipoDePagoACadena(regArancel.getTipoPago()) << endl;
     cout << "         TIPO DE VISITA: " << regArancel.getIDTipoVisita() << endl;
     cout << "                  TOTAL: " << regArancel.getTotalArancel() << endl;
+    cout <<"E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cout << "           TIPO DE PAGO: ";
     cin >> tipoPago;
     if(!validarTipoDePago(tipoPago)){
@@ -1293,13 +1325,11 @@ bool modificarArancel(){
         return false;
     }
     regArancel.setTipoPago(tipoPago);
-
-    pos=regCliente.buscarClientePorID(regArancel.getIDCliente()); ///BUSCO AL CLIENTE
-    if(pos==-1){
+    posCliente=regCliente.buscarClientePorID(regArancel.getIDCliente()); ///BUSCO AL CLIENTE
+    if(posCliente==-1){
         errorRegistro();
         return false;
     }
-
     if(tipoPago=='c'||tipoPago=='C')                                 ///EL PAGO QUEDA A CUENTA ENTONCES..
     {
         if(regArancel.getAbonado()){                                ///SI EL ARANCEL ESTABA ABONADO, AHORA SE LO SUMO AL SALDO
@@ -1310,42 +1340,18 @@ bool modificarArancel(){
     else
     {
         if(!regArancel.getAbonado()){                                ///SI EL ARANCEL ESTABA ABONADO, AHORA SE LO SUMO AL SALDO
+
             regCliente.setSaldo(regCliente.getSaldo()-regArancel.getTotalArancel());
         }
-        regArancel.setAbonado(true);            ///LO TENGO QUE CAMBIAAAAAAAAAAAAAAAAAAAAAAAAAAar
+        regArancel.setAbonado(true);
     }
-    if(!regArancel.modificarArancel(ID) || !regCliente.modificarClienteDisco(ID)){
+    if(!regArancel.modificarArancel(posArancel) || !regCliente.modificarClienteDisco(posCliente)){
         errorArchivo();
         return false;
     }
     return true;
 }
 bool mostrarArancelesPorVisita(){
-//    Arancel reg;
-//    int ID,pos;
-//    cin >> ID;
-//    pos=reg.buscarArancel(ID);
-//    if (pos==-1){
-//        errorRegistro();
-//        return false;
-//    }
-//    cout << "TIPO DE VISITA: ";
-//    reg.mostrarIDTipoVisita();
-//    cout << endl;
-//    cout << "    ID ARANCEL: ";
-//    reg.mostrarIDArancel();
-//    cout << endl;
-//    cout << " TOTAL ARANDEL: ";
-//    reg.mostrarTotalArancel();
-//    cout << endl;
-//    cout << "  TIPO DE PAGO: ";
-//    reg.mostrarTipoPago();
-//    cout << endl;
-//    cout << "   ID HISTORIA: ";
-//    reg.mostrarIDHistoria();
-//    cout << endl<< endl;
-//    pausar();
-//    return true;
     Arancel *vecArancel;
     TipoVisita *vecTipoVisita;
     int cantAranceles=cantidadRegistrosArancel();
@@ -1370,7 +1376,7 @@ bool mostrarArancelesPorVisita(){
     int ID;
     float acu=0;
     cout << "ARANCELES POR TIPO DE VISITA"<< endl<< endl;
-    ListarTiposDeVisita();
+    listarTiposDeVisita();
     cout << endl;
     cout << "INGRESE EL TIPO DE VISITA: ";
     cin >> ID;
@@ -1540,6 +1546,7 @@ bool ingresarItems(){
 bool listarPorFecha(){
     limpiar();
     Arancel*vecArancel;
+    TipoVisita reg;
     Fecha inicio;
     Fecha fin;
     int d, m, a,cantAranceles;
@@ -1547,49 +1554,68 @@ bool listarPorFecha(){
 
     cout << " LISTADO DE VISITAS POR FECHA" <<endl << endl;
     cout << " FECHA DE INICIO (DD/MM/AA): " << endl;        ///PIDO LAS FECHAS DE INICIO Y FIN DE BUSQUEDA
-    cin >> d>> m >>a;
+    cout << "                        DIA: ";
+    cin >> d;
+    cout << "                        MES: ";
+    cin >> m;
+    cout << "                       ANIO: ";
+    cin >> a;
     inicio.setFecha(d,m,a);
-    if(validarFecha(d,m,a) && compararFechas(inicio,obtenerFechaActual())>1)
+    if(!validarFecha(d,m,a) || compararFechas(inicio,obtenerFechaActual())>1){
+        errorFechaInvalida();
         return false;
+    }
     cout << "     FECHA DE FIN (DD/MM/AA): " << endl;
-    cin >> d>> m >>a;
-    inicio.setFecha(d,m,a);
-    if(validarFecha(d,m,a) && compararFechas(fin,obtenerFechaActual())<2)
+    cout << "                        DIA: ";
+    cin >> d;
+    cout << "                        MES: ";
+    cin >> m;
+    cout << "                       ANIO: ";
+    cin >> a;
+    fin.setFecha(d,m,a);
+    if(!validarFecha(d,m,a) || compararFechas(inicio,fin)==2){
+        errorFechaInvalida();
         return false;
+    }
 
     cantAranceles=cantidadRegistrosArancel();
     vecArancel= new Arancel[cantAranceles];
-    if(vecArancel==NULL)
+    if(vecArancel==NULL){
+        errorAsignacionMemoria();
         return false;
+        }
 
-    if(!(cargarVecArancel(vecArancel,cantAranceles)))
+    if(!(cargarVecArancel(vecArancel,cantAranceles))){
+        errorCargarRegistros();
         return false;
+        }
 
     for(int i=0; i<cantAranceles; i++)
     {
-        if((compararFechas(inicio,vecArancel[i].getFechaArancel())==1) && (compararFechas(vecArancel[i].getFechaArancel(),fin)==1))
+        if((compararFechas(inicio,vecArancel[i].getFechaArancel())<=1) && (compararFechas(vecArancel[i].getFechaArancel(),fin)<=1))
         {
             vecArancel[i].mostrarFechaArancel();
             cout << endl;
-            cout << "  TIPO DE VISITA: ";
-            vecArancel[i].mostrarIDTipoVisita();
-            cout << endl;
-            cout << "         IMPORTE: $";
-            vecArancel[i].mostrarTotalArancel();
-            cout << endl << endl;
+            if(reg.buscarTipoVisita(vecArancel[i].getIDTipoVisita())==-1){
+                errorRegistro();
+                return false;
+            }
+            cout << "  TIPO DE VISITA: " << reg.getNombreTipoVisita() << endl;
+            cout << "         IMPORTE: $"<< vecArancel[i].getTotalArancel() << endl;
+            cout << "-------------------------------" << endl;
             acu+=vecArancel[i].getTotalArancel();
         }
     }
-    cout << "EL TOTAL FACTURADO: $" << acu;
-    system("pause");
-    free(vecArancel);
+    cout << "        EL TOTAL FACTURADO: $" << acu << endl;
+    pausar();
+    delete(vecArancel);
     return true;
 }
 bool mostrarDeudores(){
     Arancel*vecArancel;
     Cliente*vecClientes;
     float acu;
-    char aux[30];
+    bool deudores=false;
 
     int cantAranceles=cantidadRegistrosArancel();   ///CARGO VECTOR DE ARANCELES
     vecArancel= new Arancel [cantAranceles];
@@ -1612,22 +1638,26 @@ bool mostrarDeudores(){
     for(int i=0;i<cantClientes;i++){            ///RECORRO LOS CLIENTES DE A UNO BUSCANDO DEUDORES
         acu=0;
         if(vecClientes[i].getSaldo()>0){         ///SI ENCUENTRO, MUESTRO SUS DATOS
-            vecClientes[i].getNombreCliente(aux);
-            cout << "NOMBRE CLIENTE: "<< aux;
-            vecClientes[i].getApellido(aux);
-            cout << "      APELLIDO: " << aux;
-            cout << "      TELEFONO: " << vecClientes[i].getTelefono();
+            deudores=true;                          ///SI DEUDORES ES FALSE MUESTRO QUE NO HAY DEUDORES
+            cout << "NOMBRE CLIENTE: "<< vecClientes[i].getNombreCliente() << endl;
+            cout << "      APELLIDO: " << vecClientes[i].getApellido()<< endl;
+            cout << "      TELEFONO: " << vecClientes[i].getTelefono() << endl;
                                                 ///LUEGO BUSCO LOS ARANCELES INPAGOS QUE COICIDAN CON ESE CLIENTE
             for(int j=0;j<cantAranceles;j++){
                 if(!(vecArancel[j].getAbonado()) && vecClientes[i].getIDCliente()==vecArancel[j].getIDCliente()){
+                    cout << "         FECHA: ";
                     vecArancel[j].mostrarFechaArancel();           ///SI ENCUENTRO MUESTRO LOS DATOS DE ESE ARANCEL Y ACUMULO EL TOTAL $.
                     cout << endl << "    ID ARANCEL: " << vecArancel[j].getIDArancel() << endl;
                     cout << "         TOTAL: $" << vecArancel[j].getTotalArancel() << endl;
                 }
-                cout << "SALDO DEUDOR: $" << acu;               ///AHORA MUESTRO EL TOTAL ACUMULADO DE LOS ARANCELES INPAGOS
-                cout << endl<< endl;
+
             }
+            cout << "  SALDO DEUDOR: $" << acu;               ///AHORA MUESTRO EL TOTAL ACUMULADO DE LOS ARANCELES INPAGOS
+            cout << endl<< endl;
         }
+    }
+    if(!deudores){
+        cout << "NO HAY CLIENTES CON SALDO DEUDOR." << endl;
     }
     system("pause");
     delete(vecArancel);
@@ -1636,32 +1666,47 @@ bool mostrarDeudores(){
 }
 bool comisiones(){
     Arancel*vecArancel;
+    TipoVisita regTipoVisita;
     Fecha aux;
     int dia, mes, anio, ID, cantAranceles;
     float acu=0;
     cout << "COMISIONES" << endl << endl;
     cout << "INGRESE DESDE QUE FECHA INICIAR LA BUSQUEDA (DD/MM/AA): " << endl;
-    cin>> dia >> mes>> anio;
+    cout << "                         DIA: ";
+    cin >> dia;
+    cout << "                         MES: ";
+    cin >> mes;
+    cout << "                        ANIO: ";
+    cin >> anio;
     aux.setFecha(dia,mes,anio);
-    cout << "ID TIPO DE VISITA: ";
+    cout << "           ID TIPO DE VISITA: ";
     cin>> ID;
     cantAranceles=cantidadRegistrosArancel();
     vecArancel=new Arancel [cantAranceles];
-    if(vecArancel==NULL) return false;
+    if(vecArancel==NULL){
+        errorAsignacionMemoria();
+        return false;
+    }
     if(!cargarVecArancel(vecArancel,cantAranceles)){
+        errorCargarRegistros();
         delete (vecArancel);
         return false;
     }
+
+    regTipoVisita.buscarTipoVisita(ID);
+    cout << "              TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita()<< endl;
+
     for(int i=0;i<cantAranceles;i++){
         if(vecArancel[i].getIDTipoVisita()==ID && (compararFechas(aux,vecArancel[i].getFechaArancel())==1 || compararFechas(aux,vecArancel[i].getFechaArancel())==0)){
-            cout << "FECHA: ";
+            cout << "                       FECHA: ";
             vecArancel[i].getFechaArancel().mostrarFecha();
-            cout << "        IMPORTE: $" << vecArancel[i].getIDArancel()<< endl;
+            cout << "            TOTAL DE ARANCEL: $"<< vecArancel[i].getTotalArancel()<< endl;
             acu+= (vecArancel[i].getTotalArancel() * vecArancel[i].getPorcentajeHonorario()/100);
         }
     }
-    cout << endl;
-    cout << "TOTAL DE COMISIONES: $" <<acu;
+    cout <<"---------------------------------------------"<<  endl;
+    cout << "      PORCENTAJE DE COMISION: " <<regTipoVisita.getPorcentajeHonorario()<< "%." << endl;
+    cout << "         TOTAL DE COMISIONES: $" <<acu << endl;
     system("pause");
     delete(vecArancel);
     return true;

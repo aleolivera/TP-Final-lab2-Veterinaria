@@ -31,12 +31,14 @@ bool validarTipoDePago(char);
 bool cad_vacia(char*);
 void listardueno(int);
 const char*TipoDePagoACadena(char);
+void listarMascotasConIDCliente(int);
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 int asignarIDHistoria();
 int asignarIDarancel();
 bool validarIDcliente(int);
 bool validarIDarancel(int);
+bool validarMascotaConCliente(const char*,int);
 bool validarIDTipoVisita(int);
 int buscarIDClientePorMascota(const char*);
 int buscarIDClienteEnHistorias(int);

@@ -218,13 +218,13 @@ int Cliente::getIDCliente()
 float Cliente::getSaldo(){
     return saldo;
 }
-void Cliente::getNombreCliente(char*cadena)
+const char* Cliente::getNombreCliente()
 {
-    strcpy(cadena,nombreCliente);
+    return nombreCliente;
 }
-void Cliente::getApellido(char*cadena)
+const char* Cliente::getApellido()
 {
-    strcpy(cadena,apellido);
+    return apellido;
 }
 int Cliente::getTelefono()
 {

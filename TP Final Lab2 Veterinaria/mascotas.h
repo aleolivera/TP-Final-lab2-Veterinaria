@@ -29,7 +29,8 @@ class Mascotas{
         void mostrarDatosDelDueno(int );
         ///GETs
         int getIDCliente();
-        void getNombre(char*);
+        const char* getNombre();
+        bool getVivo();
         ///SETs
         void setIDcliente(int id){ IDCliente=id;}
         ///DISCO
