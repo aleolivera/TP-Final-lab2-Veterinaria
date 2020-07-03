@@ -9,7 +9,7 @@ const char ARCHIVOTIPOVISITABKP[20]="tipovisita.bkp";
 class TipoVisita{
     private:
         int IDTipoVisita;
-        char nombreTipoVisita[15];
+        char nombreTipoVisita[30];
         float importe;
         float porcentajeHonorario;
         bool estado;

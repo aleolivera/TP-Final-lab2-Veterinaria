@@ -29,17 +29,16 @@ bool Cliente::cargarCliente()
 {
     IDCliente=cantidad_Clientes()+1;
     int encontrado;
-
-    cout<<" DNI :";
+    cout<<"       DNI :";
     cin>>dni;
     cin.ignore();
 
-    cout<<" Nombre:";
+    cout<<"     NOMBRE:";
     cin.getline(nombreCliente,30);
     if(cad_vacia(nombreCliente))
         return false;
 
-    cout<<" Apellido :";
+    cout<<"   APELLIDO:";
     cin.getline(apellido,30);
     if(cad_vacia(apellido))
         return false;
@@ -47,28 +46,24 @@ bool Cliente::cargarCliente()
     encontrado=buscarClienteXDni(dni);
     if(encontrado==-1)
     {
-        cout<<" Domicilio :";
+        cout<<"  DOMICILIO: ";
         cin.getline(domicilio,30);
 
-
-        cout<<" Telefono :";
+        cout<<"   TELEFONO: ";
         cin>>Telefono;
         cin.ignore();
 
-
-
-        cout<<" Email :";
+        cout<<"      EMAIL: ";
         cin>>email;
         if(validarMail(email))
         {
-            cout<<"email no valido"<<endl;    // retocar.
-            system("pause");
+            errorIngresoInvalido();
             return false;
         }
     }
     else
     {
-        cout<<" El cliente "<<apellido<<" "<<nombreCliente<<" ya estaba registrado "<<endl; //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
+        cout<<" EL CLIENTE "<<apellido<<" "<<nombreCliente<<" YA ESTABA INGRESADO EN LE ARCHIVO "<<endl; //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
 
         return false;
     }
@@ -120,13 +115,13 @@ int Cliente::buscarClienteXDni(int dni) //COMPARA EL DNI INGRESADO CON LOS REGIS
 
 void Cliente::mostrarCliente()
 {
-    cout<<" ID :"<<IDCliente<<endl;
-    cout<<" DNI :"<<dni<<endl;
-    cout<<" Nombre :"<<nombreCliente<<endl;
-    cout<<" Apellido :"<<apellido<<endl;
-    cout<<" Domicilio :"<<domicilio<<endl;
-    cout<<" Telefono :"<<Telefono<<endl;
-    cout<<" Email :"<<email<<endl;
+    cout<<"         ID: "<<IDCliente<<endl;
+    cout<<"        DNI: "<<dni<<endl;
+    cout<<"     NOMBRE: "<<nombreCliente<<endl;
+    cout<<"   APELLIDO: "<<apellido<<endl;
+    cout<<"  DOMICILIO: "<<domicilio<<endl;
+    cout<<"   TELEFONO: "<<Telefono<<endl;
+    cout<<"      EMAIL: "<<email<<endl;
 }
 
 void Cliente::listarClietes()
@@ -167,7 +162,8 @@ void Cliente::modificar_Cliente()
 {
     Cliente reg;
     int pos;
-    cout<<" Ingrese el DNI del Cliente que desea modificar :";
+    cout<<"MODIFICAR CLIENTE" << endl << endl;
+    cout<<"    INGRESE EL DNI DEL CLIENTE:";
     cin>>dni;
     cin.ignore();
     pos= reg.buscarClienteXDni(dni);
@@ -177,34 +173,32 @@ void Cliente::modificar_Cliente()
         cout<<endl;
         mostrarCliente();
         cout<<endl;
-        cout<<" domicilio :";
+        cout<<"  DOMICILIO: ";
         cin.getline(domicilio,50);
         cout<<endl;
-
-        cout<<" Telefono :";
+        cout<<"   TELEFONO: ";
         cin>>Telefono;
         cin.ignore();
 
-        cout<<" Email :";
+        cout<<"     EMAIL : ";
         cin.getline(email,30);
         if(validarMail(email))
         {
-            cout<<"email no valido"<<endl;
-            system("pause");
+            errorIngresoInvalido();
             return;
         }
         if(sobrescribir_Cliente(pos))
         {
-            cout<<" Cliente modificado. "<<endl;
+            guardadoExitoso();
         }
         else
         {
-            cout<<" No se modifico el Cliente"<<endl;
+            errorGuardado();
         }
     }
     else
     {
-        cout<<" No existe el Cliente:";
+        errorRegistro();
     }
 
 }

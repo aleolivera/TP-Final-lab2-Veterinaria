@@ -7,20 +7,6 @@ using namespace std;
 #include "fecha.h"
 #include "tipoVisita.h"
 
-    ///MOSTRAR
-void TipoVisita::mostrarIDTipoVisita(){
-    cout << IDTipoVisita;
-}
-void TipoVisita::mostrarImporte(){
-    cout << importe;
-}
-void TipoVisita::mostrarNombreTipoVisita(){
-    cout << nombreTipoVisita;
-}
-void TipoVisita::mostrarPorcentajeHonorario(){
-    cout << porcentajeHonorario << "%" << endl;
-}
-
     ///SETs
 void TipoVisita::setIDTipoVisita(int valor){
     IDTipoVisita = valor;
@@ -122,10 +108,10 @@ bool TipoVisita::mostrarTodoElArchivo(){
         return -1;
     }
     while(fread(this,sizeof (TipoVisita),1,p)==1){
-        this->mostrarIDTipoVisita();
-        this->mostrarNombreTipoVisita();
-        this->mostrarImporte();
-        this->mostrarPorcentajeHonorario();
+        cout << this->getIDTipoVisita()<< endl;
+        cout << this->getNombreTipoVisita()<< endl;
+        cout << this->getImporte()<< endl;
+        cout << this->getPorcentajeHonorario()<< endl;
         cout << "................" << endl;
     }
     pausar();

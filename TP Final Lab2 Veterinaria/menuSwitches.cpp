@@ -16,23 +16,28 @@ void menuClientes(){
     {
         system("cls");
         reg.listarClietes();
-        system("pause");
+        pausar();
     }
     break;
     case 2:
     {
         system("cls");
         reg.modificar_Cliente();
-        system("pause");
+        pausar();
     }
     break;
     case 3:
     {
-        ///LISTAR VISITAS
+        if(listarVisitasClientes()){
+            volviendoMenu();
+        }
+        else{
+            errorArchivo();
+        }
     }
     break;
     case 0:{
-        reg.mostrarTodoElArchivo();
+//        reg.mostrarTodoElArchivo();
     } break;
     }
 
@@ -52,14 +57,21 @@ void menuMascotas(){
     {
         system("cls");
         reg.listar_Mascotas();
-        system("pause");
+//        system("pause");
     }
     break;
     case 2:
     {
         system("cls");
         reg.modificar_mascota();
-        system("pause");
+//        system("pause");
+    }
+    break;
+    case 3:
+    {
+        system("cls");
+        listarVisitasMascotas();
+//        system("pause");
     }
     break;
     case 4:
@@ -68,9 +80,9 @@ void menuMascotas(){
 //        Mascotas reg;
 //        Cliente p;
         int op;
-        cout<<endl;
-        cout<<" 1-Registrar nuevo dueno "<<endl;
-        cout<<" 2-Dueno ya existente  "<<endl;
+        cout<< "TRANSFERENCIA DE MASCOTA" <<endl;
+        cout<<" 1- TRANSFERIR A NUEVO CLIENTE "<<endl;
+        cout<<" 2- CLIENTE YA INGRESADO "<<endl;
         cin>>op;
         cin.ignore();
         switch(op)
@@ -80,27 +92,34 @@ void menuMascotas(){
             Mascotas re;
             Cliente reg;
             char nombre[20];
+            int ID;
             if(reg.cargarCliente())
             {
                 if(reg.gurdarClienteEnDisco())
                 {
-                    cout<<" El nuevo cliente fue registrado "<<endl;
+                    cout<<"EL NUEVO CLIENTE FUE REGISTRADO."<<endl;
                     system("pause");
                     cin.ignore();
-                    cout<<" Nombre de la mascota que desa transferir :";
+                    cout<<"NOMBRE DE LA MASCOTA A TRANSFERIR: ";
                     cin.getline(nombre,20);
                     cin.ignore();
+                    cout<<"           ID DEL DUENIO ANTERIOR: ";
+                    cin >> ID;
                     int pos;
-                    pos=re.buscarMascotaXNombre(nombre);
+                    pos=re.buscarMascotaXNombreID(nombre,ID);
+                    if(pos==-1){
+                        cout << "NO HUBO COINCIDENCIAS" << endl;
+                    }
                     re.setIDcliente(reg.getIDCliente());
+
                     if(re.sobrescribir_mascota(pos))
                     {
-                        cout<<" Transferencia completada "<<endl;
+                        cout<<"TRANSFERENCIA COMPLETADA"<<endl;
 
                     }
                     else
                     {
-                        cout<<" No se pudo transferir "<<endl;
+                        cout<<"NO SE PUDO TRANSFERIR"<<endl;
                     }
                 }
             }
@@ -108,24 +127,32 @@ void menuMascotas(){
         break;
         case 2:
         {
-             int dni;
+             int dni,ID;
             char nombre[20];
             Cliente reg;
             Mascotas re;
-            cout<<" Ingrese el DNI del nuevo duenio :";
+            cout<<" INGRESE EL DNI DEL NUEVO DUENIO:";
             cin>>dni;
             cin.ignore();
-            cout<<" Nombre de la mascota que desa transferir :";
+            cout<<"            NOMBRE DE LA MASCOTA:";
             cin.getline(nombre,20);
-            cin.ignore();
+//            cin.ignore();
             int pos=0;
             pos=reg.buscarClienteXDni(dni);
             reg.LeerDiscoDeCliente(pos);
-            int posmascota=re.buscarMascotaXNombre(nombre);
+            cout<<"           ID DEL DUENIO ANTERIOR: ";
+            cin >> ID;
+            int posmascota;
+            posmascota=re.buscarMascotaXNombreID(nombre,ID);
+            if(pos==-1){
+                cout << "NO HUBO COINCIDENCIAS" << endl;
+                pausar();
+            }
             re.setIDcliente(reg.getIDCliente());
             if(re.sobrescribir_mascota(posmascota))
             {
-                cout<<" Transferencia completada "<<endl;
+                cout<<"TRANSFERENCIA COMPLETADA"<<endl;
+                pausar();
             }
         }
         break;
@@ -133,9 +160,11 @@ void menuMascotas(){
     }
     break;
         case 0:
-            Mascotas reg;
-            reg.mostrarTodoElArchivo();
+//            Mascotas reg;
+//            reg.mostrarTodoElArchivo();
+            break;
     }
+
 }
 void menuIngresoPaciente(){
     limpiar();
@@ -214,7 +243,6 @@ void menuHistorias(){
     int op;
     cin >>op;
     limpiar();
-    Historia reg;
     switch(op)
     {
     case 1:
@@ -272,7 +300,8 @@ void menuHistorias(){
     break;
     case 0:
     {
-       reg.mostrarTodoElArchivo();
+//        Historia reg;
+//       reg.mostrarTodoElArchivo();
     } break;
     }
 }
@@ -320,15 +349,14 @@ void menuAranceles(){
             cin.get();
             break;
         case 0:
-            Arancel reg;
-            reg.mostrarTodoElArchivo();
+//            Arancel reg;
+//            reg.mostrarTodoElArchivo();
             break;
     }
 }
 void menuAdministracion(){
     limpiar();
     pantallaAdministracion();
-    TipoVisita reg;
     int op;
     cin >>op;
     limpiar();
@@ -398,7 +426,8 @@ void menuAdministracion(){
         cin.get();
     break;
     case 0:
-        reg.mostrarTodoElArchivo();
+//        TipoVisita reg;
+//        reg.mostrarTodoElArchivo();
         break;
     }
 
@@ -488,7 +517,6 @@ void menuConfiguracion(){
         cin.get();
     break;
     case 0:
-
         break;
     }
 }

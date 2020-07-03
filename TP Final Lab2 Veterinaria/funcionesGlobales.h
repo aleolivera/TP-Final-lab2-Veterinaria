@@ -61,10 +61,10 @@ bool cargarVecTipoVisita(TipoVisita*,int);
 
 ///SECCIONES DEL PROGRAMA
 ///CLIENTES
-
+bool listarVisitasClientes();
 void menuClientes();
 ///MASCOTAS
-
+bool listarVisitasMascotas();
 
 void menuMascotas();
 void menuIngresoPaciente();

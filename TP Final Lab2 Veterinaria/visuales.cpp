@@ -7,8 +7,7 @@
 #include "funcionesGlobales.h"
 using namespace std;
 
-void pantallaPrincipal()
-{
+void pantallaPrincipal(){
     cout << " ===================================================== "<< endl;
     cout << "|                   VETERINARIA                       |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
@@ -25,9 +24,7 @@ void pantallaPrincipal()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-
-void pantallaAgregar()
-{
+void pantallaAgregar(){
     cout<<" ======================================================== "<<endl;
     cout<<"|                     AGREGAR                            |"<<endl;
     cout<<"|--------------------------------------------------------|"<<endl;
@@ -37,9 +34,7 @@ void pantallaAgregar()
     cout<<"|         0)SALIR                                        |"<<endl;
     cout<<" ======================================================== "<<endl;
 }
-
-void pantallaHistorias()
-{
+void pantallaHistorias(){
     cout << " ===================================================== "<< endl;
     cout << "|                 HISTORIA CLINICA                    |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
@@ -55,8 +50,7 @@ void pantallaHistorias()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-void pantallaMascotas()
-{
+void pantallaMascotas(){
     cout << " ===================================================== "<< endl;
     cout << "|                    MASCOTAS                         |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
@@ -71,8 +65,7 @@ void pantallaMascotas()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-void pantallaClientes()
-{
+void pantallaClientes(){
     system("cls");
     cout << " ===================================================== "<< endl;
     cout << "|                    CLIENTES                         |"<< endl;
@@ -88,8 +81,7 @@ void pantallaClientes()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-void pantallaAranceles()
-{
+void pantallaAranceles(){
     cout << " ===================================================== "<< endl;
     cout << "|                    ARANCELES                        |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
@@ -104,8 +96,7 @@ void pantallaAranceles()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-void pantallaAdministracion()
-{
+void pantallaAdministracion(){
     cout << " ===================================================== "<< endl;
     cout << "|                   ADMINISTRACION                    |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
@@ -122,8 +113,7 @@ void pantallaAdministracion()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-void pantallaConfiguracion()
-{
+void pantallaConfiguracion(){
     cout << " ===================================================== "<< endl;
     cout << "|                CONFIGURACION                        |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
@@ -140,9 +130,7 @@ void pantallaConfiguracion()
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
 }
-
-void limpiar()
-{
+void limpiar(){
     system("cls");
 //    cin.ignore();
 }

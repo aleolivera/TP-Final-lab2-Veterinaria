@@ -289,7 +289,7 @@ void listarMascotasConIDCliente(int ID){
     Mascotas reg;
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
     if (p==NULL) return;
-    cout <<"                SUS MASCOTAS:";
+    cout <<"                SUS MASCOTAS: ";
     while(fread(&reg,sizeof (Mascotas),1,p)==1){
         if(reg.getIDCliente()==ID&&reg.getVivo()){
             cout << reg.getNombre()<< " | ";
@@ -593,6 +593,117 @@ bool cargarVecTipoVisita(TipoVisita*vec,int tam){///Le mandas un vector de clase
 }
 
 ///SECCIONES DEL PROGRAMA
+///CLIENTES
+bool listarVisitasClientes(){
+    Historia*vecHistorias;
+    char cadena[20];
+    int ID;
+    bool encontrado=false;
+    int cantHistorias=cantidadRegistrosHistorias();
+    if(cantHistorias==-1){
+        errorArchivo();
+        return false;
+    }
+
+    cout << "LISTAR VISITAS" << endl << endl;
+    cout << "       ID DE CLIENTE: ";
+    cin>> ID;
+    cin.ignore();
+    if(!validarIDcliente(ID)){
+        errorIngresoInvalido();
+        return false;
+    }
+    listarMascotasConIDCliente(ID);
+    cout << endl;
+    cout << "   NOMBRE DE MASCOTA: ";
+    cin.getline(cadena,20);
+    if(cadena[0]=='\0'){
+        errorIngresoInvalido();
+        return false;
+    }
+
+    vecHistorias=new Historia [cantHistorias];
+    if(vecHistorias==NULL){
+        errorAsignacionMemoria();
+        return false;
+    }
+    if(!cargarVecHistorias(vecHistorias,cantHistorias)){
+        delete(vecHistorias);
+        return false;
+    }
+
+    for(int i=0;i<cantHistorias;i++){
+        if(strcmp(cadena,vecHistorias[i].getNombreMascota())==0 && vecHistorias[i].getIDCliente()==ID){
+            cout << "FECHA VISITA: ";
+            vecHistorias[i].mostrarFechaVisita();
+            cout << "      ID DE VISITA: " << ID << endl;
+            cout << "--------------------------------------------" << endl;
+            encontrado=true;
+        }
+    }
+    if(!encontrado){
+        cout << "NO HUBO COINCIDENCIAS" << endl;
+    }
+    pausar();
+    delete(vecHistorias);
+    return true;
+}
+
+///MASCOTAS
+bool listarVisitasMascotas(){
+    Historia*vecHistorias;
+    char cadena[20];
+    int ID;
+    bool encontrado=false;
+    int cantHistorias=cantidadRegistrosHistorias();
+    if(cantHistorias==-1){
+        errorArchivo();
+        return false;
+    }
+
+    cout << "LISTAR VISITAS" << endl << endl;
+    cout << "       ID DE CLIENTE: ";
+    cin>> ID;
+    cin.ignore();
+    if(!validarIDcliente(ID)){
+        errorIngresoInvalido();
+        return false;
+    }
+    listarMascotasConIDCliente(ID);
+    cout << endl;
+    cout << "   NOMBRE DE MASCOTA: ";
+    cin.getline(cadena,20);
+    if(cadena[0]=='\0'){
+        errorIngresoInvalido();
+        return false;
+    }
+
+    vecHistorias=new Historia [cantHistorias];
+    if(vecHistorias==NULL){
+        errorAsignacionMemoria();
+        return false;
+    }
+    if(!cargarVecHistorias(vecHistorias,cantHistorias)){
+        delete(vecHistorias);
+        return false;
+    }
+
+    for(int i=0;i<cantHistorias;i++){
+        if(strcmp(cadena,vecHistorias[i].getNombreMascota())==0 && vecHistorias[i].getIDCliente()==ID){
+            cout << "FECHA VISITA: ";
+            vecHistorias[i].mostrarFechaVisita();
+            cout << "      ID DE VISITA: " << ID << endl;
+            cout << "--------------------------------------------" << endl;
+            encontrado=true;
+        }
+    }
+    if(!encontrado){
+        cout << "NO HUBO COINCIDENCIAS" << endl;
+    }
+    pausar();
+    delete(vecHistorias);
+    return true;
+}
 ///HISTORIAS
 ///Para resolver las consignas del MENU HISTORIA
 bool ingresoHistoria(){
@@ -996,8 +1107,7 @@ bool nuevoArancel(){
     }
     regArancel.setIDTipoVisita(valor);
     regArancel.setTotalArancel(total);
-    cout <<"         TIPO DE VISITA: ";
-    regTipoVisita.mostrarNombreTipoVisita();
+    cout <<"         TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita();
     cout <<"      TOTAL DEL ARANCEL: $";
     regArancel.mostrarTotalArancel();
 
@@ -1186,9 +1296,7 @@ bool mostrarListaDePrecios(){
     for(int i=0; i<cantTipoVisita; i++)
     {
         cout << "            ID: "<< vec[i].getIDTipoVisita() << endl;
-        cout << "TIPO DE VISITA: ";
-        vec[i].mostrarNombreTipoVisita();
-        cout << endl;
+        cout << "TIPO DE VISITA: " << vec[i].getNombreTipoVisita() << endl;
         cout << "       IMPORTE: $" << vec[i].getImporte() <<"-." << endl;
         cout << "     HONORARIO: " << vec[i].getPorcentajeHonorario() << "%."<< endl;
         cout << "----------------------------------" << endl;
@@ -1239,7 +1347,7 @@ bool nuevoServicio(){
     TipoVisita reg;
     int ID;
     float importe;
-    char cadena[15];
+    char cadena[30];
     cout << " INGRESAR TIPO DE VISITA" <<endl << endl;
     ID=asignarIDTipoVisita();                  ///EL ID SE ASIGNA SECUENCIALMENTE
     if(validarIDTipoVisita(ID)){
@@ -1250,7 +1358,7 @@ bool nuevoServicio(){
     cout << "                  ID: " << reg.getIDTipoVisita()<< endl;
     cout << "              NOMBRE: ";        ///PIDO LOS DEMAS ATRIBUTOS Y LOS VALIDO
     cin.ignore();
-    cin.getline(cadena,15);
+    cin.getline(cadena,30);
     if (!validarTipoVisita(cadena) && ID!=1){
         errorIngresoInvalido();
         cout << "PUEDE QUE ESE SERVICIO ESTE DADO DE BAJA" << endl;

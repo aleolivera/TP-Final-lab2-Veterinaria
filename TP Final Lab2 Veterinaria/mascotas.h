@@ -37,6 +37,7 @@ class Mascotas{
         bool leerMascota(int);
         bool gurdar_Mascota_EnDisco();
         int buscarMascotaXNombre(char*);
+        int buscarMascotaXNombreID(const char*,int);
         bool modificar_mascota();
         bool sobrescribir_mascota(int);
         bool mostrarTodoElArchivo();
