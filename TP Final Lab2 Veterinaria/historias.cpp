@@ -93,8 +93,8 @@ Fecha Historia::getFechaIngreso(){
 Fecha Historia::getFechaVisita(){
     return fechaVisita;
 }
-void Historia::getNombreMascota(char*cadena){
-    strcpy(cadena,nombreMascota);
+const char* Historia::getNombreMascota(){
+    return nombreMascota;
 }
 bool Historia::getControl(){
     return control;

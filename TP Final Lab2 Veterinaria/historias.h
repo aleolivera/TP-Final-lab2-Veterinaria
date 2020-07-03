@@ -47,7 +47,7 @@ class Historia{
         Fecha getFechaIngreso();
         Fecha getFechaModificacion();
         Fecha getFechaVisita();
-        void getNombreMascota(char*);
+        const char*getNombreMascota();
         bool getControl();
         Fecha getFechaControl();
         int getIDarancel();

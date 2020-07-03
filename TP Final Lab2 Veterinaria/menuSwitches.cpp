@@ -242,7 +242,6 @@ void menuHistorias(){
         else{
             errorArchivo();
         }
-        cin.get();
     break;
     case 4:
         if(modificarHistoria()){
@@ -369,7 +368,7 @@ void menuAdministracion(){
         else{
             errorGuardado();;
         }
-        cin.get();
+//        cin.get();
     break;
     case 5:
         if(listarPorFecha()){
@@ -407,53 +406,85 @@ void menuAdministracion(){
 void menuConfiguracion(){
     limpiar();
     pantallaConfiguracion();
+    char cadena[3];
     int op;
     cin >>op;
+    cin.ignore();
     limpiar();
     switch(op){
     case 1:
-        if(backupClientes()){
-            guardadoExitoso();
+        cout << "BACKUP DE CLIENTES."<< endl <<endl;
+        cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"SI")==0|| strcmp(cadena,"si")==0){
+            if(backupClientes()){
+                guardadoExitoso();
+            }
+            else{
+                errorGuardado();
+            }
         }
-        else{
-            errorGuardado();
-        }
+        volviendoMenu();
         cin.get();
     break;
     case 2:
-        if(backupMascotas()){
-            guardadoExitoso();
+        cout << "BACKUP DE HISTORIAS MASCOTAS."<< endl <<endl;
+        cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"SI")==0|| strcmp(cadena,"si")==0){
+            if(backupMascotas()){
+                guardadoExitoso();
+            }
+            else{
+                errorGuardado();
+            }
         }
-        else{
-            errorGuardado();
-        }
+        volviendoMenu();
         cin.get();
     break;
     case 3:
-        if(backupHistorias()){
-            guardadoExitoso();
+         cout << "BACKUP DE HISTORIAS CLINICAS."<< endl <<endl;
+        cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"SI")==0|| strcmp(cadena,"si")==0){
+            if(backupHistorias()){
+                guardadoExitoso();
+            }
+            else{
+                errorGuardado();
+            }
         }
-        else{
-            errorGuardado();
-        }
+        volviendoMenu();
         cin.get();
     break;
     case 4:
-        if(backupTipoVisita()){
-            guardadoExitoso();
+        cout << "BACKUP DE LISTA DE PRECIOS."<< endl <<endl;
+        cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"SI")==0|| strcmp(cadena,"si")==0){
+            if(backupTipoVisita()){
+                guardadoExitoso();
+            }
+            else{
+                errorGuardado();
+            }
         }
-        else{
-            errorGuardado();
-        }
+        volviendoMenu();
         cin.get();
     break;
     case 5:
-        if(backupAranceles()){
-            guardadoExitoso();
+        cout << "BACKUP DE ARANCELES."<< endl <<endl;
+        cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+        cin.getline(cadena,3);
+        if(strcmp(cadena,"SI")==0|| strcmp(cadena,"si")==0){
+            if(backupAranceles()){
+                guardadoExitoso();
+            }
+            else{
+                errorGuardado();
+            }
         }
-        else{
-            errorGuardado();
-        }
+        volviendoMenu();
         cin.get();
     break;
     case 0:

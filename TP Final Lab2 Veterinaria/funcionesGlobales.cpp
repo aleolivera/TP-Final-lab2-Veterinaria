@@ -70,29 +70,25 @@ bool validarFecha(int dia,int mes,int anio){///Valida que la fecha se ingrese bi
 //    {
 //        return false;
 //    }
-    if (mes==2 && validarFebrero(dia,anio))
-    {
+    if(mes>12||dia>31){
         return false;
     }
-    if (mes<8 && mes%2!=0)
-    {
-        if (dia<0&&dia>31)
-        {
+    if (mes==2 && validarFebrero(dia,anio)){
+        return false;
+    }
+    if (mes<8 && mes%2!=0){
+        if (dia<0&&dia>31){
             return false;
         }
     }
-    else if(mes<8 && dia<0&&dia>30)
-    {
+    else if(mes<8 && dia<0&&dia>30){
         return false;
     }
-    if(mes%2!=0)
-    {
-        if(dia<0&&dia>30)
-        {
+    if(mes%2!=0){
+        if(dia<0&&dia>30){
             return false;
         }
-        else if(dia<0&&dia>31)
-        {
+        else if(dia<0&&dia>31){
             return false;
         }
     }
@@ -231,15 +227,17 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
         errorArchivo();
         return -1;
     }
-    int i=1;
+    int i=0;
+    int con=0;
     cout <<"                       ";
     switch(op){
         case 0:
             while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+                i++;
                 if(!reg.getEstado()){
+                    con++;
                     cout<<i <<"- "<<reg.getNombreTipoVisita();
-                    i++;
-                    if(i%4==0){
+                    if(con%3==0){
                         cout << endl;
                         cout<<"                       ";
                     }
@@ -251,10 +249,11 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
             break;
         case 1:
             while(fread(&reg,sizeof (TipoVisita),1,p)==1){
+                i++;
                 if(reg.getEstado()){
+                    con++;
                     cout<<i <<"- "<<reg.getNombreTipoVisita();
-                    i++;
-                    if(i%4==0){
+                    if(con%3==0){
                         cout << endl;
                         cout<<"                       ";
                     }
@@ -266,9 +265,10 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
             break;
         case 2:
             while(fread(&reg,sizeof (TipoVisita),1,p)==1){
-                cout<<i <<"- "<<reg.getNombreTipoVisita();
+                con++;
                 i++;
-                if(i%4==0){
+                cout<<i <<"- "<<reg.getNombreTipoVisita();
+                if(con%3==0){
                     cout << endl;
                     cout<<"                       ";
                 }
@@ -605,7 +605,7 @@ bool ingresoHistoria(){
     reg.setFechaModificacion();
     cout << "INGRESO DE HISTORIAS CLINICAS" << endl << endl;
     cout << "                          ID: "<< reg.getIDHistoria() << endl;
-    cout << "FECHA DE LA VISITA(DD/MM/AA): "<< endl;
+    cout << "FECHA DE LA VISITA(DD/MM/AA) "<< endl;
     cout << "                         DIA: ";
     cin >> dia;
     cout << "                         MES: ";
@@ -638,18 +638,19 @@ bool ingresoHistoria(){
 
     cout << endl;
     cout << "                  ANAMNESIS: ";
-//    cin.ignore();
     reg.setAnamnesis();                     ///Aca la Anamnesis (detalles de la visita)
 
-    cout << "VISITA DE CONTROL? 'SI' o 'NO' :";
-//    cin.ignore();
+    cout << "VISITA DE CONTROL? 'SI' o 'NO' : ";
     cin.getline(cadena2,3);
-//    cin.ignore();
     if(strcmp(cadena2,"SI")==0||strcmp(cadena2,"si")==0)
     {
-        cout << "INGRESE LA FECHA DEL CONTROL(DD/MM/AA):"<< endl;
-        cin >> dia >> mes >> anio;
-
+        cout << "INGRESE LA FECHA DEL CONTROL(DD/MM/AA)"<< endl;
+        cout << "                         DIA: ";
+        cin >> dia;
+        cout << "                         MES: ";
+        cin >> mes;
+        cout << "                        ANIO: ";
+        cin >> anio;
         if (!validarFecha(dia,mes,anio)&&compararFechas(reg.getFechaControl(),obtenerFechaActual())==2)  ///Se valida que no se ingrese 42/9/2500 o 29/2 si no es anio biciesto y que la fecha del control no sea en le pasado
         {
             errorFechaInvalida();
@@ -681,75 +682,86 @@ bool mostrarEntradaHistoria(){
     Historia reg;
     int ID;
     int pos;
-    cout << "ID DE ENTRADA DE HISTORIA CLINICA." << endl;
+    cout << "ENTRADA DE HISTORIA CLINICA." << endl;
+    cout << "HISTORIA CLINICA ID: ";
     cin >> ID;
     pos=reg.buscarHistoria(ID);
-    if(pos==-1)
-    {
+    if(pos==-1){
         errorRegistro();
         return false;
     }
 
     reg.mostrarFechaVisita(); ///Despues se muestran los registros de a uno
-    cout << endl;
-    reg.mostrarNombreMascota();
-    cout << endl;
+    cout << "                 " << reg.getNombreMascota() << endl<< endl;
+    cout <<"ANAMNESIS: " << endl;
     reg.mostrarAnamnesis();
     cout << endl;
     pausar();
     return true;
 }
 bool mostrarHistoria(){
+    Mascotas*vecMascotas;
     Historia*vecHistoria; ///para encontrar las entradas correspondientes a la historia clinica
     Cliente*vecClientes;    ///para encontrar con el ID del paciente el apellido que coincida con el del reg mascota
-    char aux[30];           ///para deposita el contenido de los GETS que devuelven cadenas
     int ID=-1;              ///para comprar el ID entre los registros
-    int tam1;               ///para armar el vector y recorrer los ciclos
-    int tam2;               ///para armar el vector y recorrer los ciclos
-    vecHistoria=new Historia[cantidadRegistrosHistorias()];
-    if(vecHistoria==NULL)
-    {
+    char nombreMascota[20];
+    char apellidoCliente[30];
+    int cantHistorias=cantidadRegistrosHistorias();
+    int cantClientes=cantidadRegistrosClientes();
+    int cantMascotas=cantidadRegistrosMascotas();
+    bool encontrado=false;
+
+    vecHistoria=new Historia[cantHistorias];
+    vecMascotas=new Mascotas[cantMascotas];
+    vecClientes=new Cliente [cantClientes];
+
+    if(vecHistoria==NULL||vecClientes==NULL||vecMascotas==NULL){
         errorAsignacionMemoria();
+        delete(vecHistoria);
+        delete(vecMascotas);
+        delete(vecClientes);
         return false;
     }
-    vecClientes=new Cliente [cantidadRegistrosClientes()];
-    if(vecHistoria==NULL)
-    {
-        errorAsignacionMemoria();
+
+    ///CARGO LOS VECTORES
+    if(!cargarVecHistorias(vecHistoria,cantHistorias)||!cargarVecClientes(vecClientes,cantClientes)||!cargarVecMascotas(vecMascotas,cantMascotas)){
+        errorCargarRegistros();
+        delete(vecClientes);
+        delete(vecMascotas);
         delete(vecHistoria);
         return false;
     }
-    cout << "MOSTRAR HISTORIA CLINICA." << endl << endl;
 
-    char nombreMascota[20];
-    char apellidoCliente[30];
+    cout << "MOSTRAR HISTORIA CLINICA." << endl << endl;
     cout << "       NOMBRE DE MASCOTA: ";                     ///PIDO nombreMascota (clase mascota)
     cin.ignore();
     cin.getline(nombreMascota,20);
+    for(int i=0;i<cantMascotas;i++){                    ///MUESTRO LOS POSIBLES DUENIOS DE ESA MASCOTA
+        if(strcmp(nombreMascota,vecMascotas[i].getNombre())==0)
+            for(int j=0;j<cantidadRegistrosClientes();j++){
+                if(vecMascotas[i].getIDCliente()==vecClientes[j].getIDCliente()){
+                    cout << "                 DUENIOS: " << vecClientes[i].getApellido()<< " | ";
+                    encontrado=true;
+                }
+            }
+    }
+    cout << endl;
+    if(!encontrado){
+        cout << "NO HUBO COINCIDENCIAS"<< endl;
+        pausar();
+        return false;
+    }
+
     cout << "    APELLIDO DEL CLIENTE: ";                    ///PIDO apellido (clase cliente)
     cin.getline(apellidoCliente,30);
 
-    tam1=cantidadRegistrosHistorias();
-    tam2=cantidadRegistrosClientes();
-
-
-    ///CARGO LOS VECTORES
-    if(!cargarVecHistorias(vecHistoria,tam1)||!cargarVecClientes(vecClientes,tam2))
+    for(int i=0; i<cantHistorias; i++)          ///El problema es que puede haber mas de un cliente con el mismo apellido
     {
-        errorCargarRegistros();
-        delete(vecClientes);
-        delete(vecHistoria);
-        return false;
-    }
-    for(int i=0; i<tam1; i++)          ///El problema es que puede haber mas de un cliente con el mismo apellido
-    {
-        vecHistoria[i].getNombreMascota(aux);
-        if(strcmp(nombreMascota,aux)==0)          ///Recorro el vecHistoria hasta encontrar el nombre de mascota ingresado
+        if(strcmp(nombreMascota,vecHistoria[i].getNombreMascota())==0)          ///Recorro el vecHistoria hasta encontrar el nombre de mascota ingresado
         {
-            for(int j=0; j<tam2; j++)       ///ahora vuelvo a recorrer pero el vecCliente hasta que coincida del apellido ingresado con el del REG
+            for(int j=0; j<cantClientes; j++)       ///ahora vuelvo a recorrer pero el vecCliente hasta que coincida del apellido ingresado con el del REG
             {
-                if((vecHistoria[i].getIDCliente() == vecClientes[j].getIDCliente())&&(strcmp(apellidoCliente,vecClientes[j].getApellido())))
-                {
+                if((vecHistoria[i].getIDCliente() == vecClientes[j].getIDCliente())&&(strcmp(apellidoCliente,vecClientes[j].getApellido())==0)){
                     ID=vecHistoria[i].getIDCliente();   ///al poder tener varios clientes con el mismo apellido, asi se puede obtener el ID correcto
                 }
             }
@@ -760,7 +772,7 @@ bool mostrarHistoria(){
         cin.get();
         return false;
     }
-    for (int i=0; i<tam1; i++)
+    for (int i=0; i<cantHistorias; i++)
     {
         if(vecHistoria[i].getIDCliente()==ID)   ///con el ID obtenido mostramos los atributos que corresponden
         {
@@ -777,6 +789,7 @@ bool mostrarHistoria(){
     }
     delete(vecHistoria);      ///tal vez necesite un DESTRUCTOR
     delete(vecClientes);
+    delete(vecMascotas);
     pausar();
     return true;
 }
@@ -989,7 +1002,7 @@ bool nuevoArancel(){
     regArancel.mostrarTotalArancel();
 
     cout <<"           E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
-    cout <<"           TIPO DE PAGO: " << endl;
+    cout <<"           TIPO DE PAGO: ";
     cin>> tipoPago;
     if(!validarTipoDePago(tipoPago))                                     ///VALIDA QUE SE INGRESEN 'E,T,D,C'
     {
@@ -1124,18 +1137,21 @@ bool mostrarArancelesPorVisita(){
         return false;
 
     }
-    int ID;
+    int ID,anio;
     float acu=0;
-    cout << "ARANCELES POR TIPO DE VISITA"<< endl<< endl;
+    cout << "ARANCELES POR TIPO DE VISITA ANUAL"<< endl<< endl;
     listarTiposDeVisita(2);
     cout << endl;
     cout << "INGRESE EL TIPO DE VISITA: ";
     cin >> ID;
+    cout << "                     ANIO: ";
+    cin >> anio;
+    if (anio<100) anio+=2000;
     cout << endl;
     for(int i=0;i<cantTipoVisita;i++){
         if(vecTipoVisita[i].getIDTipoVisita()==ID){
             for (int j=0;j<cantAranceles;j++){
-                if(vecArancel[j].getIDTipoVisita()==ID){
+                if(vecArancel[j].getIDTipoVisita()==ID && vecArancel[j].getFechaArancel().getAnio()==anio){
                 cout <<"ID N " << vecArancel[j].getIDArancel()<<" | "<< vecTipoVisita[i].getNombreTipoVisita()<< " | $"<<vecArancel[j].getTotalArancel()<< endl;
                 acu+=vecArancel[j].getTotalArancel();
                 }
@@ -1235,7 +1251,7 @@ bool nuevoServicio(){
     cout << "              NOMBRE: ";        ///PIDO LOS DEMAS ATRIBUTOS Y LOS VALIDO
     cin.ignore();
     cin.getline(cadena,15);
-    if (!validarTipoVisita(cadena)){
+    if (!validarTipoVisita(cadena) && ID!=1){
         errorIngresoInvalido();
         cout << "PUEDE QUE ESE SERVICIO ESTE DADO DE BAJA" << endl;
         return false;
@@ -1280,18 +1296,25 @@ bool AltaBajaServicio(){
         errorRegistro();
         return false;
     }
+    cin.ignore();
     if(regTipoVisita.getEstado()){
         cout << " ESTA SEGURO QUE DESEA DAR DE BAJA?"<< endl;
         cout << "                       'SI' o 'NO':";
         cin.getline(cadena,3);
-        if(strcmp(cadena,"si")||strcmp(cadena,"SI")){
-            regTipoVisita.setEstado(true);
+        if(strcmp(cadena,"si")==0||strcmp(cadena,"SI")==0){
+            cout << "ENTRO AL SI DE BAJA:"<< cadena << endl;
+            pausar();
+            regTipoVisita.setEstado(false);
         }
-        else if (strcmp(cadena,"no")||strcmp(cadena,"NO")){
+        else if (strcmp(cadena,"no")==0||strcmp(cadena,"NO")==0){
+            cout << "ENTRO AL NO DE BAJA:"<< cadena << endl;
+            pausar();
             volviendoMenu();
             return false;
         }
         else{
+            cout << "ENTRO AL ERROR DE BAJA:"<< cadena << endl;
+            pausar();
             errorIngresoInvalido();
             return false;
         }
@@ -1300,14 +1323,20 @@ bool AltaBajaServicio(){
         cout << " ESTA SEGURO QUE DESEA DAR DE ALTA?"<< endl;
         cout << "                       'SI' o 'NO':";
         cin.getline(cadena,3);
-        if(strcmp(cadena,"si")||strcmp(cadena,"SI")){
+        if(strcmp(cadena,"si")==0||strcmp(cadena,"SI")==0){
+            cout << "ENTRO AL SI DE ALTA:"<< cadena << endl;
+            pausar();
             regTipoVisita.setEstado(true);
         }
-        else if (strcmp(cadena,"no")||strcmp(cadena,"NO")){
+        else if (strcmp(cadena,"no")==0||strcmp(cadena,"NO")==0){
+            cout << "ENTRO AL NO DE ALTA:"<< cadena << endl;
+            pausar();
             volviendoMenu();
             return false;
         }
         else{
+            cout << "ENTRO AL ERROR DE ALTA:"<< cadena << endl;
+            pausar();
             errorIngresoInvalido();
             return false;
         }
@@ -1415,20 +1444,25 @@ bool mostrarDeudores(){
         if(vecClientes[i].getSaldo()>0){         ///SI ENCUENTRO, MUESTRO SUS DATOS
             deudores=true;                          ///SI DEUDORES ES FALSE MUESTRO QUE NO HAY DEUDORES
             cout << "NOMBRE CLIENTE: "<< vecClientes[i].getNombreCliente() << endl;
-            cout << "      APELLIDO: " << vecClientes[i].getApellido()<< endl;
-            cout << "      TELEFONO: " << vecClientes[i].getTelefono() << endl;
-                                                ///LUEGO BUSCO LOS ARANCELES INPAGOS QUE COICIDAN CON ESE CLIENTE
+            cout << "      APELLIDO: " << vecClientes[i].getApellido();
+            cout << "      TELEFONO: " << vecClientes[i].getTelefono() << endl <<endl;
+            cout << "                ARANCELES" << endl;
+            cout << "---------------------------" << endl;                                    ///LUEGO BUSCO LOS ARANCELES INPAGOS QUE COICIDAN CON ESE CLIENTE
             for(int j=0;j<cantAranceles;j++){
                 if(!(vecArancel[j].getAbonado()) && vecClientes[i].getIDCliente()==vecArancel[j].getIDCliente()){
+
                     cout << "         FECHA: ";
                     vecArancel[j].mostrarFechaArancel();           ///SI ENCUENTRO MUESTRO LOS DATOS DE ESE ARANCEL Y ACUMULO EL TOTAL $.
                     cout << endl << "    ID ARANCEL: " << vecArancel[j].getIDArancel() << endl;
                     cout << "         TOTAL: $" << vecArancel[j].getTotalArancel() << endl;
+                     cout << "---------------------------" << endl;
                     acu+=vecArancel[j].getTotalArancel();
                 }
 
             }
-            cout << "  SALDO DEUDOR: $" << acu;               ///AHORA MUESTRO EL TOTAL ACUMULADO DE LOS ARANCELES INPAGOS
+            cout << "----------------------------" << endl;
+            cout << "  SALDO DEUDOR: $" << acu << endl;               ///AHORA MUESTRO EL TOTAL ACUMULADO DE LOS ARANCELES INPAGOS
+            cout << "===================================================" << endl;
             cout << endl<< endl;
         }
     }
@@ -1470,11 +1504,11 @@ bool comisiones(){
     }
 
     regTipoVisita.buscarTipoVisita(ID);
-    cout << "              TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita()<< endl;
+    cout << "              TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita()<< endl << endl;
 
     for(int i=0;i<cantAranceles;i++){
         if(vecArancel[i].getIDTipoVisita()==ID && (compararFechas(aux,vecArancel[i].getFechaArancel())==1 || compararFechas(aux,vecArancel[i].getFechaArancel())==0)){
-            cout << "                       FECHA: ";
+            cout << "FECHA: ";
             vecArancel[i].getFechaArancel().mostrarFecha();
             cout << "            TOTAL DE ARANCEL: $"<< vecArancel[i].getTotalArancel()<< endl;
             acu+= (vecArancel[i].getTotalArancel() * vecArancel[i].getPorcentajeHonorario()/100);
