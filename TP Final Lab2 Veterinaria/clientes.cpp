@@ -231,15 +231,7 @@ void Cliente::setSaldo(float importe){
 }
 
 
-///MOSTRAR son solo cout de un atributo. LO HICE PARA MOSTRARLO EN LAS HISTORIAS CLINICAS
-void Cliente::mostrarTelefono()
-{
-    cout << Telefono;
-}
-void Cliente::mostrarApellido()
-{
-    cout << apellido;
-}
+
 ///DISCO        NECESITABA PONER COMO DEUDOR A UN CLIENTE DESDE ARANCELES
 int Cliente::buscarClientePorID(int ID){
     FILE*p=fopen(ARCHIVOCLIENTES,"rb");
@@ -301,19 +293,19 @@ bool Cliente::modificarClienteDisco(int pos){
     fclose(p);
     return false;
 }
-bool Cliente::mostrarTodoElArchivo(){
-    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
-    if(p==NULL){
-        return false;
-    }
-    while(fread(this,sizeof (Cliente),1,p)==1){
-        cout <<"    IDcliente: "<< IDCliente << endl;
-        cout <<"nombre/Apelli: "<< nombreCliente << " " << apellido << endl;
-        cout <<"     Telefono: "<< Telefono << endl;
-        cout <<"        Saldo: "<< saldo << endl;
-        cout << "................" << endl;
-    }
-    pausar();
-    fclose(p);
-    return false;
-}
+//bool Cliente::mostrarTodoElArchivo(){
+//    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+//    if(p==NULL){
+//        return false;
+//    }
+//    while(fread(this,sizeof (Cliente),1,p)==1){
+//        cout <<"    IDcliente: "<< IDCliente << endl;
+//        cout <<"nombre/Apelli: "<< nombreCliente << " " << apellido << endl;
+//        cout <<"     Telefono: "<< Telefono << endl;
+//        cout <<"        Saldo: "<< saldo << endl;
+//        cout << "................" << endl;
+//    }
+//    pausar();
+//    fclose(p);
+//    return false;
+//}

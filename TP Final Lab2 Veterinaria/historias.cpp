@@ -9,12 +9,7 @@ using namespace std;
 
 
 ///MOSTRAR
-void Historia::mostrarIDHistoria(){
-    cout << IDHistoria;
-}
-void Historia::mostrarIDCliente(){
-    cout << IDCliente;
-}
+
 void Historia::mostrarFechaIngreso(){
     fechaIngreso.mostrarFecha();
 }
@@ -24,19 +19,8 @@ void Historia::mostrarFechaModificacion(){
 void Historia::mostrarFechaVisita(){
     fechaVisita.mostrarFecha();
 }
-void Historia::mostrarNombreMascota(){
-    cout << nombreMascota;
-}
 void Historia::mostrarAnamnesis(){
     cout << anamnesis;
-}
-void Historia::mostrarControl(){
-    if(control){
-        cout << "REQUIERE CONTROL";
-    }
-    else{
-        cout << "NO REQUIRE CONTROL";
-    }
 }
 void Historia::mostrarFechaControl(){
     fechaControl.mostrarFecha();
@@ -78,6 +62,9 @@ void Historia::setControl(bool valor){
 void Historia::setFechaControl(int d, int m, int a){
     fechaControl.setFecha(d,m,a);
 }
+void Historia::setIDarancel(int ID){
+    IDArancel=ID;
+}
 
 
 ///GETs
@@ -102,7 +89,9 @@ bool Historia::getControl(){
 Fecha Historia::getFechaControl(){
     return fechaControl;
 }
-
+int Historia::getIDarancel(){
+    return IDArancel;
+}
 
 ///DISCO
 int Historia::buscarHistoria(int ID){
@@ -165,22 +154,22 @@ bool Historia::modificarHistoria(int pos){
     return false;
 
 }
-bool Historia::mostrarTodoElArchivo(){
-    FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
-    if(p==NULL){
-        return false;
-    }
-    while(fread(this,sizeof (Historia),1,p)==1){
-        this->mostrarFechaIngreso();
-        this->mostrarIDHistoria();
-        this->mostrarAnamnesis();
-        this->mostrarIDCliente();
-        cout << "................" << endl;
-    }
-    pausar();
-    fclose(p);
-    return false;
-}
+//bool Historia::mostrarTodoElArchivo(){
+//    FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
+//    if(p==NULL){
+//        return false;
+//    }
+//    while(fread(this,sizeof (Historia),1,p)==1){
+//        this->mostrarFechaIngreso();
+//        this->mostrarIDHistoria();
+//        this->mostrarAnamnesis();
+//        this->mostrarIDCliente();
+//        cout << "................" << endl;
+//    }
+//    pausar();
+//    fclose(p);
+//    return false;
+//}
 
 
 

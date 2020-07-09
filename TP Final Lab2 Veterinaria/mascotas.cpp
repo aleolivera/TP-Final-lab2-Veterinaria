@@ -167,14 +167,16 @@ bool Mascotas::sobrescribir_mascota(int pos){
     return guardado;
 }
 bool Mascotas::modificar_mascota(){
-    int pos;
+    int pos,ID;
     cout<<"MODIFICAR MASCOTA" << endl << endl;
-    cout<<"INGRESE EL NOMBRE DE LA MASCOTA: ";
+    cout<<"  INGRESE EL NOMBRE DE LA MASCOTA: ";
     cin.ignore();
     cin.getline(nombreMascota,20);
+    cout<<"                   ID DEL CLIENTE: ";
+    cin >> ID;
     /*cout<<" Apellido del duenio :";
     cin.getline(apellido,30);*/
-    pos= buscarMascotaXNombre(nombreMascota);
+    pos= buscarMascotaXNombreID(nombreMascota,ID);
     if(pos>=0)
     {
         leerMascota(pos);

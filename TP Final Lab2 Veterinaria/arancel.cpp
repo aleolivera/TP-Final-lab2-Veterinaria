@@ -11,35 +11,6 @@ using namespace std;
 void Arancel::mostrarFechaArancel(){
     fechaArancel.mostrarFecha();
 }
-void Arancel::mostrarIDArancel(){
-    cout << IDArancel<< endl;
-}
-void Arancel::mostrarIDCliente(){
-    cout << IDCliente << endl;
-}
-void Arancel::mostrarIDHistoria(){
-    cout << IDHistoria<< endl;
-}
-void Arancel::mostrarIDTipoVisita(){
-    cout << IDTipoVisita<< endl;
-}
-void Arancel::mostrarTotalArancel(){
-    cout << totalArancel<< endl;
-}
-void Arancel::mostrarTipoPago(){
-    cout << tipoPago<< endl;
-}
-void Arancel::mostrarPorcentajeHonorario(){
-    cout << porcentajeHonorario << endl;
-}
-void Arancel::mostrarAbonado(){
-    if(abonado){
-        cout << "PAGO" << endl;
-    }
-    else{
-        cout << "IMPAGO" << endl;
-    }
-}
 
 ///GETs
 Fecha Arancel::getFechaArancel(){

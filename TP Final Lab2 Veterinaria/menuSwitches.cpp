@@ -231,8 +231,8 @@ void menuIngresoPaciente(){
     }
     break;
     case 0:{
-        Cliente reg;
-        reg.mostrarTodoElArchivo();
+//        Cliente reg;
+//        reg.mostrarTodoElArchivo();
     } break;
     }
 

@@ -19,14 +19,6 @@ class Arancel{
     public:
         ///MOSTRAR
         void mostrarFechaArancel();
-        void mostrarIDArancel();
-        void mostrarIDCliente();
-        void mostrarIDHistoria();
-        void mostrarIDTipoVisita();
-        void mostrarTotalArancel();
-        void mostrarTipoPago();
-        void mostrarPorcentajeHonorario();
-        void mostrarAbonado();
 
         ///GETs
         Fecha getFechaArancel();

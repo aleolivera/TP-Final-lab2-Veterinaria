@@ -102,19 +102,19 @@ bool TipoVisita::modificarTipoVisita(int pos){
     fclose(p);
     return false;
 }
-bool TipoVisita::mostrarTodoElArchivo(){
-    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
-    if(p==NULL){
-        return -1;
-    }
-    while(fread(this,sizeof (TipoVisita),1,p)==1){
-        cout << this->getIDTipoVisita()<< endl;
-        cout << this->getNombreTipoVisita()<< endl;
-        cout << this->getImporte()<< endl;
-        cout << this->getPorcentajeHonorario()<< endl;
-        cout << "................" << endl;
-    }
-    pausar();
-    fclose(p);
-    return false;
-}
+//bool TipoVisita::mostrarTodoElArchivo(){
+//    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+//    if(p==NULL){
+//        return -1;
+//    }
+//    while(fread(this,sizeof (TipoVisita),1,p)==1){
+//        cout << this->getIDTipoVisita()<< endl;
+//        cout << this->getNombreTipoVisita()<< endl;
+//        cout << this->getImporte()<< endl;
+//        cout << this->getPorcentajeHonorario()<< endl;
+//        cout << "................" << endl;
+//    }
+//    pausar();
+//    fclose(p);
+//    return false;
+//}

@@ -5,6 +5,7 @@
 #include "mascotas.h"
 #include "visuales.h"
 #include "funcionesGlobales.h"
+#include "windows.h"
 using namespace std;
 
 void pantallaPrincipal(){
@@ -137,19 +138,28 @@ void limpiar(){
 void pausar(){
     system("pause");
 }
+void colorPantalla(int texto,int fondo){
+    int x;
+    x=fondo*16+texto;
+    SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),x);
+}
+
 ///ERRORES
 void errorFechaInvalida(){
     limpiar();
+    colorPantalla(15,4);
     cout << "ERROR: FECHA INVALIDA." << endl;
     pausar();
 }
 void errorArchivo(){
     limpiar();
+    colorPantalla(15,4);
     cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO." << endl;
     pausar();
 }
 void errorIngresoInvalido(){
     limpiar();
+    colorPantalla(15,4);
     cout << "ERROR: INGRESO INVALIDO."<< endl;
     pausar();
 }
@@ -160,26 +170,31 @@ void volviendoMenu(){
 }
 void guardadoExitoso(){
     limpiar();
+    colorPantalla(15,2);
     cout << "GUARDADO EXITOSO." << endl;
     pausar();
 }
 void errorRegistro(){
     limpiar();
+    colorPantalla(15,4);
     cout << "NO SE ENCUENTRA EL REGISTRO EN EL ARCHIVO." << endl;
     pausar();
 }
 void errorAsignacionMemoria(){
     limpiar();
+    colorPantalla(15,4);
     cout << "NO HAY MEMORIA SUFICIENTE." << endl;
     pausar();
 }
 void errorCargarRegistros(){
     limpiar();
+    colorPantalla(15,4);
     cout << "NO SE PUDIERON CARGAR EL/LOS REGISTRO/S." << endl;
     pausar();
 }
 void errorGuardado(){
     limpiar();
+    colorPantalla(15,4);
     cout << "NO SE PUDO GUARDAR EL ARCHIVO." << endl;
     pausar();
 }

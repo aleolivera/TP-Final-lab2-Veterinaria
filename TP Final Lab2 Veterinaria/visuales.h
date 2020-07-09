@@ -20,5 +20,6 @@ void errorRegistro();
 void errorAsignacionMemoria();
 void errorCargarRegistros();
 void errorGuardado();
+void colorPantalla(int,int);
 
 #endif // VISUALES_H_INCLUDED

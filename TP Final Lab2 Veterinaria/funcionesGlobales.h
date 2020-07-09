@@ -48,6 +48,7 @@ bool validarMascotaConCliente(const char*,int);
 bool validarIDTipoVisita(int);
 int buscarIDClientePorMascota(const char*);
 int buscarIDClienteEnHistorias(int);
+int buscarIDClienteEnHistorias(int);
 int cantidadRegistrosHistorias();
 int cantidadRegistrosClientes();
 int cantidadRegistrosMascotas();

@@ -453,6 +453,19 @@ bool validarMascotaConCliente(const char*nombre,int ID){
     }
     return false;
 }
+int buscarIDhistoriaEnAranceles(int IDHistoria){
+    Arancel reg;
+    FILE*p=fopen(ARCHIVOARANCELES,"rb");
+    if(p==NULL) return -1;
+    while(fread(&reg,sizeof (Arancel),1,p)==1){
+        if(IDHistoria==reg.getIDHistoria()){
+            fclose(p);
+            return reg.getIDArancel();
+        }
+    }
+    fclose(p);
+    return -1;
+}
 int buscarIDClienteEnHistorias(int IDHistoria){
     Historia reg;
     FILE*p=fopen(ARCHIVOHISTORIAS,"rb");
@@ -780,7 +793,7 @@ bool ingresoHistoria(){
         cin.get();
         return false;
     }
-
+    reg.setIDarancel(-1);   ///CUANDO HAGO EL ARANCEL LE ASIGNO SU NUMERO
     ///EL CAMPO QUE RESTA ES 'int IDArancel' QUE SE CARGA CON EL ARANCEL
     if(!reg.guardarHistoria())
     {
@@ -977,26 +990,25 @@ bool controlesPendientes(){
         delete(vecHistoria);
         return false;
     }
-
+    cout << "VISITAS DE CONTROL PENDIENTES." << endl << endl;
     for(int i=0; i<cantHistorias; i++)  ///Recorro el vecHistorias para encontrar las "control=true"
     {
         if(vecHistoria[i].getControl()&&compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==2)
         {
-            vecHistoria[i].mostrarNombreMascota();
-            cout << endl;
+            cout << "       NOMBRE DE MASCOTA: " << vecHistoria[i].getNombreMascota();
+            cout << "     FECHA: ";
             vecHistoria[i].mostrarFechaControl();
             cout << endl;
             for(int j=0; j<cantClientes; j++)       ///al encontrar uno, muestro el nombre de mascota, fecha de control en el mismo reg.
             {
                 if(vecHistoria[i].getIDCliente()==vecCliente[j].getIDCliente())
                 {
-                    vecCliente[j].mostrarTelefono();    ///y ahora con el ID del cliente del reg de esa historia, ubico al cliente en el vec.
-                    cout << endl;
-                    vecCliente[j].mostrarApellido();    ///asi accedo a sus atributos y muestro lo que necesito
-                    cout << endl;
+                    cout << "                APELLIDO: " << vecCliente[j].getApellido();    ///y ahora con el ID del cliente del reg de esa historia, ubico al cliente en el vec.
+                    cout << "     TELEFONO: " << vecCliente[j].getTelefono() << endl;
+                        ///asi accedo a sus atributos y muestro lo que necesito
                 }
             }
-            cout << endl;
+            cout <<"--------------------------------------------------" <<endl;
         }
     }
     cout << "ESAS SON LAS ENTRADAS HASTA LA FECHA." << endl;
@@ -1013,15 +1025,13 @@ bool controlesAusentes(){
 
     vecHistoria=new Historia [cantHistorias]; ///CARGO LOS VECTORES CON TODOS LOS REG HISTORIAS
     vecCliente=new Cliente[cantClientes];///CARGO LOS VECTORES CON TODOS LOS REG CLIENTES
-    if(vecCliente==NULL||vecHistoria==NULL)
-    {
+    if(vecCliente==NULL||vecHistoria==NULL){
         errorAsignacionMemoria();
         delete (vecCliente);
         delete(vecHistoria);
         return false;
     }
-    if(!cargarVecHistorias(vecHistoria,cantHistorias)||!(cargarVecClientes(vecCliente,cantClientes)))
-    {
+    if(!cargarVecHistorias(vecHistoria,cantHistorias)||!(cargarVecClientes(vecCliente,cantClientes))){
         errorCargarRegistros();
         delete(vecCliente);
         delete(vecHistoria);
@@ -1030,23 +1040,20 @@ bool controlesAusentes(){
 
     for(int i=0; i<cantHistorias; i++)  ///Recorro el vecHistorias para encontrar las "control=true" y que la fecha de contro no haya pasado
     {
-        if(vecHistoria[i].getControl() && compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==1)
-        {
-            vecHistoria[i].mostrarNombreMascota();
-            cout << endl;
+        if(vecHistoria[i].getControl() && compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==1){
+            cout << "       NOMBRE DE MASCOTA: " << vecHistoria[i].getNombreMascota();
+            cout << "     FECHA: ";
             vecHistoria[i].mostrarFechaControl();
             cout << endl;
             for(int j=0; j<cantClientes; j++)       ///al encontrar uno, muestro el nombre de mascota, fecha de control en el mismo reg.
             {
-                if(vecHistoria[i].getIDCliente()==vecCliente[j].getIDCliente())
-                {
-                    vecCliente[j].mostrarTelefono();    ///y ahora con el ID del cliente del reg de esa historia, ubico al cliente en el vec.
-                    cout << endl;
-                    vecCliente[j].mostrarApellido();    ///asi accedo a sus atributos y muestro lo que necesito
-                    cout << endl;
+                if(vecHistoria[i].getIDCliente()==vecCliente[j].getIDCliente()){
+                    cout << "                APELLIDO: " << vecCliente[j].getApellido();    ///y ahora con el ID del cliente del reg de esa historia, ubico al cliente en el vec.
+                    cout << "     TELEFONO: " << vecCliente[j].getTelefono() << endl;
+                        ///asi accedo a sus atributos y muestro lo que necesito
                 }
             }
-            cout << endl;
+            cout <<"--------------------------------------------------" <<endl;
         }
     }
     cout << "ESAS ENTRADAS HASTA LA FECHA." << endl;
@@ -1081,6 +1088,10 @@ bool nuevoArancel(){
         errorRegistro();
         return false;
     }
+//    if (regHistoria.getIDarancel()!=-1){
+//        cout << "A ESA HISTORIA LE FUE ASIGNADA EL ARANCEL ID " << regHistoria.getIDarancel()<< endl;
+//        return false;
+//    }
     regArancel.setIDHistoria(valor);
 
     valor=regHistoria.getIDCliente();
@@ -1108,8 +1119,7 @@ bool nuevoArancel(){
     regArancel.setIDTipoVisita(valor);
     regArancel.setTotalArancel(total);
     cout <<"         TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita();
-    cout <<"      TOTAL DEL ARANCEL: $";
-    regArancel.mostrarTotalArancel();
+    cout <<"      TOTAL DEL ARANCEL: $" <<regArancel.getTotalArancel();
 
     cout <<"           E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cout <<"           TIPO DE PAGO: ";

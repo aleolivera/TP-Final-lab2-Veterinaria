@@ -14,11 +14,6 @@ class TipoVisita{
         float porcentajeHonorario;
         bool estado;
     public:
-        ///MOSTRAR
-        void mostrarIDTipoVisita();
-        void mostrarNombreTipoVisita();
-        void mostrarImporte();
-        void mostrarPorcentajeHonorario();
 
         ///SETs
         void setIDTipoVisita(int);

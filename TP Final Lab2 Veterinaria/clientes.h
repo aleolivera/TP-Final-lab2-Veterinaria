@@ -35,9 +35,7 @@ class Cliente{
         int getTelefono();
         ///SETs
         void setSaldo(float);
-        ///MOSTRAR solo cout de un solo atributo
-        void mostrarTelefono();
-        void mostrarApellido();
+
         ///DISCO        NECESITABA PONER COMO DEUDOR A UN CLIENTE DESDE ARANCELES
         int buscarClientePorID(int);
         bool guardarCliente();

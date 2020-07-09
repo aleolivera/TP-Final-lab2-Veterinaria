@@ -34,6 +34,7 @@ int main()
     while(!salir)
     {
         system("cls");
+        colorPantalla(10,0);
         pantallaPrincipal();
         cin>>op;
         cin.ignore();

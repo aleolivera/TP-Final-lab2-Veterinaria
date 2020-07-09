@@ -14,19 +14,16 @@ class Historia{
         int IDCliente;
         char nombreMascota[20];
         char anamnesis [300];
-        bool control; ///constructor =falso
-        Fecha fechaControl;///constructor =0
-        int IDArancel; ///constructor =0
+        bool control;
+        Fecha fechaControl;
+        int IDArancel;
     public:
         ///      MOSTRAR
-        void mostrarIDHistoria();
-        void mostrarIDCliente();
+
         void mostrarFechaIngreso();
         void mostrarFechaModificacion();
         void mostrarFechaVisita();
-        void mostrarNombreMascota();
         void mostrarAnamnesis();
-        void mostrarControl();
         void mostrarFechaControl();
 
 ///     SETs
@@ -57,7 +54,7 @@ class Historia{
         bool guardarHistoria();
         bool leerHistoria(int);
         bool modificarHistoria(int);
-        bool mostrarTodoElArchivo();
+//        bool mostrarTodoElArchivo();
 
 //        ///CONSTRUCTOR
 //        Historia(){
