@@ -1420,19 +1420,13 @@ bool AltaBajaServicio(){
         cout << "                       'SI' o 'NO':";
         cin.getline(cadena,3);
         if(strcmp(cadena,"si")==0||strcmp(cadena,"SI")==0){
-            cout << "ENTRO AL SI DE BAJA:"<< cadena << endl;
-            pausar();
             regTipoVisita.setEstado(false);
         }
         else if (strcmp(cadena,"no")==0||strcmp(cadena,"NO")==0){
-            cout << "ENTRO AL NO DE BAJA:"<< cadena << endl;
-            pausar();
             volviendoMenu();
             return false;
         }
         else{
-            cout << "ENTRO AL ERROR DE BAJA:"<< cadena << endl;
-            pausar();
             errorIngresoInvalido();
             return false;
         }
@@ -1442,19 +1436,13 @@ bool AltaBajaServicio(){
         cout << "                       'SI' o 'NO':";
         cin.getline(cadena,3);
         if(strcmp(cadena,"si")==0||strcmp(cadena,"SI")==0){
-            cout << "ENTRO AL SI DE ALTA:"<< cadena << endl;
-            pausar();
             regTipoVisita.setEstado(true);
         }
         else if (strcmp(cadena,"no")==0||strcmp(cadena,"NO")==0){
-            cout << "ENTRO AL NO DE ALTA:"<< cadena << endl;
-            pausar();
             volviendoMenu();
             return false;
         }
         else{
-            cout << "ENTRO AL ERROR DE ALTA:"<< cadena << endl;
-            pausar();
             errorIngresoInvalido();
             return false;
         }
