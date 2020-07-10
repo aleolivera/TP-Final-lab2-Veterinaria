@@ -29,16 +29,17 @@ bool Cliente::cargarCliente()
 {
     IDCliente=cantidad_Clientes()+1;
     int encontrado;
-    cout<<"       DNI :";
+    cout<<"CARGA DE NUEVO CLIENTE"<< endl<< endl;
+    cout<<"       DNI : ";
     cin>>dni;
     cin.ignore();
 
-    cout<<"     NOMBRE:";
+    cout<<"     NOMBRE: ";
     cin.getline(nombreCliente,30);
     if(cad_vacia(nombreCliente))
         return false;
 
-    cout<<"   APELLIDO:";
+    cout<<"   APELLIDO: ";
     cin.getline(apellido,30);
     if(cad_vacia(apellido))
         return false;
@@ -67,6 +68,7 @@ bool Cliente::cargarCliente()
 
         return false;
     }
+    cout << endl;
     saldo=0;
     return true;
 }

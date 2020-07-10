@@ -22,14 +22,10 @@ bool Mascotas::Cargar_Mascota(){
         errorIngresoInvalido();
         return false;
     }
-    cout<<"  DOMICILIO: ";
-    cout<<"     ANIOS :";
+    cout<<"               ANIOS : " ;
     cin>>anios;
 
-
-    cout<<"   CASTRADO: ";
-    cout<<"         1- SI  ";
-    cout<<"         2- NO: ";
+    cout<<"CASTRADO: 1- SI | 2- NO: ";
     cin>>castrado_opcion;
     cin.ignore();
     switch (castrado_opcion)
@@ -42,9 +38,7 @@ bool Mascotas::Cargar_Mascota(){
         break;
     }
 
-    cout<<"   VACUNADO: ";
-    cout<<"         1- SI  ";
-    cout<<"         2- NO:  ";
+    cout<<"VACUNADO: 1- SI | 2- NO: ";
     cin>>vacunado_opcion;
     cin.ignore();
     if (vacunado_opcion==1){
@@ -58,14 +52,14 @@ bool Mascotas::Cargar_Mascota(){
         return false;
     }
 
-    cout<<"    ESPECIE: ";
+    cout<<"             ESPECIE: ";
     cin.getline(especie,10);
     if(cad_vacia(especie)){
         errorIngresoInvalido();
         return false;
     }
 
-    cout<<"       RAZA: ";
+    cout<<"                RAZA: ";
     cin.getline(raza,20);
     if(cad_vacia(raza)){
         errorIngresoInvalido();
@@ -74,7 +68,7 @@ bool Mascotas::Cargar_Mascota(){
 
 
 //    int sexo_opcion;
-    cout<<" SEXO 'M'- MACHO | 'H'- HEMBRA :";
+    cout<<" SEXO 'M'- MACHO | 'H'- HEMBRA : ";
     cin>> sexo;
     if(!(sexo=='M' || sexo=='m'|| sexo!='H'|| sexo!='h')){
         errorIngresoInvalido();
@@ -142,7 +136,7 @@ int Mascotas::buscarMascotaXNombre(char *nombre){
 }
 int Mascotas::buscarMascotaXNombreID(const char* nombre,int ID){
     int pos=0;
-    while(leerMascota(pos))
+    while(leerMascota(pos++))
     {
         if(strcmp(nombre,nombreMascota)==0 && ID==IDCliente)
         {
@@ -168,15 +162,21 @@ bool Mascotas::sobrescribir_mascota(int pos){
 }
 bool Mascotas::modificar_mascota(){
     int pos,ID;
+    char cadena[20];
     cout<<"MODIFICAR MASCOTA" << endl << endl;
-    cout<<"  INGRESE EL NOMBRE DE LA MASCOTA: ";
-    cin.ignore();
-    cin.getline(nombreMascota,20);
     cout<<"                   ID DEL CLIENTE: ";
     cin >> ID;
-    /*cout<<" Apellido del duenio :";
-    cin.getline(apellido,30);*/
-    pos= buscarMascotaXNombreID(nombreMascota,ID);
+    if(!validarIDcliente(ID)){
+        errorIngresoInvalido();
+        return false;
+    }
+    listarMascotasConIDCliente(ID);
+    cout << endl;
+    cout<<"  INGRESE EL NOMBRE DE LA MASCOTA: ";
+    cin.ignore();
+    cin.getline(cadena,20);
+
+    pos=buscarMascotaXNombreID(cadena,ID);
     if(pos>=0)
     {
         leerMascota(pos);

@@ -814,12 +814,12 @@ bool mostrarEntradaHistoria(){
         errorRegistro();
         return false;
     }
-
+    cout << "FECHA: ";
     reg.mostrarFechaVisita(); ///Despues se muestran los registros de a uno
-    cout << "                 " << reg.getNombreMascota() << endl<< endl;
+    cout << "          MASCOTA: " << reg.getNombreMascota() << endl<< endl;
     cout <<"ANAMNESIS: " << endl;
     reg.mostrarAnamnesis();
-    cout << endl;
+    cout <<endl <<"-----------------------------------" << endl;
     pausar();
     return true;
 }
@@ -1120,7 +1120,7 @@ bool nuevoArancel(){
     regArancel.setTotalArancel(total);
     cout <<"         TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita();
     cout <<"      TOTAL DEL ARANCEL: $" <<regArancel.getTotalArancel();
-
+    cout << endl;
     cout <<"           E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cout <<"           TIPO DE PAGO: ";
     cin>> tipoPago;

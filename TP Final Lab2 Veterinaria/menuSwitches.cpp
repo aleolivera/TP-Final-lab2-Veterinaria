@@ -108,17 +108,20 @@ void menuMascotas(){
                     int pos;
                     pos=re.buscarMascotaXNombreID(nombre,ID);
                     if(pos==-1){
+                        limpiar();
                         cout << "NO HUBO COINCIDENCIAS" << endl;
                     }
                     re.setIDcliente(reg.getIDCliente());
 
                     if(re.sobrescribir_mascota(pos))
                     {
+                        limpiar();
                         cout<<"TRANSFERENCIA COMPLETADA"<<endl;
 
                     }
                     else
                     {
+                        limpiar();
                         cout<<"NO SE PUDO TRANSFERIR"<<endl;
                     }
                 }
@@ -183,14 +186,14 @@ void menuIngresoPaciente(){
         {
             if(reg.gurdarClienteEnDisco())
             {
-                cout<<" El nuevo cliente fue registrado "<<endl;
+                cout<<"EL NUEVO CLIENTE FUE REGISTRADO"<<endl;
                 system("pause");
                 re.setIDcliente(reg.getIDCliente());
                 if(re.Cargar_Mascota())
                 {
                     if(re.gurdar_Mascota_EnDisco())
                     {
-                        cout<<" La mascota fue registrada "<<endl;
+                        cout<<"LA MASCOTA FUE REGISTRADA"<<endl;
                         system("pause");
                     }
                 }
@@ -205,7 +208,8 @@ void menuIngresoPaciente(){
         Mascotas p;
         int pos_cliente,ID_cliente;
         system("cls");
-        cout<<" Ingrese el DNI del cliente ya existente "<<endl;
+        cout<<" INGRESO DE MASCOTA"<<endl << endl;
+        cout<<" INGRESE EL DNI DEL CLIENTE REGISTRADO: ";
         cin>>dni;
 
         pos_cliente=reg.buscarClienteXDni(dni);
@@ -215,19 +219,19 @@ void menuIngresoPaciente(){
             p.setIDcliente(reg.getIDCliente());
             if(p.Cargar_Mascota()){
                 if(p.gurdar_Mascota_EnDisco()){
-                    cout<<" La mascota fue registrada "<<endl;
+                    cout<<" LA MASCOTA YA FUE REGISTRADA! "<<endl;
 //                    system("pause");
                 }
             }
         }
         else
-            cout<<" no existe el cliente "<<endl;
+            cout<<"CLIENTE INEXISTENTE"<<endl;
         system("pause");
     }
     break;
     case 3:
     {
-        ///LISTAR VISITAS
+        listarVisitasMascotas();
     }
     break;
     case 0:{
