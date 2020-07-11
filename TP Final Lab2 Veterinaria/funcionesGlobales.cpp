@@ -201,7 +201,6 @@ void listardueno(int IDcliente){
     cout<<" -----DATOS DEL DUENO----- "<<endl;
     reg.mostrarCliente();
     cout<<endl;
-
 }
 const char* tipoDePagoACadena(char tipoPago){
     switch(tipoPago){

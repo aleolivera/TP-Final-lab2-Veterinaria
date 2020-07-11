@@ -139,9 +139,8 @@ void Cliente::listarClietes()
 
 int Cliente::buscraID_Cliente(int pos)// NO FUNCIONA.
 {
-    Cliente reg;
     if(LeerDiscoDeCliente(pos))
-        {return reg.IDCliente;}
+        {return IDCliente;}
     return -1;
 }
 

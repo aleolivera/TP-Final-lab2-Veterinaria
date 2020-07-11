@@ -11,7 +11,6 @@ using namespace std;
 void Arancel::mostrarFechaArancel(){
     fechaArancel.mostrarFecha();
 }
-
 ///GETs
 Fecha Arancel::getFechaArancel(){
     return fechaArancel;
