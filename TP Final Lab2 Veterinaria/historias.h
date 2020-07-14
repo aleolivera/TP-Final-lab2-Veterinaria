@@ -11,24 +11,16 @@ class Historia{
         Fecha fechaIngreso; ///se carga solo
         Fecha fechaModificacion;
         Fecha fechaVisita;
-        int IDCliente;
+        int DNICliente;
         char nombreMascota[20];
         char anamnesis [300];
         bool control;
         Fecha fechaControl;
         int IDArancel;
     public:
-        ///      MOSTRAR
-
-        void mostrarFechaIngreso();
-        void mostrarFechaModificacion();
-        void mostrarFechaVisita();
-        void mostrarAnamnesis();
-        void mostrarFechaControl();
-
-///     SETs
+        ///     SETs
         void setIDHistoria(int); /// no la hice, no se hacerla aun
-        void setIDCliente(int);
+        void setDNICliente(int);
         void setFechaIngreso(); /// No se si esta bien
         void setFechaModificacion();
         void setFechaVisita(int,int,int); /// No se si esta bien
@@ -40,7 +32,7 @@ class Historia{
 
 ///      GETs
         int getIDHistoria();
-        int getIDCliente();
+        int getDNICliente();
         Fecha getFechaIngreso();
         Fecha getFechaModificacion();
         Fecha getFechaVisita();
@@ -48,22 +40,31 @@ class Historia{
         bool getControl();
         Fecha getFechaControl();
         int getIDarancel();
+        const char*getAnamnesis();
 
         ///DISCO
-        int buscarHistoria(int);
         bool guardarHistoria();
         bool leerHistoria(int);
         bool modificarHistoria(int);
-//        bool mostrarTodoElArchivo();
-
-//        ///CONSTRUCTOR
-//        Historia(){
-//            fechaModificacion.setFechaActual();
-//            fechaControl.setFecha(0,0,0);
-//            IDArancel=0;
-//        }
-
 };
+
+///GLOBALES
+int asignarIDHistoria();
+int cantidadRegistrosHistorias();
+bool cargarVecHistorias(Historia*,int);
+int buscarDNIClienteEnHistorias(int);
+void verVisita(Historia);
+
+
+///HISTORIAS
+///Para resolver las consignas del MENU HISTORIA
+bool ingresoHistoria();
+bool mostrarEntradaHistoria();
+bool mostrarHistoria();
+bool modificarHistoria();
+bool controlesPendientes();
+bool controlesAusentes();
+
 
 
 #endif // HISTORIAS_H_INCLUDED

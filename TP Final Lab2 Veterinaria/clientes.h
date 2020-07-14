@@ -8,40 +8,49 @@ const char ARCHIVOCLIENTESBKP[20]="clientes.bkp";
 class Cliente{
     private:
         int IDCliente;
-        int dni;
+        int DNICliente;
         char nombreCliente[30];
         char apellido[30]; ///TE LO CAMBIE!, ANTES DECIA "nombreApellido"
         char domicilio[50];
-        int Telefono;
+        int telefono;
         char email[30];
         float saldo;
     public:
-        bool cargarCliente();
-        bool gurdarClienteEnDisco();
-        bool LeerDiscoDeCliente(int);
-        void mostrarCliente();
-        int buscarClienteXDni(int);
-        void listarClietes();
-        int cantidad_Clientes();
-        int buscraID_Cliente(int);
-        void modificar_Cliente();
-        bool sobrescribir_Cliente(int);
-
         ///GETs
         int getIDCliente();
-        float getSaldo();
+        int getDNICliente();
         const char* getNombreCliente();
         const char* getApellido();
+        const char* getDomicilio();
         int getTelefono();
-        ///SETs
-        void setSaldo(float);
+        const char* getEmail();
+        float getSaldo();
 
-        ///DISCO        NECESITABA PONER COMO DEUDOR A UN CLIENTE DESDE ARANCELES
-        int buscarClientePorID(int);
+        ///SETs
+        void setIDCliente(int);
+        void setDNICliente(int);
+        void setNombreCliente(const char*);
+        void setApellido(const char*);
+        void setDomicilio(const char*);
+        void setTelefono(int);
+        void setEmail(const char*);
+        void setSaldo(float);
         bool guardarCliente();
         bool leerCliente(int);
-        bool modificarClienteDisco(int);
-        bool mostrarTodoElArchivo();
+        bool modificarCliente(int);
 };
+
+///GLOBALES
+int asignarIDCliente();
+int cantidadRegistrosClientes();
+bool cargarVecClientes(Cliente*,int);
+void verCliente(Cliente);
+
+///CLIENTES
+///Para resolver las consignas del MENU CLIENTES
+bool mostrarCliente();
+bool mostrarTodosClientes();
+bool modificarClientes();
+
 
 #endif // CLIENTES_H_INCLUDED

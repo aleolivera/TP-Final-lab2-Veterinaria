@@ -16,54 +16,49 @@ using namespace std;
 
 int main()
 {
+    Mascotas reg;
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL) return -1;
+    while(fread(&reg,sizeof (Mascotas),1,p)==1){
+        verMascota(reg);
+        }
+    pausar();
+    fclose(p);
+
     int op;
     bool salir=false;
-    while(!salir)
-    {
+    while(!salir){
         system("cls");
-        colorPantalla(10,0);
+//        colorPantalla(10,0);
+        system("color 0A");
         pantallaPrincipal();
         cin>>op;
         cin.ignore();
-        switch(op)
-        {
+        switch(op){
             case 1:
-                {
-                    menuIngresoPaciente();
-
-                }
+                    menuAgregar();
                 break;
             case 2:
-                {
                     menuHistorias();
-                }
                 break;
             case 3:
-                {
                     menuClientes();
-                }
                 break;
             case 4:
-                {
                     menuMascotas();
-                }
                 break;
             case 5:
-                {
                     menuAranceles();
-                }break;
+                break;
             case 6:
-                {
                     menuAdministracion();
-                }break;
+                break;
             case 7:
-                {
                     menuConfiguracion();
-                }break;
+                break;
             case 0:
-                {
                     salir=true;
-                }break;
+                break;
 
         }
     }

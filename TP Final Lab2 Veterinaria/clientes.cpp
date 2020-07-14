@@ -7,255 +7,64 @@
 
 using namespace std;
 
-int buscarCliente(char*,char*);
-
-
-int Cliente::cantidad_Clientes()
-{
-    int cant;
-    FILE *p;
-    p = fopen(ARCHIVOCLIENTES,"rb");
-    if(p==NULL)
-    {
-        return 0;
-    }
-    fseek(p,0,2);
-    cant = ftell(p)/sizeof(Cliente);
-    fclose(p);
-    return cant;
-}
-
-bool Cliente::cargarCliente()
-{
-    IDCliente=cantidad_Clientes()+1;
-    int encontrado;
-    cout<<"CARGA DE NUEVO CLIENTE"<< endl<< endl;
-    cout<<"       DNI : ";
-    cin>>dni;
-    cin.ignore();
-
-    cout<<"     NOMBRE: ";
-    cin.getline(nombreCliente,30);
-    if(cad_vacia(nombreCliente))
-        return false;
-
-    cout<<"   APELLIDO: ";
-    cin.getline(apellido,30);
-    if(cad_vacia(apellido))
-        return false;
-
-    encontrado=buscarClienteXDni(dni);
-    if(encontrado==-1)
-    {
-        cout<<"  DOMICILIO: ";
-        cin.getline(domicilio,30);
-
-        cout<<"   TELEFONO: ";
-        cin>>Telefono;
-        cin.ignore();
-
-        cout<<"      EMAIL: ";
-        cin>>email;
-        if(validarMail(email))
-        {
-            errorIngresoInvalido();
-            return false;
-        }
-    }
-    else
-    {
-        cout<<" EL CLIENTE "<<apellido<<" "<<nombreCliente<<" YA ESTABA INGRESADO EN LE ARCHIVO "<<endl; //FALTA MOSTRAR CON QUE MASCOTA ESTA REGISTRADO.
-
-        return false;
-    }
-    cout << endl;
-    saldo=0;
-    return true;
-}
-
-bool Cliente::gurdarClienteEnDisco()
-{
-    bool guardado;
-    FILE *p;
-    p=fopen(ARCHIVOCLIENTES,"ab");
-    if(p==NULL)
-    {
-        return false;
-    }
-    guardado=fwrite(this,sizeof(Cliente),1,p);
-    fclose(p);
-    return guardado;
-}
-
-bool Cliente::LeerDiscoDeCliente(int pos)
-{
-    bool leido;
-    FILE *p;
-    p=fopen(ARCHIVOCLIENTES,"rb");
-    if(p==NULL)
-    {
-        return false;
-    }
-    fseek(p,pos*sizeof(Cliente),0);
-    leido=fread(this,sizeof(Cliente),1,p);
-    fclose(p);
-    return leido;
-}
-
-int Cliente::buscarClienteXDni(int dni) //COMPARA EL DNI INGRESADO CON LOS REGISTRADOS.
-{
-    int pos=0;
-    Cliente reg;
-    while(reg.LeerDiscoDeCliente(pos))
-    {
-        if(dni==reg.dni)
-            {return pos;}
-        pos++;
-    }
-    return -1;
-}
-
-void Cliente::mostrarCliente()
-{
-    cout<<"         ID: "<<IDCliente<<endl;
-    cout<<"        DNI: "<<dni<<endl;
-    cout<<"     NOMBRE: "<<nombreCliente<<endl;
-    cout<<"   APELLIDO: "<<apellido<<endl;
-    cout<<"  DOMICILIO: "<<domicilio<<endl;
-    cout<<"   TELEFONO: "<<Telefono<<endl;
-    cout<<"      EMAIL: "<<email<<endl;
-}
-
-void Cliente::listarClietes()
-{
-    int pos=0;
-    system("cls");
-    while(LeerDiscoDeCliente(pos++)==1)
-    {
-        mostrarCliente();
-        cout<<endl;
-    }
-}
-
-int Cliente::buscraID_Cliente(int pos)// NO FUNCIONA.
-{
-    if(LeerDiscoDeCliente(pos))
-        {return IDCliente;}
-    return -1;
-}
-
-bool Cliente::sobrescribir_Cliente(int pos) /// NO SOBREESCRIBE.
-{
-    bool guardado;
-    FILE *p;
-    p= fopen(ARCHIVOCLIENTES,"rb+");
-    if(p==NULL)
-    {
-        return false;
-    }
-    fseek(p,pos*sizeof(Cliente),0);
-    guardado= fwrite(this,sizeof(Cliente),1,p);
-    fclose(p);
-    return guardado;
-}
-
-void Cliente::modificar_Cliente()
-{
-    Cliente reg;
-    int pos;
-    cout<<"MODIFICAR CLIENTE" << endl << endl;
-    cout<<"    INGRESE EL DNI DEL CLIENTE:";
-    cin>>dni;
-    cin.ignore();
-    pos= reg.buscarClienteXDni(dni);
-    if(pos>=0)
-    {
-        LeerDiscoDeCliente(pos);
-        cout<<endl;
-        mostrarCliente();
-        cout<<endl;
-        cout<<"  DOMICILIO: ";
-        cin.getline(domicilio,50);
-        cout<<endl;
-        cout<<"   TELEFONO: ";
-        cin>>Telefono;
-        cin.ignore();
-
-        cout<<"     EMAIL : ";
-        cin.getline(email,30);
-        if(validarMail(email))
-        {
-            errorIngresoInvalido();
-            return;
-        }
-        if(sobrescribir_Cliente(pos))
-        {
-            guardadoExitoso();
-        }
-        else
-        {
-            errorGuardado();
-        }
-    }
-    else
-    {
-        errorRegistro();
-    }
-
-}
-
-
-///GETs     TE HICE ESTE GET PARA PODER VALIDAR EL ID DEL CLIENTE AL INGRESAR LA HISTORIA CLINICA
-int Cliente::getIDCliente()
-{
+///GETs
+int Cliente::getIDCliente(){
     return IDCliente;
+}
+int Cliente::getDNICliente(){
+    return DNICliente;
+}
+const char* Cliente::getNombreCliente(){
+    return nombreCliente;
+}
+const char* Cliente::getApellido(){
+    return apellido;
+}
+const char* Cliente::getDomicilio(){
+    return domicilio;
+}
+int Cliente::getTelefono(){
+    return telefono;
+}
+const char* Cliente::getEmail(){
+    return email;
 }
 float Cliente::getSaldo(){
     return saldo;
 }
-const char* Cliente::getNombreCliente()
-{
-    return nombreCliente;
-}
-const char* Cliente::getApellido()
-{
-    return apellido;
-}
-int Cliente::getTelefono()
-{
-    return Telefono;
-}
 
 ///SETs
+void Cliente::setIDCliente(int ID){
+    IDCliente=ID;
+}
+void Cliente::setDNICliente(int DNI){
+    DNICliente=DNI;
+}
+void Cliente::setNombreCliente(const char* cadena){
+    strcpy(nombreCliente,cadena);
+}
+void Cliente::setApellido(const char* cadena){
+    strcpy(apellido,cadena);
+}
+void Cliente::setDomicilio(const char* cadena){
+    strcpy(domicilio,cadena);
+}
+void Cliente::setTelefono(int t){
+    telefono=t;
+}
+void Cliente::setEmail(const char* cadena){
+    strcpy(email,cadena);
+}
 void Cliente::setSaldo(float importe){
     saldo=importe;
 }
 
-
-
 ///DISCO        NECESITABA PONER COMO DEUDOR A UN CLIENTE DESDE ARANCELES
-int Cliente::buscarClientePorID(int ID){
-    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
-    if(p==NULL){
-        return -1;
-    }
-    int n;
-    while(fread(this,sizeof (Cliente),1,p)==1){
-        if(ID==IDCliente){
-            n=(ftell(p)/sizeof (Cliente));
-            fclose(p);
-            return n;
-        }
-    }
-    fclose(p);
-    return -1;
-}
 bool Cliente::guardarCliente(){
     FILE*p=fopen(ARCHIVOCLIENTES,"ab");
     if(p==NULL){
         return false;
     }
-
     if(fwrite(this,sizeof (Cliente),1,p)==1){
         fclose(p);
         return true;
@@ -270,8 +79,8 @@ bool Cliente::leerCliente(int pos){
     if(p==NULL){
         return false;
     }
-    fseek(p, pos*sizeof*this,0);
-    if(fread(this,sizeof* this,1,p)==1){
+    fseek(p,(pos*sizeof (Cliente)),0);
+    if(fread(this,sizeof (Cliente),1,p)==1){
         fclose(p);
         return true;
     }
@@ -280,12 +89,11 @@ bool Cliente::leerCliente(int pos){
         return false;
     }
 }
-bool Cliente::modificarClienteDisco(int pos){
+bool Cliente::modificarCliente(int pos){
     FILE*p=fopen(ARCHIVOCLIENTES,"rb+");
     if(p==NULL){
         return false;
     }
-    pos--;
     fseek(p,(pos*sizeof (Cliente)),0);
     if(fwrite(this,sizeof (Cliente),1,p)==1){
         fclose(p);
@@ -294,19 +102,166 @@ bool Cliente::modificarClienteDisco(int pos){
     fclose(p);
     return false;
 }
-//bool Cliente::mostrarTodoElArchivo(){
-//    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
-//    if(p==NULL){
-//        return false;
-//    }
-//    while(fread(this,sizeof (Cliente),1,p)==1){
-//        cout <<"    IDcliente: "<< IDCliente << endl;
-//        cout <<"nombre/Apelli: "<< nombreCliente << " " << apellido << endl;
-//        cout <<"     Telefono: "<< Telefono << endl;
-//        cout <<"        Saldo: "<< saldo << endl;
-//        cout << "................" << endl;
-//    }
-//    pausar();
-//    fclose(p);
-//    return false;
-//}
+
+///GLOBALES
+int asignarIDCliente(){///Le pone solo el ID de manera secuencial
+    Cliente reg;
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL)
+    {
+        return 1;
+    }
+    if(fread(&reg,sizeof (Cliente),1,p)==0)  ///tal vez deberia preguntar si !=1
+    {
+        fclose(p);
+        return 1;
+    }
+    else
+    {
+        fseek(p,-sizeof (Cliente),2);
+        fread(&reg,sizeof (Cliente),1,p);
+        fclose(p);
+        return reg.getIDCliente()+1;
+    }
+}
+int cantidadRegistrosClientes(){    ///Devuelve la cantidad de registros en ARCHIVOCLIENTES
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL)
+    {
+        return -1;
+    }
+    fseek(p,0,2);
+    return ftell(p)/sizeof (Cliente);
+}
+bool cargarVecClientes(Cliente*vec,int tam){///Le mandas un vector de clase CLIENTES y su tamanio y te lo carga todo
+    Cliente reg;
+    int i=0;
+    FILE*p=fopen(ARCHIVOCLIENTES,"rb");
+    if(p==NULL)
+    {
+        return false;
+    }
+    while(fread(&reg,sizeof (Cliente),1,p)==1 && i<tam)
+    {
+        vec[i]=reg;
+        i++;
+    }
+    fclose(p);
+    return true;
+}
+void verCliente(Cliente regCliente){
+    cout << "               ID: " << regCliente.getIDCliente()<< endl;
+    cout << "           NOMBRE: " << regCliente.getNombreCliente()<< endl;
+    cout << "         APELLIDO: "<< regCliente.getApellido()<<endl;
+    cout << "        DIRECCION: "<< regCliente.getDomicilio()<<endl;
+    cout << "         TELEFONO: "<< regCliente.getTelefono()<<endl;
+    cout << "            @MAIL: "<< regCliente.getEmail()<<endl;
+    listarMascotasConDNICliente(regCliente.getDNICliente());
+    cout << endl;
+    pausar();
+}
+
+///CLIENTES
+///Para resolver las consignas del MENU CLIENTES
+bool mostrarCliente(){
+    Cliente regCliente;
+    int DNI,pos;
+    cout << "MOSTRAR CLIENTE" << endl<< endl;
+    cout << "       INGRESE DNI: ";
+    cin>>DNI;
+    pos=buscarClientePorDNI(DNI);
+    if(pos==-1){
+        errorEnteroInvalido(DNI,", NO SE ENCUENTRA EN LE ARCHIVO");
+        return false;
+    }
+    regCliente.leerCliente(pos);
+    verCliente(regCliente);
+    return true;
+}
+bool mostrarTodosClientes(){
+    Cliente*vecClientes;
+    int cantClientes=cantidadRegistrosClientes();
+    if(cantClientes==-1){
+        error("NO SE ENCUENTRAR REGISTROS");
+        return false;
+    }
+
+    vecClientes=new Cliente [cantClientes];
+    if(vecClientes==NULL){
+        error("ERROR EN LA ASIGNACION DE MEMORIA");
+        return false;
+    }
+
+    if(!cargarVecClientes(vecClientes,cantClientes)){
+        error("NO SE PUDIERON CARGAR LOS REGISTROS");
+        delete(vecClientes);
+        return false;
+    }
+    cout << "LISTADO DE CLIENTES"<< endl<< endl;
+    for(int i=0;i<cantClientes;i++){
+        cout << "               ID: " << vecClientes[i].getIDCliente()<< endl;
+        cout << "              DNI: " << vecClientes[i].getDNICliente()<< endl;
+        cout << "           NOMBRE: " << vecClientes[i].getNombreCliente()<< endl;
+        cout << "         APELLIDO: "<< vecClientes[i].getApellido()<<endl;
+        listarMascotasConDNICliente(vecClientes[i].getDNICliente());
+        cout << "------------------------------------"<< endl;
+    }
+    pausar();
+    delete(vecClientes);
+    return true;
+}
+bool modificarClientes(){
+    Cliente regCliente;
+    int pos,DNI,validar;
+    char cadena[30];
+    char cadena2[50];
+    cout<< "MODIFICAR CLIENTE" << endl << endl;
+    cout << "       INGRESE DNI: ";
+    cin>> DNI;
+    pos=buscarClientePorDNI(DNI);
+    if(pos==-1){
+        errorEnteroInvalido(DNI,", NO SE ENCUENTRA ESTE DNI EN EL ARCHIVO");
+        return false;
+    }
+    regCliente.leerCliente(pos);
+    verCliente(regCliente);
+    cout << "-----------------------------------------------" << endl;
+    cout << "                MODIFICAR " << endl<<endl;
+    cout << "        DOMICILIO: ";
+    cin.ignore();
+    cin.getline(cadena2,50);
+    if (!validarNombresConEspacios(cadena2)){
+        errorCadenaInvalida(cadena2,"ES UN INGRESO INVALIDO");
+        return false;
+    }
+    regCliente.setDomicilio(cadena2);
+
+    cout << "         TELEFONO: ";
+    cin>>DNI;
+    regCliente.setTelefono(DNI);
+
+    cout << "            @MAIL: ";
+    cin.ignore();
+    cin.getline(cadena,30);
+    if(validarMail(cadena)!=0){
+        errorCadenaInvalida(cadena,"ES UN CORREO INVALIDO");
+        return false;
+    }
+    cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
+    validar=preguntarSIoNO();
+    if(validar==1){
+        if(!regCliente.modificarCliente(pos)){
+            error("ERROR EN EL GUARDADO");
+            return false;
+        }
+    }
+    else if(validar==0){
+        volviendoMenu();
+        return false;
+    }
+    else{
+        errorIngresoInvalido();
+        return false;
+    }
+    return true;
+}

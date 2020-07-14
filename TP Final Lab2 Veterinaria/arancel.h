@@ -1,6 +1,12 @@
 #ifndef ARANCEL_H_INCLUDED
 #define ARANCEL_H_INCLUDED
 #include "fecha.h"
+#include "visuales.h"
+#include "clientes.h"
+#include "historias.h"
+#include "mascotas.h"
+#include "tipoVisita.h"
+#include "funcionesGlobales.h"
 
 const char ARCHIVOARANCELES[20]="aranceles.dat";
 const char ARCHIVOARANCELESBKP[20]="aranceles.bkp";
@@ -9,7 +15,7 @@ class Arancel{
     private:
         Fecha fechaArancel;
         int IDArancel;
-        int IDCliente;
+        int DNICliente;
         int IDHistoria;
         int IDTipoVisita;
         float totalArancel;
@@ -17,13 +23,10 @@ class Arancel{
         int porcentajeHonorario;
         bool abonado;
     public:
-        ///MOSTRAR
-        void mostrarFechaArancel();
-
         ///GETs
         Fecha getFechaArancel();
         int getIDArancel();
-        int getIDCliente();
+        int getDNICliente();
         int getIDHistoria();
         int getIDTipoVisita();
         float getTotalArancel();
@@ -32,9 +35,9 @@ class Arancel{
         bool getAbonado();
 
         ///SETs
-        void setFechaIngreso();
+        void setFechaArancel();
         void setIDArancel(int);
-        void setIDCliente(int);
+        void setDNICliente(int);
         void setIDHistoria(int);
         void setIDTipoVisita(int);
         void setTotalArancel(float);
@@ -43,11 +46,22 @@ class Arancel{
         void setAbonado(bool);
 
         ///DISCO
-        int buscarArancel(int);
         bool guardarArancel();
         bool modificarArancel(int);
         bool leerArancel(int);
-        bool mostrarTodoElArchivo();
 };
+
+///GLOBALES
+int cantidadRegistrosArancel();
+bool cargarVecArancel(Arancel*,int);
+int asignarIDarancel();
+void verArancel(Arancel);
+
+///ARANCELES
+///Para resolver las consignas del MENU ARANCELES
+bool nuevoArancel();
+bool mostrarArancelesDelDia();
+bool modificarArancel();
+bool mostrarArancelesPorVisita();
 
 #endif // ARANCEL_H_INCLUDED

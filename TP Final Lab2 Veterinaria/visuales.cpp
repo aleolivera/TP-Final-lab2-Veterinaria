@@ -32,7 +32,7 @@ void pantallaAgregar(){
     cout<<"|        1) AGREGAR MASCOTA Y CLIENTE                    |"<<endl;
     cout<<"|        2) AGREGAR MASCOTA (CLIENTE EXISTENTE)          |"<<endl;
     cout<<"|--------------------------------------------------------|"<<endl;
-    cout<<"|         0)SALIR                                        |"<<endl;
+    cout<<"|         0)VOLVER                                       |"<<endl;
     cout<<" ======================================================== "<<endl;
 }
 void pantallaHistorias(){
@@ -46,7 +46,7 @@ void pantallaHistorias(){
     cout << "|     5) CONTROLES PENDIENTES (0_0)         (0_o)     |"<< endl;
     cout << "|     6) CONTROLES AUSENTES  ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
-    cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
+    cout << "|                  0) VOLVER                          |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -61,7 +61,7 @@ void pantallaMascotas(){
     cout << "|     3) LISTAR VISITAS       (0_0)         (0_o)     |"<< endl;
     cout << "|     4) TRANSFERIR MASCOTA  ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
-    cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
+    cout << "|                  0) VOLVER                          |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -73,11 +73,12 @@ void pantallaClientes(){
     cout << "|-----------------------------------------------------|"<< endl;
     cout << "|                                                     |"<< endl;
     cout << "|     1) MOSTRAR CLIENTES                             |"<< endl;
-    cout << "|     2) MODIFICAR CLIENTES   /|_/|        /|___/|    |"<< endl;
-    cout << "|     3) LISTAR VISITAS       (0_0)         (0_o)     |"<< endl;
+    cout << "|     2) MOSTRAR TODOS LOS CLIENTES                   |"<< endl;
+    cout << "|     3) MODIFICAR CLIENTES   /|_/|        /|___/|    |"<< endl;
+    cout << "|                             (0_0)         (0_o)     |"<< endl;
     cout << "|                            ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
-    cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
+    cout << "|                  0) VOLVER                          |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -92,7 +93,7 @@ void pantallaAranceles(){
     cout << "|     4) ARANCELES POR VISITA (0_0)         (0_o)     |"<< endl;
     cout << "|                            ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
-    cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
+    cout << "|                  0) VOLVER                          |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -109,7 +110,7 @@ void pantallaAdministracion(){
     cout << "|       6) MOSTRAR DEUDORES     (0_0)         (0_o)   |"<< endl;
     cout << "|       7) COMISIONES          ==(Y)==         (V)    |"<< endl;
     cout << "|-----------------------------(u)---(u)----oOo--U--oOo|"<< endl;
-    cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
+    cout << "|                  0) VOLVER                          |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -118,15 +119,14 @@ void pantallaConfiguracion(){
     cout << " ===================================================== "<< endl;
     cout << "|                CONFIGURACION                        |"<< endl;
     cout << "|-----------------------------------------------------|"<< endl;
-    cout << "|     1) BACKUP CLIENTES                              |"<< endl;
-    cout << "|     2) BACKUP MASCOTAS                              |"<< endl;
-    cout << "|     3) BACKUP HISTORIAS                             |"<< endl;
-    cout << "|     4) BACKUP LISTA DE PRECIOS                      |"<< endl;
-    cout << "|     5) BACKUP ARANCELES     /|_/|        /|___/|    |"<< endl;
+    cout << "|     1) REALIZAR BACKUP DEL SISTEMA                  |"<< endl;
+    cout << "|     2) RESTAURAR ARCHIVOS BACKUP                    |"<< endl;
+    cout << "|                                                     |"<< endl;
+    cout << "|                             /|_/|        /|___/|    |"<< endl;
     cout << "|                             (0_0)         (0_o)     |"<< endl;
     cout << "|                            ==(Y)==         (V)      |"<< endl;
     cout << "|---------------------------(u)---(u)----oOo--U--oOo--|"<< endl;
-    cout << "|                  0) SALIR DEL PROGRAMA              |"<< endl;
+    cout << "|                  0) VOLVER                          |"<< endl;
     cout << " ===================================================== "<< endl;
     cout << "|                    DOCTOR CASA                      |"<< endl;
     cout << " ===================================================== "<< endl;
@@ -142,24 +142,72 @@ void colorPantalla(int texto,int fondo){
     int x;
     x=fondo*16+texto;
     SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),x);
+///0 = Negro
+///1= Azul
+///2= Verde
+///3= Aguamarina
+///4= Rojo
+///5= Púrpura
+///6= Amarillo
+///7= Blanco
+///8= Gris
+///9= Azul Claro
+///A= Verde Claro
+///B= Aguamarina Claro
+///C= Rojo Claro
+///D= Púrpura Claro
+///E= Amarillo Claro
+///F= Blanco Brillante
 }
 
 ///ERRORES
+void error(const char* mensaje){
+    limpiar();
+    system("color 4F");
+//    colorPantalla(15,4);
+    cout << mensaje<< endl;
+    pausar();
+}
+void errorCadenaInvalida(const char* cadena,const char* mensaje){
+    limpiar();
+    system("color 4F");
+//    colorPantalla(15,4);
+    cout << "'"<<cadena<<"' "<< mensaje;
+    pausar();
+}
+void errorEnteroInvalido(int numero,const char* mensaje){
+    limpiar();
+//    colorPantalla(15,4);
+    system("color 4F");
+    cout << "'"<<numero<<"' "<< mensaje << endl;
+    pausar();
+}
+void errorFloatInvalido(float numero,const char* mensaje){
+    limpiar();
+//    colorPantalla(15,4);
+    system("color 4F");
+    cout << "'"<<numero<<"' "<< mensaje << endl;
+    pausar();
+}
+
 void errorFechaInvalida(){
     limpiar();
-    colorPantalla(15,4);
+    system("color 4F");
+//    colorPantalla(15,4);
     cout << "ERROR: FECHA INVALIDA." << endl;
     pausar();
 }
 void errorArchivo(){
     limpiar();
-    colorPantalla(15,4);
+//    colorPantalla(15,4);
+    system("color 4F");
     cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO." << endl;
     pausar();
 }
 void errorIngresoInvalido(){
     limpiar();
-    colorPantalla(15,4);
+    system("color 4F");
+//    colorPantalla(15,4);
     cout << "ERROR: INGRESO INVALIDO."<< endl;
     pausar();
 }
@@ -170,31 +218,35 @@ void volviendoMenu(){
 }
 void guardadoExitoso(){
     limpiar();
-    colorPantalla(15,2);
+    system("color 2F");
+//    colorPantalla(15,2);
     cout << "GUARDADO EXITOSO." << endl;
     pausar();
 }
 void errorRegistro(){
     limpiar();
-    colorPantalla(15,4);
+    system("color 4F");
+//    colorPantalla(15,4);
     cout << "NO SE ENCUENTRA EL REGISTRO EN EL ARCHIVO." << endl;
     pausar();
 }
 void errorAsignacionMemoria(){
     limpiar();
-    colorPantalla(15,4);
+//    colorPantalla(15,4);
     cout << "NO HAY MEMORIA SUFICIENTE." << endl;
     pausar();
 }
 void errorCargarRegistros(){
     limpiar();
-    colorPantalla(15,4);
+    system("color 4F");
+//    colorPantalla(15,4);
     cout << "NO SE PUDIERON CARGAR EL/LOS REGISTRO/S." << endl;
     pausar();
 }
 void errorGuardado(){
     limpiar();
-    colorPantalla(15,4);
+    system("color 4F");
+//    colorPantalla(15,4);
     cout << "NO SE PUDO GUARDAR EL ARCHIVO." << endl;
     pausar();
 }

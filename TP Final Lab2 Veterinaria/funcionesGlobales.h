@@ -6,7 +6,7 @@ using namespace std;
 #include <cstdio>
 #include <string.h>
 #include <ctime>
-
+#include "funcionesGlobales.h"
 #include "fecha.h"
 #include "arancel.h"
 #include "clientes.h"
@@ -14,7 +14,6 @@ using namespace std;
 #include "mascotas.h"
 #include "tipoVisita.h"
 #include "visuales.h"
-
 
 ///VALIDACIONES DE INGRESOS
 int compararFechas(Fecha, Fecha);
@@ -29,74 +28,49 @@ char buscarUltCaracter(const char*);
 int contarSimbolos(const char*);
 int validarMail(const char*);
 bool validarTipoDePago(char);
-bool cad_vacia(char*);
-void listardueno(int);
-const char*TipoDePagoACadena(char);
+bool validarNombres(const char*);
+bool validarNombresConEspacios(const char*);
+bool validarDomicilio(const char*);
+bool validarSiNo(const char*);
+const char* tipoDePagoACadena(char);
 int listarTiposDeVisita(int);
-void listarMascotasConIDCliente(int);
+void listarMascotasConDNICliente(int);
 void listarClientesConIDMascotas(int);
-
+int preguntarSIoNO();
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
-int asignarIDHistoria();
-int asignarIDarancel();
-int asignarIDTipoVisita();
 bool validarTipoVisita(const char*);
-bool validarIDcliente(int);
+bool validarDNICliente(int);
 bool validarIDarancel(int);
 bool validarMascotaConCliente(const char*,int);
 bool validarIDTipoVisita(int);
-int buscarIDClientePorMascota(const char*);
-int buscarIDClienteEnHistorias(int);
-int buscarIDClienteEnHistorias(int);
-int cantidadRegistrosHistorias();
-int cantidadRegistrosClientes();
-int cantidadRegistrosMascotas();
-int cantidadRegistrosArancel();
-int cantidadRegistrosTipoVisita();
-bool cargarVecHistorias(Historia*,int);
-bool cargarVecClientes(Cliente*,int);
-bool cargarVecMascotas(Mascotas*,int);
-bool cargarVecArancel(Arancel*,int);
-bool cargarVecTipoVisita(TipoVisita*,int);
+
+
+///BUSCAR
+int buscarArancel(int);
+int buscarHistoria(int);
+int buscarTipoVisita(int);
+int buscarMascotaPorDNI(int DNI);
+int buscarMascotaPorDNIyNombre(int DNI,const char*nombre);
+Cliente ultimoCliente();
+int buscarClientePorDNI(int DNI);
+
 
 ///SECCIONES DEL PROGRAMA
+///INGRESOS PACIENTES
+bool ingresarCliente();
+bool ingresarMascota();
+bool ingresarSoloMascota();
+bool AgregarPacienteYCliente();
+
+
 ///CLIENTES
 bool listarVisitasClientes();
-void menuClientes();
-///MASCOTAS
-bool listarVisitasMascotas();
 
-void menuMascotas();
-void menuIngresoPaciente();
-
-///HISTORIAS
-bool ingresoHistoria();
-bool mostrarEntradaHistoria();
-bool mostrarHistoria();
-bool modificarHistoria();
-bool controlesPendientes();
-bool controlesAusentes();
-void menuHistorias();
-
-///ARANCELES
-bool nuevoArancel();
-bool modificarArancel();
-bool mostrarArancelesDelDia();
-bool mostrarArancelesPorVisita();
-void menuAranceles();
-
-///ADMINISTRACION
-bool mostrarListaDePrecios();
-bool modificarImportes();
-bool nuevoServicio();
-bool AltaBajaServicio();
-bool listarPorFecha();
-bool mostrarDeudores();
-bool comisiones();
-void menuAdministracion();
 
 ///CONFIGURACION
+bool restaurarSistema();
+bool realizarBKP();
 bool backupHistorias();
 bool backupClientes();
 bool backupTipoVisita();

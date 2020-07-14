@@ -7,313 +7,469 @@
 #include "funcionesGlobales.h"
 #include "visuales.h"
 
-using namespace std;
 
+///GETS
+int Mascotas::getIDmascota(){
+    return IDmascota;
+}
+const char* Mascotas::getNombreMascota(){
+    return nombreMascota;
+}
+int Mascotas::getDNICliente(){
+    return DNICliente;
+}
+int Mascotas::getAnios(){
+    return anios;
+}
+bool Mascotas::getCastrado(){
+    return castrado;
+}
+bool Mascotas::getVacunado(){
+    return vacunado;
+}
+const char* Mascotas::getEspecie(){
+    return especie;
+}
+const char* Mascotas::getRaza(){
+    return raza;
+}
+char Mascotas::getSexo(){
+    return sexo;
+}
+Fecha Mascotas::getFechaVacuna(){
+    return fechaVacuna;
+}
+bool Mascotas::getVivo(){
+    return vivo;
+}
 
-bool Mascotas::Cargar_Mascota(){
-    int castrado_opcion;
-    int vacunado_opcion;
-    cout<<"-----REGISTRO--DE--MASCOTAS------"<<endl;
-
-    cin.ignore();
-    cout<<" NOMBRE DE LA MASCOTA: ";
-    cin.getline(nombreMascota,20);
-    if(cad_vacia(nombreMascota)){
-        errorIngresoInvalido();
+///SET
+void Mascotas::setIDMascota(int ID){
+    IDmascota=ID;
+}
+void Mascotas::setNombreMascota(const char* cadena){
+    strcpy(nombreMascota,cadena);
+}
+void Mascotas::setDNICliente(int DNI){
+    DNICliente=DNI;
+}
+void Mascotas::setAnios(int a){
+    anios=a;
+}
+void Mascotas::setCastrado(bool estado){
+    castrado=estado;
+}
+void Mascotas::setVacunado(bool estado){
+    vacunado=estado;
+}
+void Mascotas::setEspecie(const char* cadena){
+    strcpy(especie,cadena);
+}
+void Mascotas::setRaza(const char* cadena){
+    strcpy(raza,cadena);
+}
+void Mascotas::setSexo(char caracter){
+    sexo=caracter;
+}
+//void Mascotas::setFechaVacuna(int d,int m,int a){
+//    fechaVacuna.setFecha(int d,int m,int a);
+//}
+void Mascotas::setVivo(bool estado){
+    vivo=estado;
+}
+///DISCO
+bool Mascotas::guardarMascota(){
+    FILE*p=fopen(ARCHIVOMASCOTAS,"ab");
+    if(p==NULL){
         return false;
     }
-    cout<<"               ANIOS : " ;
-    cin>>anios;
 
-    cout<<"CASTRADO: 1- SI | 2- NO: ";
-    cin>>castrado_opcion;
-    cin.ignore();
-    switch (castrado_opcion)
+    if(fwrite(this,sizeof (Mascotas),1,p)==1){
+        fclose(p);
+        return true;
+    }
+    else{
+        fclose(p);
+        return false;
+    }
+}
+bool Mascotas::leerMascota(int pos){
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL){
+        return false;
+    }
+    fseek(p, pos*sizeof (Mascotas),0);
+    if(fread(this,sizeof (Mascotas),1,p)==1){
+        fclose(p);
+        return true;
+    }
+    else{
+        fclose(p);
+        return false;
+    }
+}
+bool Mascotas::modificarMascota(int pos){
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb+");
+    if(p==NULL){
+        return false;
+    }
+    fseek(p,(pos*sizeof (Mascotas)),0);
+    if(fwrite(this,sizeof (Mascotas),1,p)==1){
+        fclose(p);
+        return true;
+    }
+    fclose(p);
+    return false;
+}
+
+///GLOBALES
+int asignarIDMascota(){///Le pone solo el ID de manera secuencial
+    Mascotas reg;
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL){
+        return 1;
+    }
+    if(fread(&reg,sizeof (Mascotas),1,p)==0){
+        fclose(p);
+        return 1;
+    }
+    else
     {
-    case 1:
-        castrado= true;
-        break;
-    case 2:
-        castrado= false;
-        break;
+        fseek(p,-sizeof (Mascotas),2);
+        fread(&reg,sizeof (Mascotas),1,p);
+        fclose(p);
+        return reg.getIDmascota()+1;
+    }
+}
+int cantidadRegistrosMascotas(){    ///Devuelve la cantidad de registros en ARCHIVOMASCOTAS
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL)
+    {
+        return -1;
+    }
+    fseek(p,0,2);
+    return ftell(p)/sizeof (Mascotas);
+}
+bool cargarVecMascotas(Mascotas*vec,int tam){///Le mandas un vector de clase MASCOTAS y su tamanio y te lo carga todo
+    Mascotas reg;
+    int i=0;
+    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+    if(p==NULL)
+    {
+        return false;
+    }
+    while(fread(&reg,sizeof (Mascotas),1,p)==1 && i<tam)
+    {
+        vec[i]=reg;
+        i++;
+    }
+    fclose(p);
+    return true;
+}
+void verMascota(Mascotas regMascota){
+    cout<<"       ID MASCOTA: " << regMascota.getIDmascota() << endl;
+    cout<<"             EDAD: "<<regMascota.getAnios() <<" ANIOS."<< endl;
+    cout<<"          ESPECIE: "<< regMascota.getEspecie()<< endl;
+    cout<<"             RAZA: "<< regMascota.getRaza()<< endl;
+    cout<<"             SEXO: ";
+    if(regMascota.getSexo()=='m'||regMascota.getSexo()=='M'){
+        cout << "MACHO"<< endl;
+    }
+    else{
+        cout << "HEMBRA" << endl;
+    }
+     cout<<"           ESTADO: ";
+    if(regMascota.getCastrado()){
+        cout<<"CASTRADO";
+    }
+    else{
+        cout<<"SIN CASTRAR";
+    }
+    cout << " | ";
+    if(regMascota.getVacunado()){
+        cout<<"VACUNADO" << endl;
+    }
+    else{
+        cout<<"SIN VACUNAR" << endl;
+    }
+    pausar();
+}
+
+///MASCOTAS
+///Para resolver las consignas del MENU MASCOTA
+bool mostrarMascotas(){
+    Mascotas regMascota;
+    int pos,DNI;
+    char cadena[20];
+
+    cout<<"MOSTRAR MASCOTA" << endl<< endl;
+    cout<<"  DNI DEL CLIENTE: ";
+    cin>>DNI;
+    pos=buscarMascotaPorDNI(DNI);
+    if(pos==-1){
+        errorEnteroInvalido(DNI,"ES UN DNI INVALIDO, O NO POSEE MASCOTA REGISTRADA");
+        return false;
+    }
+    listarMascotasConDNICliente(DNI);
+    cout << endl;
+
+    cout<<"NOMBRE DE MASCOTA: ";
+    cin.ignore();
+    cin.getline(cadena,20);
+    pos=buscarMascotaPorDNIyNombre(DNI,cadena);
+    if(pos==-1){
+        errorCadenaInvalida(cadena,", NO SE ENCUENTRA EN EL ARCHIVO");
+        return false;
+    }
+    regMascota.leerMascota(pos);
+    verMascota(regMascota);
+    return true;
+}
+bool modificarMascotas(){
+    Mascotas regMascota;
+    int pos,DNI, validar;
+    char cadena[20];
+    char caracter;
+    cout <<"MODIFICAR MASCOTA" << endl<< endl;
+    cout<<"  DNI DEL CLIENTE: ";
+    cin>>DNI;
+    pos=buscarMascotaPorDNI(DNI);
+    if(pos==-1){
+        errorEnteroInvalido(DNI,"ES UN DNI INVALIDO");
+        return false;
+    }
+    listarMascotasConDNICliente(DNI);
+    cout << endl;
+
+    cout<<"NOMBRE DE MASCOTA: ";
+    cin.ignore();
+    cin.getline(cadena,20);
+    pos=buscarMascotaPorDNIyNombre(DNI,cadena);
+    if(pos==-1){
+        errorEnteroInvalido(DNI,"EL NOMBRE INGRESADO NO SE ENCUENTRA EN LE ARCHIVO");
+        return false;
+    }
+    regMascota.leerMascota(pos);
+    verMascota(regMascota);
+    cout <<"-----------------------------------"<< endl;
+    cout <<"            MODIFICAR" << endl;
+    cout << "         NOMBRE: ";
+    cin.getline(cadena,20);
+    if(!validarNombres(cadena)){
+        errorCadenaInvalida(cadena,"NO ES UN NOMBRE VALIDO PARA UNA MASCOTA");
+    }
+    regMascota.setNombreMascota(cadena);
+
+    cout << "        ESPECIE: ";
+    cin.getline(cadena,20);
+    if(!validarNombres(cadena)){
+        errorCadenaInvalida(cadena,"NO ES UN INGRESO VALIDO");
+        return false;
+    }
+    regMascota.setEspecie(cadena);
+
+    cout << "CASTRADO  'SI'|'NO': ";
+
+    validar=preguntarSIoNO();
+    if(validar==1){
+        regMascota.setCastrado(true);
+    }
+    else if(validar==0){
+        regMascota.setCastrado(false);
+    }
+    else{
+        error("INGRESO INVALIDO");
+        return false;
     }
 
-    cout<<"VACUNADO: 1- SI | 2- NO: ";
-    cin>>vacunado_opcion;
-    cin.ignore();
-    if (vacunado_opcion==1){
-        vacunado= true;
+    cout << "VACUNADO  'SI'|'NO': ";
+    validar=preguntarSIoNO();
+    if(validar==1){
+        regMascota.setVacunado(true);
     }
-    else if(vacunado_opcion==2){
-        vacunado= false;
+    else if(validar==0){
+        regMascota.setVacunado(false);
+    }
+    else{
+        error("INGRESO INVALIDO");
+        return false;
+    }
+
+    cout << "SEXO Macho= 'M'| Hembra= 'H': ";
+    cin>> caracter;
+    if(caracter=='H'||caracter=='h'){
+        regMascota.setSexo(caracter);
+    }
+    else if(caracter=='M'||caracter!='m'){
+        regMascota.setSexo(caracter);
     }
     else{
         errorIngresoInvalido();
         return false;
     }
 
-    cout<<"             ESPECIE: ";
-    cin.getline(especie,10);
-    if(cad_vacia(especie)){
-        errorIngresoInvalido();
-        return false;
-    }
-
-    cout<<"                RAZA: ";
-    cin.getline(raza,20);
-    if(cad_vacia(raza)){
-        errorIngresoInvalido();
-        return false;
-    }
-
-
-//    int sexo_opcion;
-    cout<<" SEXO 'M'- MACHO | 'H'- HEMBRA : ";
-    cin>> sexo;
-    if(!(sexo=='M' || sexo=='m'|| sexo!='H'|| sexo!='h')){
-        errorIngresoInvalido();
-        return false;
-    }
-
-    vivo=true;
-    return true;
-}
-void Mascotas::mostrar_Mascota(){
-    cout<<"-----MASCOTA-----"<<endl;
-    if(vivo)
-        cout<<"     NOMBRE: "<<nombreMascota<<endl;
-
-//    cout<<"             ID DEL DUENIO: N "<<IDCliente<< endl;  //EL ID DEL CLIENTE.
-    cout<<"       EDAD: "<<anios<< " ANIOS" << endl;
-
-    cout<<"   CASTRADO: ";
-    if(castrado)
-        cout<<" SI "<<endl;
-    else
-        cout<<" NO "<<endl;
-
-    cout<<"   VACUNADO: ";
-    if(vacunado)
-        cout<<" SI "<<endl;  /// HAY QUE REVEER ESTA INSTANCIA
-    else
-        cout<<" NO"<<endl;
-
-    cout<<"    ESPECIE: "<<especie<<endl;
-
-    cout<<"       RAZA: "<<raza<<endl;
-
-    cout<<"       SEXO: ";
-    if(sexo=='m'||sexo=='M')
-        cout << "MACHO" << endl;
-    if(sexo=='h'||sexo=='H')
-        cout << "HEMBRA" << endl;
-    //cout<<" Fecha de vacuna:"<<fechaVacuna<<endl;
-}
-void Mascotas::listar_Mascotas(){
-//    Mascotas reg;
-    int pos=0;
-    system("cls");
-    while(leerMascota(pos++))
-    {
-        listardueno(IDCliente);
-        mostrar_Mascota();
-        system("pause");
-    }
-}
-
-
-int Mascotas::buscarMascotaXNombre(char *nombre){
-    int pos=0;
-    while(leerMascota(pos))
-    {
-        if(strcmp(nombre,nombreMascota)==0)
-        {
-            return pos;
-            pos++;
-        }
-    }
-    return -1;
-}
-int Mascotas::buscarMascotaXNombreID(const char* nombre,int ID){
-    int pos=0;
-    while(leerMascota(pos++))
-    {
-        if(strcmp(nombre,nombreMascota)==0 && ID==IDCliente)
-        {
-            return pos;
-            pos++;
-        }
-    }
-    return -1;
-}
-
-bool Mascotas::sobrescribir_mascota(int pos){
-    bool guardado;
-    FILE *p;
-    p= fopen(ARCHIVOMASCOTAS,"rb+");
-    if(p==NULL)
-    {
-        return false;
-    }
-    fseek(p,pos*sizeof(ARCHIVOMASCOTAS),0);
-    guardado=fwrite(this,sizeof(Mascotas),1,p);
-    fclose(p);
-    return guardado;
-}
-bool Mascotas::modificar_mascota(){
-    int pos,ID;
-    char cadena[20];
-    cout<<"MODIFICAR MASCOTA" << endl << endl;
-    cout<<"                   ID DEL CLIENTE: ";
-    cin >> ID;
-    if(!validarIDcliente(ID)){
-        errorIngresoInvalido();
-        return false;
-    }
-    listarMascotasConIDCliente(ID);
-    cout << endl;
-    cout<<"  INGRESE EL NOMBRE DE LA MASCOTA: ";
+    cout << "SIGUE DE ALTA  'SI'|'NO': ";
     cin.ignore();
-    cin.getline(cadena,20);
+    validar=preguntarSIoNO();
+    if(validar==1){
+        regMascota.setVivo(true);
+    }
+    else if(validar==0){
+        regMascota.setVivo(false);
+    }
+    else{
+        error("INGRESO INVALIDO");
+    }
 
-    pos=buscarMascotaXNombreID(cadena,ID);
-    if(pos>=0)
-    {
-        leerMascota(pos);
-        cout<<endl;
-        mostrar_Mascota();
-        cout<<endl;
-        cout<<"-----MODIFICAR-----"<<endl;
-        cout<<endl;
-        int opcastrado;
-        cout<<" CASTRADO:  1-SI.   2-NO. "<<endl;
-        cin>>opcastrado;
-        cin.ignore();
-        switch(opcastrado)
-        {
-        case 1:
-            castrado=true;
-            break;
-        case 2:
-            castrado=false;
-            break;
-        default:
-            errorIngresoInvalido();
+    cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO: ";
+    validar=preguntarSIoNO();
+    if(validar==1){
+        if(!regMascota.modificarMascota(pos)){
+            error("NO SE PUDO GUARDAR LA MASCOTA");
             return false;
-            break;
         }
-
-        int opestado;
-        cout<<" SIGUE DADO DE ALTA :  1-SI.  2-NO. "<<endl;
-        cin>>opestado;
-        cin.ignore();
-        switch(opestado)
-        {
-        case 1:
-            vivo=true;
-            break;
-        case 2:
-            vivo=false;
-            break;
-        default:
-            return false;
-            break;
-        }
-
-        int opnombre;
-        cout<<" CAMBIAR NOMBRE: 1-SI. 2-NO. "<<endl;
-        cin>>opnombre;
-        cin.ignore();
-        if(opnombre==1)
-        {
-            cout<<" INGRESE EL NUEVO NOMBRE: ";
-            cin.getline(nombreMascota,20);
-        }
-
-        int opsexo;
-        cout<<" CAMBIAR SEXO: 1-SI. 2-NO "<<endl;
-        cin>>opsexo;
-        cin.ignore();
-        if(opsexo==1)
-        {
-            cout<<" SEXO 'M'-MACHO | 'H'-HEMBRA :";
-            cin>> sexo;
-            if(!(sexo=='M' || sexo=='m'|| sexo!='H'|| sexo!='h')){
-            errorIngresoInvalido();
-            return false;
-            }
-        }
-
-        if(sobrescribir_mascota(pos))
-        {
-            guardadoExitoso();
-        }
-        else
-        {
-            errorGuardado();
-        }
-    }
-    else
-    {
-        errorRegistro();
-    }
-    return true;
-}
-
-///GETS
-int Mascotas::getIDCliente(){
-    return IDCliente;
-}
-const char* Mascotas::getNombre(){
-    return nombreMascota;
-}
-bool Mascotas::getVivo(){
-    return vivo;
-}
-///DISCO
-bool Mascotas::gurdar_Mascota_EnDisco(){
-    bool guardado;
-    FILE *p;
-    p=fopen(ARCHIVOMASCOTAS,"ab");
-    if(p==NULL)
-    {
-        return false;
-    }
-    guardado=fwrite(this,sizeof(Mascotas),1,p);
-    fclose(p);
-    return guardado;
-}
-bool Mascotas::leerMascota(int pos){
-    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
-    if(p==NULL)
-    {
-        return false;
-    }
-    fseek(p, pos*sizeof (Mascotas),0);
-    if(fread(this,sizeof (Mascotas),1,p)==1)
-    {
-        fclose(p);
         return true;
     }
-    else
-    {
-        fclose(p);
+    else if(validar==0){
+        volviendoMenu();
         return false;
     }
-}
-bool Mascotas::mostrarTodoElArchivo(){
-    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
-    if(p==NULL){
-        return -1;
+    else{
+        error("INGRESO INVALIDO");
+        return false;
     }
-    while(fread(this,sizeof (Mascotas),1,p)==1){
-        cout <<"IDcliente: "<< this->IDCliente<< endl;
-        cout <<"sexo: "<< this->sexo<< endl;
-        cout <<"especie: " << this->especie<< endl;
-        cout <<"nombre: " << this->nombreMascota<< endl;
-        cout << "................" << endl;
+
+}
+bool listarVisitas(){
+    Historia*vecHistorias;
+    char cadena[20];
+    int DNI;
+    bool encontrado=false;
+    int cantHistorias=cantidadRegistrosHistorias();
+    if(cantHistorias==-1){
+        errorArchivo();
+        return false;
+    }
+
+    cout << "LISTAR VISITAS" << endl << endl;
+    cout << "      DNI DE CLIENTE: ";
+    cin>> DNI;
+    cin.ignore();
+    if(!validarDNICliente(DNI)){
+        errorIngresoInvalido();
+        return false;
+    }
+    listarMascotasConDNICliente(DNI);
+    cout << endl;
+    cout << "   NOMBRE DE MASCOTA: ";
+    cin.getline(cadena,20);
+    if(cadena[0]=='\0'){
+        errorIngresoInvalido();
+        return false;
+    }
+
+    vecHistorias=new Historia [cantHistorias];
+    if(vecHistorias==NULL){
+        errorAsignacionMemoria();
+        return false;
+    }
+    if(!cargarVecHistorias(vecHistorias,cantHistorias)){
+        delete(vecHistorias);
+        return false;
+    }
+
+    for(int i=0;i<cantHistorias;i++){
+        if(strcmp(cadena,vecHistorias[i].getNombreMascota())==0 && vecHistorias[i].getDNICliente()==DNI){
+            cout << "FECHA VISITA: ";
+            vecHistorias[i].getFechaVisita().mostrarFecha();
+            cout << "      ID DE VISITA: " << vecHistorias[i].getIDHistoria() << endl;
+            cout << "--------------------------------------------" << endl;
+            encontrado=true;
+        }
+    }
+    if(!encontrado){
+        cout << "NO HUBO COINCIDENCIAS" << endl;
     }
     pausar();
-    fclose(p);
-    return false;
+    delete(vecHistorias);
+    return true;
 }
+bool transferirMascotas(){
+    Cliente regCliente;
+    Mascotas regMascota;
+    int posMascota,posCliente,DNI,validar;
+    char cadena[20];
+    cout <<"TRANFERIR MASCOTA" << endl<< endl;
+    cout<<"DNI DUENIO ACTUAL: ";
+    cin>>DNI;
+    posMascota=buscarMascotaPorDNI(DNI);
+    if(posMascota==-1){
+        errorEnteroInvalido(DNI,"ES UN DNI INVALIDO");
+        return false;
+    }
+    listarMascotasConDNICliente(DNI);
+    cout << endl;
+
+    cout<<"NOMBRE DE MASCOTA: ";
+    cin.ignore();
+    cin.getline(cadena,20);
+    posMascota=buscarMascotaPorDNIyNombre(DNI,cadena);
+    if(posMascota==-1){
+        errorEnteroInvalido(DNI,"EL NOMBRE INGRESADO NO SE ENCUENTRA EN LE ARCHIVO");
+        return false;
+    }
+    regMascota.leerMascota(posMascota);
+    verMascota(regMascota);
+    cout <<"-----------------------------------"<< endl;
+    cout <<"            TRANSFERIR" << endl;
+    cout << "       DNI NUEVO DUENIO: ";
+    cin>>DNI;
+    cin.ignore();
+    posCliente=buscarClientePorDNI(DNI);
+    regCliente.leerCliente(posCliente);
+    if(posCliente==-1){
+        cout << DNI << ", ES UN DNI INVALIDO, O NO SE ENCUENTRA REGISTRADO"<< endl;
+        cout << "¿DESEA REGISTRARLO AHORA?:";
+        validar=preguntarSIoNO();
+        if(validar==1){
+            limpiar();
+            if(!ingresarCliente()){
+                error("NO SE PUDO INGRESAR EL CLIENTE");
+                return false;
+            }
+            regCliente=ultimoCliente();
+        }
+        else if(validar==0){
+            volviendoMenu();
+            return false;
+        }
+        else{
+            error("NO ES UN INGRESO VALIDO");
+            return false;
+        }
+    }
+    cout << "NOMBRE DEL NUEVO DUENIO: "<< regCliente.getNombreCliente() << endl;
+    cout << "               APELLIDO: "<< regCliente.getApellido() << endl;
+    cout << "                    DNI: "<< regCliente.getDNICliente() << endl;
+    cout << "DESEA COMPLETAR LA TRANSFERENCIA? SI | NO: ";
+    validar=preguntarSIoNO();
+    if(validar==1){
+        regMascota.setDNICliente(regCliente.getDNICliente());
+        if(!regMascota.modificarMascota(posMascota)){
+            error("NO SE PUDO GUARDAR EL REGISTRO");
+            return false;
+        }
+    }
+    else if(validar==0){
+        volviendoMenu();
+        return false;
+    }
+    else{
+        error("NO ES UN INGRESO VALIDO");
+        return false;
+    }
+    return true;
+}
+
+
+

@@ -12,35 +12,62 @@ const char ARCHIVOMASCOTASBKP[20]="mascotas.bkp";
 
 class Mascotas{
     private:
+        int IDmascota;
         char nombreMascota[20];
-        int IDCliente;  ///UN SET = GET DE IDCLIENTE CLIENTE
+        int DNICliente;  ///UN SET = GET DE IDCLIENTE CLIENTE
         int anios;
         bool castrado;
         bool vacunado;
-        char especie [10];
+        char especie [20];
         char raza [20];
         char sexo;
         Fecha fechaVacuna;
         bool vivo;
     public:
-        bool Cargar_Mascota();
-        void mostrar_Mascota(); ///INDIVIDUAL
-        void listar_Mascotas(); ///MUESTRA TODOS LOS REGISTROS
-        void mostrarDatosDelDueno(int );
-        ///GETs
-        int getIDCliente();
-        const char* getNombre();
+        ///GETS
+        int getIDmascota();
+        const char* getNombreMascota();
+        int getDNICliente();
+        int getAnios();
+        bool getCastrado();
+        bool getVacunado();
+        const char* getEspecie();
+        const char* getRaza();
+        char getSexo();
+        Fecha getFechaVacuna();
         bool getVivo();
-        ///SETs
-        void setIDcliente(int id){ IDCliente=id;}
+
+        ///SET
+        void setIDMascota(int);
+        void setNombreMascota(const char*);
+        void setDNICliente(int);
+        void setAnios(int );
+        void setCastrado(bool);
+        void setVacunado(bool);
+        void setEspecie(const char*);
+        void setRaza(const char*);
+        void setSexo(char);
+        void setVivo(bool);
         ///DISCO
+        bool guardarMascota();
         bool leerMascota(int);
-        bool gurdar_Mascota_EnDisco();
-        int buscarMascotaXNombre(char*);
-        int buscarMascotaXNombreID(const char*,int);
-        bool modificar_mascota();
-        bool sobrescribir_mascota(int);
-        bool mostrarTodoElArchivo();
+        bool modificarMascota(int);
 };
+
+
+///GLOBALES
+int asignarIDMascota();
+int cantidadRegistrosMascotas();
+bool cargarVecMascotas(Mascotas*,int);
+void verMascota(Mascotas regMascota);
+
+///MASCOTAS
+///Para resolver las consignas del MENU MASCOTA
+bool mostrarMascotas();
+bool modificarMascotas();
+bool listarVisitas();
+bool transferirMascotas();
+
+
 
 #endif // MASCOTAS_H_INCLUDED
