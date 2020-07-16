@@ -16,14 +16,23 @@ using namespace std;
 
 int main()
 {
-    Mascotas reg;
-    FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
+//    Arancel reg;
+//    FILE*p=fopen(ARCHIVOARANCELES,"rb");
+//    if(p==NULL) return -1;
+//    while(fread(&reg,sizeof reg,1,p)==1){
+//        cout << reg.getIDArancel() << endl;
+//        verArancel(reg);
+//    }
+//    pausar();
+
+    TipoVisita reg;
+    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
     if(p==NULL) return -1;
-    while(fread(&reg,sizeof (Mascotas),1,p)==1){
-        verMascota(reg);
-        }
+    while(fread(&reg,sizeof reg,1,p)==1){
+        cout << reg.getIDTipoVisita() << endl;
+        cout << reg.getNombreTipoVisita() << endl;
+    }
     pausar();
-    fclose(p);
 
     int op;
     bool salir=false;

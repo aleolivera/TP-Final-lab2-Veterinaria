@@ -43,6 +43,8 @@
 		<Unit filename="historias.cpp" />
 		<Unit filename="historias.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="marcos.cpp" />
+		<Unit filename="marcos.h" />
 		<Unit filename="mascotas.cpp" />
 		<Unit filename="mascotas.h">
 			<Option target="&lt;{~None~}&gt;" />

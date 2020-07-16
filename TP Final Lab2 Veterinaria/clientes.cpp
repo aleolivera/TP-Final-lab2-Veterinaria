@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <string.h>
 #include "clientes.h"
+#include "marcos.h"
 #include "funcionesGlobales.h"
 
 using namespace std;
@@ -156,9 +157,8 @@ void verCliente(Cliente regCliente){
     cout << "        DIRECCION: "<< regCliente.getDomicilio()<<endl;
     cout << "         TELEFONO: "<< regCliente.getTelefono()<<endl;
     cout << "            @MAIL: "<< regCliente.getEmail()<<endl;
+    cout << "         MASCOTAS: ";
     listarMascotasConDNICliente(regCliente.getDNICliente());
-    cout << endl;
-    pausar();
 }
 
 ///CLIENTES
@@ -166,7 +166,9 @@ void verCliente(Cliente regCliente){
 bool mostrarCliente(){
     Cliente regCliente;
     int DNI,pos;
-    cout << "MOSTRAR CLIENTE" << endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "                   MOSTRAR CLIENTE" << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout << "       INGRESE DNI: ";
     cin>>DNI;
     pos=buscarClientePorDNI(DNI);
@@ -176,6 +178,8 @@ bool mostrarCliente(){
     }
     regCliente.leerCliente(pos);
     verCliente(regCliente);
+    cout << "======================================================"<< endl;
+    pausar();
     return true;
 }
 bool mostrarTodosClientes(){
@@ -197,15 +201,19 @@ bool mostrarTodosClientes(){
         delete(vecClientes);
         return false;
     }
-    cout << "LISTADO DE CLIENTES"<< endl<< endl;
+
+    cout << "======================================================"<< endl;
+    cout << "                   LISTADO DE CLIENTES" << endl;
     for(int i=0;i<cantClientes;i++){
+        cout << "------------------------------------------------------"<< endl;
         cout << "               ID: " << vecClientes[i].getIDCliente()<< endl;
         cout << "              DNI: " << vecClientes[i].getDNICliente()<< endl;
         cout << "           NOMBRE: " << vecClientes[i].getNombreCliente()<< endl;
         cout << "         APELLIDO: "<< vecClientes[i].getApellido()<<endl;
+        cout << "         MASCOTAS: ";
         listarMascotasConDNICliente(vecClientes[i].getDNICliente());
-        cout << "------------------------------------"<< endl;
     }
+    cout << "======================================================"<< endl;
     pausar();
     delete(vecClientes);
     return true;
@@ -215,7 +223,9 @@ bool modificarClientes(){
     int pos,DNI,validar;
     char cadena[30];
     char cadena2[50];
-    cout<< "MODIFICAR CLIENTE" << endl << endl;
+    cout << "======================================================"<< endl;
+    cout << "                   MODIFICAR CLIENTE" << endl;
+    cout << "------------------------------------------------------" << endl;
     cout << "       INGRESE DNI: ";
     cin>> DNI;
     pos=buscarClientePorDNI(DNI);
@@ -225,7 +235,7 @@ bool modificarClientes(){
     }
     regCliente.leerCliente(pos);
     verCliente(regCliente);
-    cout << "-----------------------------------------------" << endl;
+    cout << "------------------------------------------------------" << endl;
     cout << "                MODIFICAR " << endl<<endl;
     cout << "        DOMICILIO: ";
     cin.ignore();
@@ -265,3 +275,4 @@ bool modificarClientes(){
     }
     return true;
 }
+

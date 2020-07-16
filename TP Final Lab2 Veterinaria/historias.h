@@ -64,6 +64,10 @@ bool mostrarHistoria();
 bool modificarHistoria();
 bool controlesPendientes();
 bool controlesAusentes();
+bool bajarControlesPendientes();
+bool bajarControlesAusentes();
+
+
 
 
 

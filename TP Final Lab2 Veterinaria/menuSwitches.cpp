@@ -215,6 +215,7 @@ void menuConfiguracion(){
     case 2:
         if(restaurarSistema()){
             guardadoExitoso();
+            limpiar();
             cout << "SISTEMA RESTAURADO."<< endl;
             pausar();
         }

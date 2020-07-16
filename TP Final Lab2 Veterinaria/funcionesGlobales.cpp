@@ -200,7 +200,6 @@ bool validarNombresConEspacios(const char* cadena){///True = 0-9, a-z o A-Z , fa
         }
         i++;
     }
-
     return true;
 }
 bool validarSiNo(const char* cadena){ /// True= Si o NO , false=cualquier otra cosa
@@ -230,12 +229,11 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
     TipoVisita reg;
     FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
     if (p==NULL){
-        errorArchivo();
         return -1;
     }
     int i=0;
     int con=0;
-    cout <<"                       ";
+    cout <<"     ";
     switch(op){
         case 0:
             while(fread(&reg,sizeof (TipoVisita),1,p)==1){
@@ -245,12 +243,15 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
                     cout<<i <<"- "<<reg.getNombreTipoVisita();
                     if(con%3==0){
                         cout << endl;
-                        cout<<"                       ";
+                        cout <<"     ";
                     }
                     else{
                         cout << " | ";
                     }
                 }
+            }
+            if (con==0){
+                cout << "NO HAY SERVICIOS EN BAJA.";
             }
             break;
         case 1:
@@ -261,12 +262,15 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
                     cout<<i <<"- "<<reg.getNombreTipoVisita();
                     if(con%3==0){
                         cout << endl;
-                        cout<<"                       ";
+                        cout <<"     ";
                     }
                     else{
                         cout << " | ";
                     }
                 }
+            }
+            if (con==0){
+                cout << "NO HAY SERVICIOS EN ALTA.";
             }
             break;
         case 2:
@@ -276,11 +280,14 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
                 cout<<i <<"- "<<reg.getNombreTipoVisita();
                 if(con%3==0){
                     cout << endl;
-                    cout<<"                       ";
+                    cout <<"     ";
                 }
                 else{
                     cout << " | ";
                 }
+            }
+            if (con==0){
+                cout << "NO HAY SERVICIOS REGISTRADOS";
             }
             break;
     }
@@ -295,12 +302,12 @@ void listarMascotasConDNICliente(int DNI){
     Mascotas reg;
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
     if (p==NULL){
-        cout<<endl;
+        error("NO SE ENCONTRO EL ARCHIVO DE MASCOTAS");
         return;
     }
     bool estado=false;
     int con=0;
-    cout <<"       SUS MASCOTAS: ";
+//    cout <<"       SUS MASCOTAS: ";
     while(fread(&reg,sizeof (Mascotas),1,p)==1){
         if(reg.getDNICliente()==DNI&&reg.getVivo()){
             con++;
@@ -315,7 +322,7 @@ void listarMascotasConDNICliente(int DNI){
         }
     }
     if(!estado){
-        cout << "SIN MASCOTA REGISTRADA" << endl;
+        cout << "SIN MASCOTA REGISTRADA";
     }
     cout << endl;
     fclose(p);
@@ -345,6 +352,11 @@ int preguntarSIoNO(){ ///DEVUELVE 1=si, 0=no, 2=otra cosa.
     else{
         return 0;
     }
+}
+int generarRandom(int maximo){
+    int n;
+    n=1 + rand() % (maximo-1); ///variable = limite_inferior + rand() % (limite_superior +1 - limite_inferior) ;
+    return n;
 }
 
 ///BUSCAR
@@ -465,17 +477,14 @@ bool validarTipoVisita(const char*nombre){
     if(p==NULL){
         return false;
     }
-    if(!validarNombres(nombre)){
-        return false;
-    }
     while(fread(&reg,sizeof (TipoVisita),1,p)==1){
         if(strcmp(reg.getNombreTipoVisita(),nombre)==0){
             fclose(p);
-            return false;
+            return true;
         }
     }
     fclose(p);
-    return true;
+    return false;
 }
 bool validarIDTipoVisita(int ID){
     TipoVisita aux;
@@ -606,7 +615,10 @@ bool ingresarCliente(){
     int DNI;
     char cadena[30];
     char cadena2[50];
-    cout << "INGRESO DE CLIENTE" << endl << endl;
+
+    cout << "======================================================" << endl;
+    cout << "                 INGRESO DE CLIENTE" << endl;
+    cout << "------------------------------------------------------" << endl;
     regCliente.setIDCliente(asignarIDCliente());
     cout << "            ID: " << regCliente.getIDCliente() << endl;
     cout << "           DNI: ";
@@ -659,7 +671,7 @@ bool ingresarCliente(){
     }
     regCliente.setEmail(cadena);
     regCliente.setSaldo(0);
-    cout <<"-------------------------------------" << endl;
+    cout << "======================================================" << endl;
 
     if(!regCliente.guardarCliente()){
         error("NO SE PUDO GUARDAR EL ARCHIVO.");
@@ -671,7 +683,6 @@ bool ingresarMascota(){
     int valor,validar;
 //    int dia,mes,anio;
     char cadena [20];
-    char cadena3 [3];
     char caracter;
 
     Mascotas regMascota;
@@ -683,7 +694,9 @@ bool ingresarMascota(){
     }
     regMascota.setIDMascota(asignarIDMascota());
     regMascota.setDNICliente(regCliente.getDNICliente());
-    cout << "INGRESO DE MASCOTA" << endl<< endl;
+    cout << "======================================================" << endl;
+    cout << "                 INGRESO DE MASCOTA" << endl;
+    cout << "------------------------------------------------------" << endl;
     cout << "         ID MASCOTA: " << regMascota.getIDmascota();
     cout << "                DNI: " << regMascota.getDNICliente();
     cout << endl;
@@ -698,36 +711,36 @@ bool ingresarMascota(){
     cout << "       EDAD (ANIOS): ";
     cin>> valor;
     if(valor>30||valor<0){
-        errorEnteroInvalido(valor,"NO ES UN INGRESO VALIDO.");;
+        errorEnteroInvalido(valor,"NO ES UN INGRESO VALIDO.");
         return false;
     }
     regMascota.setAnios(valor);
 
     cout << "CASTRADO  'SI'|'NO': ";
     cin.ignore();
-    cin.getline(cadena3,3);
-    if(!validarSiNo(cadena3)){
-        errorCadenaInvalida(cadena3,"NO ES UN INGRESO VALIDO");
-        return false;
-    }
-    if(strcmp("Si",cadena3)==0||strcmp("SI",cadena3)==0||strcmp("sI",cadena3)==0||strcmp("si",cadena3)==0){
+    validar=preguntarSIoNO();
+    if(validar==1){
         regMascota.setCastrado(true);
     }
-    else{
+    else if(validar==0){
         regMascota.setCastrado(false);
+    }
+    else{
+        errorIngresoInvalido();
     }
 
     cout << "VACUNADO  'SI'|'NO': ";
-    cin.getline(cadena3,3);
-    if(!validarSiNo(cadena3)){
-        errorCadenaInvalida(cadena3,"NO ES UN INGRESO VALIDO");
-    }
-    if(strcmp("Si",cadena3)==0||strcmp("SI",cadena3)==0||strcmp("sI",cadena3)==0||strcmp("si",cadena3)==0){
+    validar=preguntarSIoNO();
+    if(validar==1){
         regMascota.setVacunado(true);
     }
-    else{
+    else if(validar==0){
         regMascota.setVacunado(false);
     }
+    else{
+        errorIngresoInvalido();
+    }
+
     cout << "            ESPECIE: ";
     cin.getline(cadena,20);
     if(!validarNombres(cadena)){
@@ -795,7 +808,6 @@ bool ingresarSoloMascota(){
     int pos,valor,validar;
 //    int dia,mes,anio;
     char cadena [20];
-    char cadena3 [3];
     char caracter;
 
     Mascotas regMascota;
@@ -803,7 +815,9 @@ bool ingresarSoloMascota(){
 
     regMascota.setIDMascota(asignarIDMascota());
     regMascota.setDNICliente(regCliente.getDNICliente());
-    cout << "INGRESO DE MASCOTA" << endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "                    INGRESO DE MASCOTA" << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout << "        INGRESE DNI: ";
     cin >> valor;
     pos=buscarClientePorDNI(valor);
@@ -815,8 +829,9 @@ bool ingresarSoloMascota(){
     regMascota.setDNICliente(regCliente.getDNICliente());
     cout << " NOMBRE DEL CLIENTE: " << regCliente.getNombreCliente() << endl;
     cout << "           APELLIDO: " << regCliente.getApellido()<< endl;
+    cout << "           MASCOTAS: ";
     listarMascotasConDNICliente(valor);
-    cout << "---------------------------------------" << endl;
+    cout << "------------------------------------------------------" << endl;
     cout << "         ID MASCOTA: " << regMascota.getIDmascota()<< endl;
     cout << "             NOMBRE: ";
     cin.ignore();
@@ -837,29 +852,29 @@ bool ingresarSoloMascota(){
 
     cout << "CASTRADO  'SI'|'NO': ";
     cin.ignore();
-    cin.getline(cadena3,3);
-    if(!validarSiNo(cadena3)){
-        errorCadenaInvalida(cadena3,"NO ES UN INGRESO VALIDO");
-        return false;
-    }
-    if(strcmp("Si",cadena3)==0||strcmp("SI",cadena3)==0||strcmp("sI",cadena3)==0||strcmp("si",cadena3)==0){
+    validar=preguntarSIoNO();
+    if(validar==1){
         regMascota.setCastrado(true);
     }
-    else{
+    else if(validar==0){
         regMascota.setCastrado(false);
+    }
+    else{
+        errorIngresoInvalido();
     }
 
     cout << "VACUNADO  'SI'|'NO': ";
-    cin.getline(cadena3,3);
-    if(!validarSiNo(cadena3)){
-        errorCadenaInvalida(cadena3,"NO ES UN INGRESO VALIDO");
-    }
-    if(strcmp("Si",cadena3)==0||strcmp("SI",cadena3)==0||strcmp("sI",cadena3)==0||strcmp("si",cadena3)==0){
+    validar=preguntarSIoNO();
+    if(validar==1){
         regMascota.setVacunado(true);
     }
-    else{
+    else if(validar==0){
         regMascota.setVacunado(false);
     }
+    else{
+        errorIngresoInvalido();
+    }
+
     cout << "            ESPECIE: ";
     cin.getline(cadena,20);
     if(!validarNombres(cadena)){
@@ -925,7 +940,9 @@ bool ingresarSoloMascota(){
 }
 bool AgregarPacienteYCliente(){
     limpiar();
-    cout << "INGRESO DE CLIENTE Y PACIENTE"<< endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "              INGRESO DE CLIENTE Y PACIENTE" << endl;
+    cout << "------------------------------------------------------"<< endl;
     if(!ingresarCliente()){
         error("NO SE PUDO CARGAR EL CLIENTE");
         return false;
@@ -1009,7 +1026,7 @@ bool restaurarAranceles(){
     return true;
 }
 bool restaurarVisita(){
-    Arancel reg;
+    TipoVisita reg;
     FILE*pArchivo=fopen(ARCHIVOTIPOVISITABKP,"rb");
     if(pArchivo==NULL) return false;
 
@@ -1095,7 +1112,7 @@ bool backupAranceles(){
     return true;
 }
 bool backupTipoVisita(){
-    Arancel reg;
+    TipoVisita reg;
     FILE*pArchivo=fopen(ARCHIVOTIPOVISITA,"rb");
     if(pArchivo==NULL) return false;
 
@@ -1112,9 +1129,19 @@ bool backupTipoVisita(){
     return true;
 }
 bool restaurarSistema(){
-    int validar;
-    cout << "RESTAURAR SISTEMA"<< endl <<endl;
-    cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+    int validar,codigo;
+    codigo=generarRandom(99999);
+    cout << "====================================================="<< endl;
+    cout << "           RESTAURAR SISTEMA"<< endl;
+    cout << "------------------------------------------------------" << endl<< endl;
+    cout << "INGRESE EL CODIGO PARA CONFIRMAR LA OPERACION: " << codigo << " : ";
+    cin>> validar;
+    if(validar!=codigo){
+        errorEnteroInvalido(validar, ", ES UN INGRESO INVALIDO");
+        return false;
+    }
+    cout << "ESTA SEGURO QUE DESEA REALIZAR LA OPERACION? SI | NO: ";
+    cin.ignore();
     validar=preguntarSIoNO();
     if(validar==1){
         if(!restaurarClientes()){
@@ -1145,9 +1172,19 @@ bool restaurarSistema(){
     return true;
 }
 bool realizarBKP(){
-    int validar;
-    cout << "BACKUP DE CLIENTES."<< endl <<endl;
-    cout << "INGRESE 'SI' PARA CONFIRMAR LA OPERACION: ";
+    int validar,codigo;
+    codigo=generarRandom(99999);
+    cout << " ===================================================== "<< endl;
+    cout << "           BACKUP DEL SISTEMA."<<endl;
+    cout << "------------------------------------------------------" << endl;
+    cout << "INGRESE EL CODIGO PARA CONFIRMAR LA OPERACION: " << codigo<< " : ";
+    cin>> validar;
+    if(validar!=codigo){
+        errorEnteroInvalido(validar, ", ES UN INGRESO INVALIDO");
+        return false;
+    }
+    cout << "ESTA SEGURO QUE DESEA REALIZAR LA OPERACION? SI | NO: ";
+    cin.ignore();
     validar=preguntarSIoNO();
     if(validar==1){
         if(!backupClientes()){

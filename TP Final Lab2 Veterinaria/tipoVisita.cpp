@@ -127,17 +127,18 @@ bool cargarVecTipoVisita(TipoVisita*vec,int tam){///Le mandas un vector de clase
     return true;
 }
 void verTipoVisita(TipoVisita regTipoVisita){
-        cout << "            ID: "<< regTipoVisita.getIDTipoVisita() << endl;
-        cout << "TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita() << endl;
-        cout << "       IMPORTE: $" << regTipoVisita.getImporte() <<"-." << endl;
-        cout << "     HONORARIO: " << regTipoVisita.getPorcentajeHonorario() << "%."<< endl;
+        cout << "                      ID: "<< regTipoVisita.getIDTipoVisita() << endl;
+        cout << "          TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita() << endl;
+        cout << "                 IMPORTE: $" << regTipoVisita.getImporte() <<"-." << endl;
+        cout << "               HONORARIO: " << regTipoVisita.getPorcentajeHonorario() << "%."<< endl;
 }
 
 ///ADMINISTRACION
 ///Para resolver las consignas del MENU ADMINISTRACION
 bool mostrarListaDePrecios(){
     limpiar();
-    cout << "LISTA DE PRECIOS" << endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "                    LISTA DE PRECIOS" << endl;
     TipoVisita*vec;
     int cantTipoVisita=cantidadRegistrosTipoVisita();
     vec= new TipoVisita [cantTipoVisita];
@@ -149,11 +150,11 @@ bool mostrarListaDePrecios(){
         errorCargarRegistros();
         return false;
     }
-    for(int i=0; i<cantTipoVisita; i++)
-    {
+    for(int i=0; i<cantTipoVisita; i++){
+        cout << " ---------------------------------------------------- " <<endl;
         verTipoVisita(vec[i]);
-        cout << "----------------------------------" << endl;
     }
+    cout << " ==================================================== "<< endl;
     pausar();
     delete(vec);
     return true;
@@ -163,10 +164,16 @@ bool modificarImportes(){
     TipoVisita reg;
     int ID, pos, validar;
     float importe;
-    cout << "MODIFICAR IMPORTES" <<endl << endl;
-    listarTiposDeVisita(1);
-    cout << endl << endl<< "           INGRESE ID: ";
+    cout << "======================================================"<< endl;
+    cout << "                    MODIFICAR IMPORTES" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    if(listarTiposDeVisita(1)==-1){
+        error("NO SE ENCONTRARON SERVICIOS EN EL ARCHIVO");
+        return false;
+    }
+    cout << "           INGRESE ID: ";
     cin >> ID;                              ///PIDO EL ID,
+    cout << "------------------------------------------------------" << endl;
     pos=buscarTipoVisita(ID);           ///BUSCO ESE REGISTRO EN ARCHIVOTIPOVISITAS
     if (pos==-1){                           ///VALIDO LA POSICION
         errorRegistro();
@@ -174,8 +181,8 @@ bool modificarImportes(){
     }
     reg.leerTipoVisita(pos);
     verTipoVisita(reg);
-    cout << "---------------------------------------" << endl;
-    cout << "INGRESO DE NUEVOS VALORES" <<endl << endl;
+    cout << "------------------------------------------------------" << endl;
+    cout << "           INGRESO DE NUEVOS VALORES" <<endl << endl;
     cout << "NOMBRE TIPO DE VISITA: ";
     cout << reg.getNombreTipoVisita() << endl;
     if(!validarNombresConEspacios(reg.getNombreTipoVisita())){
@@ -223,7 +230,9 @@ bool nuevoServicio(){
     int ID,validar;
     float importe;
     char cadena[30];
-    cout << " INGRESAR TIPO DE VISITA" <<endl << endl;
+    cout << "======================================================"<< endl;
+    cout << "              INGRESAR NUEVO TIPO DE VISITA" << endl;
+    cout << "------------------------------------------------------"<< endl;
     ID=asignarIDTipoVisita();                  ///EL ID SE ASIGNA SECUENCIALMENTE
     if(validarIDTipoVisita(ID)){
         errorRegistro();
@@ -234,9 +243,10 @@ bool nuevoServicio(){
     cout << "              NOMBRE: ";        ///PIDO LOS DEMAS ATRIBUTOS Y LOS VALIDO
     cin.ignore();
     cin.getline(cadena,30);
-    if (!validarTipoVisita(cadena) || !validarNombresConEspacios(cadena)){
+    if(validarTipoVisita(cadena) || !validarNombresConEspacios(cadena)){
         errorIngresoInvalido();
         cout << "PUEDE QUE ESE SERVICIO ESTE DADO DE BAJA" << endl;
+        pausar();
         return false;
     }
     reg.setNombreTipoVisita(cadena);
@@ -258,7 +268,7 @@ bool nuevoServicio(){
     }
     reg.setPorcentajeHonorario(ID);
     reg.setEstado(true);
-
+    cout << "------------------------------------------------------"<< endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     cin.ignore();
     validar=preguntarSIoNO();
@@ -282,13 +292,16 @@ bool AltaBajaServicio(){
     limpiar();
     TipoVisita regTipoVisita;
     int ID,pos, validar;
-    cout << " ALTA Y BAJA DE TIPO DE VISITA" <<endl << endl;
+    cout << "======================================================" << endl;
+    cout << "             ALTA Y BAJA DE TIPO DE VISITAS" << endl;
+    cout << "------------------------------------------------------" << endl<< endl;
     cout << "   SERVICIOS EN BAJA:" << endl;
     listarTiposDeVisita(0);
     cout << endl;
     cout << "   SERVICIOS EN ALTA:" << endl;
     listarTiposDeVisita(1);
-    cout << endl<< endl << "   TIPO DE VISITA ID: ";
+    cout << "------------------------------------------------------" << endl;
+    cout << endl << "   TIPO DE VISITA ID: ";
     cin >> ID;
     cin.ignore();
     pos=buscarTipoVisita(ID);
@@ -299,7 +312,7 @@ bool AltaBajaServicio(){
     regTipoVisita.leerTipoVisita(pos);
     if(regTipoVisita.getEstado()){
         cout << " ESTA SEGURO QUE DESEA DAR DE BAJA?"<< endl;
-        cout << "                         SI | NO:";
+        cout << "                         SI | NO: ";
         validar=preguntarSIoNO();
         if(validar==1){
             regTipoVisita.setEstado(false);
@@ -315,7 +328,7 @@ bool AltaBajaServicio(){
     }
     else{
         cout << " ESTA SEGURO QUE DESEA DAR DE ALTA?"<< endl;
-        cout << "                         SI | NO:";
+        cout << "                         SI | NO: ";
         validar=preguntarSIoNO();
         if(validar==1){
             regTipoVisita.setEstado(true);
@@ -329,7 +342,7 @@ bool AltaBajaServicio(){
             return false;
         }
     }
-
+    cout << "------------------------------------------------------" << endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     validar=preguntarSIoNO();
     if(validar==1){
@@ -357,7 +370,9 @@ bool listarPorFecha(){
     int d, m, a,cantAranceles;
     float acu=0;
 
-    cout << " LISTADO DE VISITAS POR FECHA" <<endl << endl;
+    cout << "======================================================"<< endl;
+    cout << "              LISTADO DE VISITAS POR FECHA" << endl;
+    cout << "------------------------------------------------------"<< endl<< endl;
     cout << " FECHA DE INICIO (DD/MM/AA): " << endl;        ///PIDO LAS FECHAS DE INICIO Y FIN DE BUSQUEDA
     cout << "                        DIA: ";
     cin >> d;
@@ -406,7 +421,7 @@ bool listarPorFecha(){
                 if(reg.getIDTipoVisita()==vecArancel[i].getIDTipoVisita()){
                     cout << "  TIPO DE VISITA: " << reg.getNombreTipoVisita() << endl;
                     cout << "         IMPORTE: $"<< vecArancel[i].getTotalArancel() << endl;
-                    cout << "-------------------------------" << endl;
+                    cout << "------------------------------------------------------"<< endl;
                     acu+=vecArancel[i].getTotalArancel();
                 }
             }
@@ -421,6 +436,7 @@ bool listarPorFecha(){
         }
     }
     cout << "        EL TOTAL FACTURADO: $" << acu << endl;
+    cout << "======================================================"<< endl;
     pausar();
     delete(vecArancel);
     return true;
@@ -448,7 +464,9 @@ bool mostrarDeudores(){
         return false;
     }
 
-    cout << "LISTADO DE DEUDORES" << endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "                 LISTADO DE DEUDORES" << endl;
+    cout << "------------------------------------------------------"<< endl;
     for(int i=0;i<cantClientes;i++){            ///RECORRO LOS CLIENTES DE A UNO BUSCANDO DEUDORES
         acu=0;
         if(vecClientes[i].getSaldo()>0){         ///SI ENCUENTRO, MUESTRO SUS DATOS
@@ -465,19 +483,21 @@ bool mostrarDeudores(){
                     vecArancel[j].getFechaArancel().mostrarFecha();           ///SI ENCUENTRO MUESTRO LOS DATOS DE ESE ARANCEL Y ACUMULO EL TOTAL $.
                     cout << endl << "    ID ARANCEL: " << vecArancel[j].getIDArancel() << endl;
                     cout << "         TOTAL: $" << vecArancel[j].getTotalArancel() << endl;
-                     cout << "---------------------------" << endl;
+                    cout << "---------------------------" << endl;
                     acu+=vecArancel[j].getTotalArancel();
                 }
 
             }
-            cout << "----------------------------" << endl;
+            cout << "------------------------------------------------------"<< endl;
             cout << "  SALDO DEUDOR: $" << acu << endl;               ///AHORA MUESTRO EL TOTAL ACUMULADO DE LOS ARANCELES INPAGOS
-            cout << "===================================================" << endl;
-            cout << endl<< endl;
+            cout << "------------------------------------------------------"<< endl;
+            cout << "======================================================" << endl;
         }
     }
     if(!deudores){
-        cout << "NO HAY CLIENTES CON SALDO DEUDOR." << endl;
+        cout << "------------------------------------------------------"<< endl<< endl;
+        cout << "   NO HAY CLIENTES CON SALDO DEUDOR." << endl;
+        cout << "======================================================"<< endl;
     }
     system("pause");
     delete(vecArancel);
@@ -490,7 +510,9 @@ bool comisiones(){
     Fecha aux;
     int dia, mes, anio, ID, cantAranceles, pos;
     float acu=0;
-    cout << "COMISIONES" << endl << endl;
+    cout << "======================================================"<< endl;
+    cout << "                    COMISIONES" << endl;
+    cout << "------------------------------------------------------"<< endl<< endl;
     cout << "INGRESE DESDE QUE FECHA INICIAR LA BUSQUEDA (DD/MM/AA): " << endl;
     cout << "                         DIA: ";
     cin >> dia;
@@ -516,7 +538,7 @@ bool comisiones(){
     pos=buscarTipoVisita(ID);
     if(pos==-1){
         errorRegistro();
-        pausar();
+        return false;
     }
     regTipoVisita.leerTipoVisita(pos);
 
@@ -526,13 +548,14 @@ bool comisiones(){
         if(vecArancel[i].getIDTipoVisita()==ID && (compararFechas(aux,vecArancel[i].getFechaArancel())==1 || compararFechas(aux,vecArancel[i].getFechaArancel())==0)){
             cout << "FECHA: ";
             vecArancel[i].getFechaArancel().mostrarFecha();
-            cout << "            TOTAL DE ARANCEL: $"<< vecArancel[i].getTotalArancel()<< endl;
+            cout << "   TOTAL DE ARANCEL: $"<< vecArancel[i].getTotalArancel()<< "  " << vecArancel[i].getPorcentajeHonorario()<< "%."<<endl;
             acu+= (vecArancel[i].getTotalArancel() * vecArancel[i].getPorcentajeHonorario()/100);
         }
     }
-    cout <<"---------------------------------------------"<<  endl;
-    cout << "      PORCENTAJE DE COMISION: " <<regTipoVisita.getPorcentajeHonorario()<< "%." << endl;
+    cout << "------------------------------------------------------"<< endl;
+//    cout << "      PORCENTAJE DE COMISION: " <<regTipoVisita.getPorcentajeHonorario()<< "%." << endl;
     cout << "         TOTAL DE COMISIONES: $" <<acu << endl;
+    cout << "======================================================"<< endl;
     pausar();
     delete(vecArancel);
     return true;

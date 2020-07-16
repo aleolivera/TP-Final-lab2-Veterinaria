@@ -79,7 +79,6 @@ const char * Historia::getAnamnesis(){
     return anamnesis;
 }
 
-
 ///DISCO
 bool Historia::guardarHistoria(){
     FILE*p=fopen(ARCHIVOHISTORIAS,"ab");
@@ -184,17 +183,19 @@ int buscarDNIClienteEnHistorias(int IDHistoria){
     return -1;
 }
 void verVisita(Historia regHistoria, Cliente regCliente){
-    cout << endl<< "FECHA: ";
+    cout << "FECHA: ";
     regHistoria.getFechaVisita().mostrarFecha();
     cout << "          MASCOTA: " << regHistoria.getNombreMascota() << endl;
     cout << "CLIENTE: " << regCliente.getApellido() << ", " << regCliente.getNombreCliente() << endl << endl << endl;
     cout <<"ANAMNESIS: " << regHistoria.getAnamnesis() << endl;
     if(regHistoria.getControl()){
-        cout << endl << "REQUIERE CONTROL LA FECHA: ";
+        cout << endl << "REQUIERE CONTROL LA FECHA: " << endl;
         regHistoria.getFechaControl().mostrarFecha();
+        cout << endl;
     }
-    cout <<endl <<"-----------------------------------" << endl;
-    pausar();
+    else{
+        cout << endl << "NO REQUIERE VISITA DE CONTROL." << endl;
+    }
 }
 
 ///HISTORIAS
@@ -206,8 +207,10 @@ bool ingresoHistoria(){
     reg.setIDHistoria(asignarIDHistoria());     ///Aca se asigna solo ID de manera secuencial
     reg.setFechaIngreso();                      ///Aca se asigna automaticamente la fecha del HOY
     reg.setFechaModificacion();
-    cout << "INGRESO DE HISTORIAS CLINICAS" << endl << endl;
-    cout << "                          ID: "<< reg.getIDHistoria() << "        FECHA ACTUAL: ";
+    cout << "======================================================"<< endl;
+    cout << "                  INGRESO DE VISITAS" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout << "                   ID VISITA: "<< reg.getIDHistoria() << "     FECHA: ";
     reg.getFechaIngreso().mostrarFecha();
     cout<<endl;
     cout << "FECHA DE LA VISITA(DD/MM/AA) "<< endl;
@@ -230,8 +233,10 @@ bool ingresoHistoria(){
         return false;
     }
     reg.setDNICliente(valor);                ///Aca se ingresa el ID del cliente en el registro tras validarlo en disco
+    cout << "                    MASCOTAS: ";
     listarMascotasConDNICliente(valor);
-    cout << endl << "        NOMBRE DE LA MASCOTA: ";
+    cout << "------------------------------------------------------"<< endl;
+    cout << "        NOMBRE DE LA MASCOTA: ";
     cin.ignore();
     cin.getline(cadena,20);
     if(!validarMascotaConCliente(cadena,reg.getDNICliente())){
@@ -273,7 +278,7 @@ bool ingresoHistoria(){
 
     reg.setIDarancel(-1);   ///CUANDO HAGO EL ARANCEL LE ASIGNO SU NUMERO
     ///EL CAMPO QUE RESTA ES 'int IDArancel' QUE SE CARGA CON EL ARANCEL
-
+    cout << "------------------------------------------------------"<< endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     validar=preguntarSIoNO();
     if(validar==1){
@@ -297,8 +302,10 @@ bool mostrarEntradaHistoria(){
     Cliente regCliente;
     int ID;
     int pos;
-    cout << "ENTRADA DE HISTORIA CLINICA." << endl;
-    cout << "HISTORIA CLINICA ID: ";
+    cout << "======================================================"<< endl;
+    cout << "                    MOSTRAR VISITA" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout << "             ID DE VISITA: ";
     cin >> ID;
     pos=buscarHistoria(ID);
     if(pos==-1){
@@ -312,7 +319,10 @@ bool mostrarEntradaHistoria(){
         return false;
     }
     regCliente.leerCliente(pos);
+    cout << "------------------------------------------------------" << endl;
     verVisita(regHistoria,regCliente);
+    cout << "======================================================" << endl;
+    pausar();
     return true;
 }
 bool mostrarHistoria(){
@@ -348,7 +358,9 @@ bool mostrarHistoria(){
         return false;
     }
 
-    cout << "MOSTRAR HISTORIA CLINICA." << endl << endl;
+    cout << "======================================================"<< endl;
+    cout << "                MOSTRAR HISTORIA CLINICA" << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout << "       NOMBRE DE MASCOTA: ";                     ///PIDO nombreMascota (clase mascota)
     cin.ignore();
     cin.getline(nombreMascota,20);
@@ -393,17 +405,19 @@ bool mostrarHistoria(){
         if(vecHistoria[i].getDNICliente()==DNI)   ///con el ID obtenido mostramos los atributos que corresponden
         {
 
-            cout << endl << "    ID DE HISTORIA: " << vecHistoria[i].getIDHistoria()<< endl;
+            cout << "------------------------------------------------------"<< endl << endl;
+            cout << "      ID DE VISITA: " << vecHistoria[i].getIDHistoria()<< endl;
             cout << "   FECHA DE VISITA: ";
             vecHistoria[i].getFechaVisita().mostrarFecha();
             cout << endl;
             cout << "         ANAMNESIS: " << vecHistoria[i].getAnamnesis() << endl;
-            cout << "      ---------------      " << endl;
+
         }
     }
     delete(vecHistoria);      ///tal vez necesite un DESTRUCTOR
     delete(vecClientes);
     delete(vecMascotas);
+    cout << endl << "======================================================"<< endl;
     pausar();
     return true;
 }
@@ -412,9 +426,12 @@ bool modificarHistoria(){
     Cliente regCliente;
     int ID,dia,mes,anio,validar;
     int posHistoria,posCliente;
-    cout << "MODIFICAR HISTORIA." << endl<<endl;
-    cout << " ID ENTRADA DE HISTORIA: ";
+    cout << "======================================================"<< endl;
+    cout << "               MODIFICAR HISTORIA CLINICA" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout << "           ID DE VISITA: ";
     cin>> ID;
+    cout << "------------------------------------------------------" << endl;
     cin.ignore();
     posHistoria=buscarHistoria(ID);         ///PIDO EL ID, abro el archivo, busco esa entrada en particular y la leo
     if(posHistoria==-1){
@@ -438,6 +455,7 @@ bool modificarHistoria(){
 //    cout << "                   -------------------------------------------------------" << endl;
 
                                 /// EDITA ATRIBUTOS
+    cout << "------------------------------------------------------" << endl;
     cout << "        NUEVA ANAMNESIS: ";              ///Despues se editan los Atributos de a uno.
     regHistoria.setAnamnesis();
     cout << "REQUIERE VISITA DE CONTROL?"<< endl;
@@ -492,6 +510,7 @@ bool modificarHistoria(){
 bool controlesPendientes(){
     Historia*vecHistoria;
     Cliente*vecCliente;
+    int validar;
     int cantHistorias=cantidadRegistrosHistorias();
     int cantClientes=cantidadRegistrosClientes();
 
@@ -516,11 +535,14 @@ bool controlesPendientes(){
         delete(vecHistoria);
         return false;
     }
-    cout << "VISITAS DE CONTROL PENDIENTES." << endl << endl;
+    cout << "======================================================"<< endl;
+    cout << "            VISITAS CON CONTROLES PENDIENTES" << endl;
+    cout << "------------------------------------------------------"<< endl<< endl;
     for(int i=0; i<cantHistorias; i++)  ///Recorro el vecHistorias para encontrar las "control=true"
     {
         if(vecHistoria[i].getControl()&&compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==2)
         {
+            cout << "               ID VISITA: " << vecHistoria[i].getIDHistoria() << endl;
             cout << "       NOMBRE DE MASCOTA: " << vecHistoria[i].getNombreMascota();
             cout << "     FECHA: ";
             vecHistoria[i].getFechaControl().mostrarFecha();
@@ -534,18 +556,34 @@ bool controlesPendientes(){
                         ///asi accedo a sus atributos y muestro lo que necesito
                 }
             }
-            cout <<"--------------------------------------------------" <<endl;
+            cout << "------------------------------------------------------"<<endl;
         }
     }
-    cout << "ESAS SON LAS ENTRADAS HASTA LA FECHA." << endl;
-    pausar();
     delete(vecHistoria);
     delete(vecCliente);
+    cout << "DESEA BAJAR ALGUN CONTROL PENDIENTE? SI | NO: ";
+    cin.ignore();
+    validar=preguntarSIoNO();
+    if(validar==1){
+        if(!bajarControlesPendientes()){
+            error("NO SE PUDO DAR DE BAJA AL CONTROL");
+            return false;
+        }
+    }
+    else if(validar==0){
+        volviendoMenu();
+        return false;
+    }
+    else{
+        errorIngresoInvalido();
+        return false;
+    }
     return true;
 }
 bool controlesAusentes(){
     Historia*vecHistoria;
     Cliente*vecCliente;
+    int validar;
     int cantHistorias=cantidadRegistrosHistorias();
     int cantClientes=cantidadRegistrosClientes();
 
@@ -563,10 +601,13 @@ bool controlesAusentes(){
         delete(vecHistoria);
         return false;
     }
-
+    cout << "======================================================"<< endl;
+    cout << "            VISITAS CON CONTROLES AUSENTES" << endl;
+    cout << "------------------------------------------------------"<< endl<< endl;
     for(int i=0; i<cantHistorias; i++)  ///Recorro el vecHistorias para encontrar las "control=true" y que la fecha de contro no haya pasado
     {
         if(vecHistoria[i].getControl() && compararFechas(vecHistoria[i].getFechaControl(),obtenerFechaActual())==1){
+            cout << "               ID VISITA: " << vecHistoria[i].getIDHistoria() << endl;
             cout << "       NOMBRE DE MASCOTA: " << vecHistoria[i].getNombreMascota();
             cout << "     FECHA: ";
             vecHistoria[i].getFechaControl().mostrarFecha();
@@ -582,14 +623,91 @@ bool controlesAusentes(){
             cout <<"--------------------------------------------------" <<endl;
         }
     }
-    cout << "ESAS ENTRADAS HASTA LA FECHA." << endl;
-    pausar();
     delete(vecHistoria);
     delete(vecCliente);
+    cout << "DESEA BAJAR ALGUN CONTROL AUSENTE? SI | NO: ";
+    cin.ignore();
+    validar=preguntarSIoNO();
+    if(validar==1){
+        if(!bajarControlesAusentes()){
+            error("NO SE PUDO DAR DE BAJA AL CONTROL");
+            return false;
+        }
+    }
+    else if(validar==0){
+        volviendoMenu();
+        return false;
+    }
+    else{
+        errorIngresoInvalido();
+        return false;
+    }
     return true;
 }
-
-
+bool bajarControlesPendientes(){
+    int validar, ID,pos;
+    Historia regHistoria;
+    cout << "INGRESE EL ID DE VISITA: ";
+    cin>> ID;
+    cin.ignore();
+    pos=buscarHistoria(ID);
+    if(pos==-1){
+        errorEnteroInvalido(ID, ", NO SE ENCUENTRA EN EL REGISTRO.");
+        return false;
+    }
+    regHistoria.leerHistoria(pos);
+    cout << endl<< "ESTA SEGURO QUE DESEA DAR DE BAJA A ESTE CONTROL?  SI | NO: ";
+    validar=preguntarSIoNO();
+    if(regHistoria.getControl() && compararFechas(regHistoria.getFechaControl(),obtenerFechaActual())==2){
+        regHistoria.setControl(false);
+        regHistoria.getFechaControl().setFecha(0,0,0);
+        if(!regHistoria.modificarHistoria(pos)){
+            error("NO SE PUDO GUARDAR LA VISITA");
+            return false;
+        }
+    }
+    else if(validar==0){
+        volviendoMenu();
+        return false;
+    }
+    else{
+        errorIngresoInvalido();
+        return false;
+    }
+    return true;
+}
+bool bajarControlesAusentes(){
+    int validar, ID,pos;
+    Historia regHistoria;
+    cout << "INGRESE EL ID DE VISITA: ";
+    cin>> ID;
+    cin.ignore();
+    pos=buscarHistoria(ID);
+    if(pos==-1){
+        errorEnteroInvalido(ID, ", NO SE ENCUENTRA EN EL REGISTRO.");
+        return false;
+    }
+    regHistoria.leerHistoria(pos);
+    cout << endl<< "ESTA SEGURO QUE DESEA DAR DE BAJA A ESTE CONTROL?  SI | NO: ";
+    validar=preguntarSIoNO();
+    if(validar==1 && regHistoria.getControl() && compararFechas(regHistoria.getFechaControl(),obtenerFechaActual())==1){
+        regHistoria.setControl(false);
+        regHistoria.getFechaControl().setFecha(0,0,0);
+        if(!regHistoria.modificarHistoria(pos)){
+            error("NO SE PUDO GUARDAR LA VISITA");
+            return false;
+        }
+    }
+    else if(validar==0){
+        volviendoMenu();
+        return false;
+    }
+    else{
+        errorIngresoInvalido();
+        return false;
+    }
+    return true;
+}
 
 
 

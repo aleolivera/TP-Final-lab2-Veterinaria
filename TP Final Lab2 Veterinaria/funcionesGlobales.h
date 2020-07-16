@@ -37,6 +37,7 @@ int listarTiposDeVisita(int);
 void listarMascotasConDNICliente(int);
 void listarClientesConIDMascotas(int);
 int preguntarSIoNO();
+int generarRandom(int);
 
 ///VALIDACIONES CON ARCHIVOS Y BUSQUEDAS EN ARCHIVO
 bool validarTipoVisita(const char*);

@@ -188,7 +188,6 @@ void verArancel(Arancel regArancel){
     cout << "           TIPO DE PAGO: " << tipoDePagoACadena(regArancel.getTipoPago()) << endl;
     cout << "         TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita() << endl;
     cout << "                  TOTAL: " << regArancel.getTotalArancel() << endl;
-    pausar();
 }
 
 ///ARANCELES
@@ -203,13 +202,15 @@ bool nuevoArancel(){
     float total;
     regArancel.setFechaArancel();
     regArancel.setIDArancel(asignarIDarancel());
-    cout <<"INGRESO DE NUEVO ARANCEL." << endl << endl;
-    cout << "       FECHA DE ARANCEL: ";
+    cout << "======================================================"<< endl;
+    cout << "                  INGRESO DE NUEVO ARANCEL" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout << "FECHA DE ARANCEL: ";
     regArancel.getFechaArancel().mostrarFecha();
 
-    cout << "             ID ARANCEL: " << regArancel.getIDArancel();
+    cout << "        ID ARANCEL: " << regArancel.getIDArancel();
     cout << endl;
-    cout << "         ID DE HISTORIA: ";
+    cout << "ID DE HISTORIA: ";
     cin >> valor;                           ///PIDO ID Y VALIDO SU PRESENCIA EN EL ARCHIVO HISTORIAS
     pos=buscarHistoria(valor);
     if(pos==-1){
@@ -224,16 +225,17 @@ bool nuevoArancel(){
     regArancel.setIDHistoria(valor);
 
     valor=regHistoria.getDNICliente();
-    cout<< "         DNI DE CLIENTE: " << valor << endl;  ///ASIGNO AUTOMATICAMENTE ID Y VALIDO SU PRESENCIA EN EL ARCHIVOCLIENTES
+    cout<< "DNI DE CLIENTE: " << valor << endl;  ///ASIGNO AUTOMATICAMENTE ID Y VALIDO SU PRESENCIA EN EL ARCHIVOCLIENTES
     pos=buscarDNIClienteEnHistorias(regHistoria.getIDHistoria());
     if(pos==-1){
         errorRegistro();
         return false;
     }
     regArancel.setDNICliente(valor);
-
+    cout << endl;
     listarTiposDeVisita(1);
-    cout<< "         TIPO DE VISITA: ";             ///PIDO TIPO DE VISITA Y VALIDO SU PRESENCIA EN EL ARCHIVOTIPOVISITAS
+    cout << endl;
+    cout<< "TIPO DE VISITA: ";             ///PIDO TIPO DE VISITA Y VALIDO SU PRESENCIA EN EL ARCHIVOTIPOVISITAS
     cin >> valor;
     pos=buscarTipoVisita(valor);
     if(pos==-1){
@@ -248,11 +250,11 @@ bool nuevoArancel(){
     }
     regArancel.setIDTipoVisita(valor);
     regArancel.setTotalArancel(total);
-    cout <<"         TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita();
-    cout <<"      TOTAL DEL ARANCEL: $" <<regArancel.getTotalArancel();
-    cout << endl;
-    cout <<"           E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
-    cout <<"           TIPO DE PAGO: ";
+    cout << "------------------------------------------------------"<< endl;
+    cout << "TIPO DE VISITA: " << regTipoVisita.getNombreTipoVisita();
+    cout << "        TOTAL: $" <<regArancel.getTotalArancel() << endl << endl;
+    cout << "E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
+    cout << "TIPO DE PAGO: ";
     cin>> tipoPago;
     cin.ignore();
     if(!validarTipoDePago(tipoPago))                                     ///VALIDA QUE SE INGRESEN 'E,T,D,C'
@@ -280,6 +282,7 @@ bool nuevoArancel(){
     }
     regArancel.setPorcentajeHonorario(regTipoVisita.getPorcentajeHonorario());
 
+    cout << "------------------------------------------------------"<< endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     validar=preguntarSIoNO();
     if(validar==1){
@@ -302,9 +305,10 @@ bool mostrarArancelesDelDia(){
     Arancel*vec;
     Fecha fechaDeHoy;
     fechaDeHoy.setFechaActual();
-    cout << "ARANCELES DEL DIA: ";
+    cout << "======================================================"<< endl;
+    cout << "          MOSTRAR ARANCELES DEL DIA: ";
     fechaDeHoy.mostrarFecha();
-    cout << endl<< endl;
+    cout << endl;
     int cantAranceles=cantidadRegistrosArancel();
     vec=new Arancel[cantAranceles];
     if(vec==NULL){
@@ -316,15 +320,22 @@ bool mostrarArancelesDelDia(){
         delete(vec);
         return false;
     }
+    bool estado=false;
     for(int i=0; i<cantAranceles; i++){
         if(compararFechas(vec[i].getFechaArancel(),obtenerFechaActual())==0){
-            cout<<" ID DE ARANCEL: "<< vec[i].getIDArancel()<< endl;
-            cout<<"TIPO DE VISITA: "<< vec[i].getIDTipoVisita()<< endl;
-            cout<<"  TIPO DE PAGO: "<< tipoDePagoACadena(vec[i].getTipoPago())<< endl;
-            cout<<"         TOTAL: "<< vec[i].getTotalArancel()<< endl;
-            cout<<"----------------------------------" << endl;
+            estado=true;
+            cout <<"------------------------------------------------------"<< endl;
+            cout <<" ID DE ARANCEL: "<< vec[i].getIDArancel()<< endl;
+            cout <<"TIPO DE VISITA: "<< vec[i].getIDTipoVisita()<< endl;
+            cout <<"  TIPO DE PAGO: "<< tipoDePagoACadena(vec[i].getTipoPago())<< endl;
+            cout <<"         TOTAL: "<< vec[i].getTotalArancel()<< endl;
+
         }
     }
+    if(!estado){
+        cout << "NO HUBO VISITAS EL DIA DE HOY." << endl;
+    }
+    cout << "======================================================"<< endl;
     pausar();
     delete(vec);
     return true;
@@ -335,7 +346,9 @@ bool modificarArancel(){
 
     int ID,posArancel,posCliente,validar;
     char tipoPago;
-    cout << "MODIFICAR ARANCEL."<< endl<< endl;
+    cout << "======================================================="<< endl;
+    cout << "                    MODIFICAR ARANCEL" << endl;
+    cout << "-------------------------------------------------------" << endl;
     cout << "  INGRESE ID DE ARANCEL: ";
     cin >> ID;
     posArancel=buscarArancel(ID);
@@ -345,9 +358,9 @@ bool modificarArancel(){
     }
     regArancel.leerArancel(posArancel);
     verArancel(regArancel);
-    cout <<"-----------------------------------------" << endl;
-    cout <<"INGRESE LA MODIFICACION" << endl;
-    cout <<"           E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
+    cout <<"-------------------------------------------------------"<<endl;
+    cout <<"            INGRESE LA MODIFICACION" << endl;
+    cout <<" E: EFECTIVO / T:TARJ CREDITO / D: DEBITO / C: A CUENTA" << endl;
     cout <<"           TIPO DE PAGO: ";
     cin >> tipoPago;
     cin.ignore();
@@ -377,7 +390,7 @@ bool modificarArancel(){
         }
         regArancel.setAbonado(true);
     }
-
+    cout <<"-------------------------------------------------------"<<endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     validar=preguntarSIoNO();
     if(validar==1){
@@ -420,9 +433,11 @@ bool mostrarArancelesPorVisita(){
     }
     int ID,anio;
     float acu=0;
-    cout << "ARANCELES POR TIPO DE VISITA ANUAL"<< endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "          ARANCELES POR TIPO DE VISITA (ANUAL)" << endl;
+    cout << "------------------------------------------------------"<< endl;
     listarTiposDeVisita(2);
-    cout << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout << "INGRESE EL TIPO DE VISITA: ";
     cin >> ID;
     cout << "                     ANIO: ";
@@ -433,15 +448,19 @@ bool mostrarArancelesPorVisita(){
         if(vecTipoVisita[i].getIDTipoVisita()==ID){
             for (int j=0;j<cantAranceles;j++){
                 if(vecArancel[j].getIDTipoVisita()==ID && vecArancel[j].getFechaArancel().getAnio()==anio){
-                cout <<"ID N " << vecArancel[j].getIDArancel()<<" | "<< vecTipoVisita[i].getNombreTipoVisita()<< " | $"<<vecArancel[j].getTotalArancel()<< endl;
+                cout <<"            ID N " << vecArancel[j].getIDArancel()<<" | ";
+                vecArancel[i].getFechaArancel().mostrarFecha();
+                cout << " | $"<<vecArancel[j].getTotalArancel()<< endl;
                 acu+=vecArancel[j].getTotalArancel();
                 }
             }
 
         }
     }
-    cout << endl;
-    cout << "        TOTAL: $" << acu << endl;
+
+    cout << "------------------------------------------------------"<< endl;
+    cout << "                TOTAL: $" << acu << endl;
+    cout << "======================================================"<< endl;
     cin.ignore();
     cin.get();
     return true;

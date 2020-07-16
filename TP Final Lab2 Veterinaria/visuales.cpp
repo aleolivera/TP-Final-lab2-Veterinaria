@@ -6,6 +6,8 @@
 #include "visuales.h"
 #include "funcionesGlobales.h"
 #include "windows.h"
+#include "marcos.h"
+
 using namespace std;
 
 void pantallaPrincipal(){
@@ -164,21 +166,28 @@ void colorPantalla(int texto,int fondo){
 void error(const char* mensaje){
     limpiar();
     system("color 4F");
+    gotoxy(0,4);
 //    colorPantalla(15,4);
-    cout << mensaje<< endl;
+    cout << " =====================================================" << endl<< endl;
+    cout << "           " << mensaje << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorCadenaInvalida(const char* cadena,const char* mensaje){
     limpiar();
     system("color 4F");
+    gotoxy(0,4);
 //    colorPantalla(15,4);
-    cout << "'"<<cadena<<"' "<< mensaje;
+    cout << " =====================================================" << endl<< endl;
+    cout << "       '"<< cadena <<"' " << mensaje << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorEnteroInvalido(int numero,const char* mensaje){
     limpiar();
 //    colorPantalla(15,4);
     system("color 4F");
+    gotoxy(0,4);
     cout << "'"<<numero<<"' "<< mensaje << endl;
     pausar();
 }
@@ -186,67 +195,97 @@ void errorFloatInvalido(float numero,const char* mensaje){
     limpiar();
 //    colorPantalla(15,4);
     system("color 4F");
-    cout << "'"<<numero<<"' "<< mensaje << endl;
+    gotoxy(0,4);
+    cout << " =====================================================" << endl<< endl;
+    cout << "       '"<< numero <<"' " << mensaje << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 
 void errorFechaInvalida(){
     limpiar();
     system("color 4F");
+    gotoxy(0,4);
 //    colorPantalla(15,4);
-    cout << "ERROR: FECHA INVALIDA." << endl;
+    cout << " =====================================================" << endl<< endl;
+    cout << "              ERROR: FECHA INVALIDA." << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorArchivo(){
     limpiar();
 //    colorPantalla(15,4);
     system("color 4F");
-    cout << "ERROR: NO SE PUDO ABRIR EL ARCHIVO." << endl;
+    gotoxy(0,4);
+    cout << " =====================================================" << endl<< endl;
+    cout << "         ERROR: NO SE PUDO ABRIR EL ARCHIVO." << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorIngresoInvalido(){
     limpiar();
     system("color 4F");
+    gotoxy(0,4);
 //    colorPantalla(15,4);
-    cout << "ERROR: INGRESO INVALIDO."<< endl;
+    cout << " =====================================================" << endl<< endl;
+    cout << "               ERROR: INGRESO INVALIDO." << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void volviendoMenu(){
     limpiar();
-    cout << "VOLVIENDO AL MENU..."<< endl;
+    gotoxy(0,4);
+    cout << " =====================================================" << endl<< endl;
+    cout << "                  VOLVIENDO AL MENU..." << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void guardadoExitoso(){
     limpiar();
     system("color 2F");
 //    colorPantalla(15,2);
-    cout << "GUARDADO EXITOSO." << endl;
+    gotoxy(0,4);
+    cout << " =====================================================" << endl<< endl;
+    cout << "                  GUARDADO EXITOSO." << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorRegistro(){
     limpiar();
     system("color 4F");
+    gotoxy(0,4);
 //    colorPantalla(15,4);
-    cout << "NO SE ENCUENTRA EL REGISTRO EN EL ARCHIVO." << endl;
+    cout << " =====================================================" << endl<< endl;
+    cout << "       NO SE ENCUENTRA EL REGISTRO EN EL ARCHIVO."  << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorAsignacionMemoria(){
     limpiar();
 //    colorPantalla(15,4);
-    cout << "NO HAY MEMORIA SUFICIENTE." << endl;
+    gotoxy(0,4);
+    cout << " =====================================================" << endl<< endl;
+    cout << "                NO HAY MEMORIA SUFICIENTE"  << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorCargarRegistros(){
     limpiar();
     system("color 4F");
+    gotoxy(0,4);
 //    colorPantalla(15,4);
-    cout << "NO SE PUDIERON CARGAR EL/LOS REGISTRO/S." << endl;
+    cout << " =====================================================" << endl<< endl;
+    cout << "      NO SE PUDIERON CARGAR EL/LOS REGISTRO/S."  << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorGuardado(){
     limpiar();
     system("color 4F");
 //    colorPantalla(15,4);
-    cout << "NO SE PUDO GUARDAR EL ARCHIVO." << endl;
+    gotoxy(0,4);
+    cout << " =====================================================" << endl<< endl;
+    cout << "            NO SE PUDO GUARDAR EL ARCHIVO."  << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }

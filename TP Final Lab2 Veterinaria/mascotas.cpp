@@ -7,7 +7,6 @@
 #include "funcionesGlobales.h"
 #include "visuales.h"
 
-
 ///GETS
 int Mascotas::getIDmascota(){
     return IDmascota;
@@ -192,7 +191,6 @@ void verMascota(Mascotas regMascota){
     else{
         cout<<"SIN VACUNAR" << endl;
     }
-    pausar();
 }
 
 ///MASCOTAS
@@ -202,7 +200,9 @@ bool mostrarMascotas(){
     int pos,DNI;
     char cadena[20];
 
-    cout<<"MOSTRAR MASCOTA" << endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "                    MOSTRAR MASCOTA" << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout<<"  DNI DEL CLIENTE: ";
     cin>>DNI;
     pos=buscarMascotaPorDNI(DNI);
@@ -210,8 +210,9 @@ bool mostrarMascotas(){
         errorEnteroInvalido(DNI,"ES UN DNI INVALIDO, O NO POSEE MASCOTA REGISTRADA");
         return false;
     }
+    cout<<"         MASCOTAS: ";
     listarMascotasConDNICliente(DNI);
-    cout << endl;
+    cout << "------------------------------------------------------"<< endl;
 
     cout<<"NOMBRE DE MASCOTA: ";
     cin.ignore();
@@ -223,6 +224,8 @@ bool mostrarMascotas(){
     }
     regMascota.leerMascota(pos);
     verMascota(regMascota);
+    cout << "======================================================"<< endl;
+    pausar();
     return true;
 }
 bool modificarMascotas(){
@@ -230,18 +233,20 @@ bool modificarMascotas(){
     int pos,DNI, validar;
     char cadena[20];
     char caracter;
-    cout <<"MODIFICAR MASCOTA" << endl<< endl;
-    cout<<"  DNI DEL CLIENTE: ";
+    cout << "======================================================"<< endl;
+    cout << "                    MODIFICAR MASCOTA" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout << "  DNI DEL CLIENTE: ";
     cin>>DNI;
     pos=buscarMascotaPorDNI(DNI);
     if(pos==-1){
         errorEnteroInvalido(DNI,"ES UN DNI INVALIDO");
         return false;
     }
+    cout<< "          MASCOTAS: ";
     listarMascotasConDNICliente(DNI);
     cout << endl;
-
-    cout<<"NOMBRE DE MASCOTA: ";
+    cout<<"  NOMBRE DE MASCOTA: ";
     cin.ignore();
     cin.getline(cadena,20);
     pos=buscarMascotaPorDNIyNombre(DNI,cadena);
@@ -251,8 +256,8 @@ bool modificarMascotas(){
     }
     regMascota.leerMascota(pos);
     verMascota(regMascota);
-    cout <<"-----------------------------------"<< endl;
-    cout <<"            MODIFICAR" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout <<"                    MODIFICAR" << endl;
     cout << "         NOMBRE: ";
     cin.getline(cadena,20);
     if(!validarNombres(cadena)){
@@ -320,7 +325,7 @@ bool modificarMascotas(){
     else{
         error("INGRESO INVALIDO");
     }
-
+    cout << "------------------------------------------------------"<< endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO: ";
     validar=preguntarSIoNO();
     if(validar==1){
@@ -351,8 +356,10 @@ bool listarVisitas(){
         return false;
     }
 
-    cout << "LISTAR VISITAS" << endl << endl;
-    cout << "      DNI DE CLIENTE: ";
+    cout << "======================================================"<< endl;
+    cout << "                    LISTAR VISITAS" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout << "     DNI DE CLIENTE: ";
     cin>> DNI;
     cin.ignore();
     if(!validarDNICliente(DNI)){
@@ -380,16 +387,17 @@ bool listarVisitas(){
 
     for(int i=0;i<cantHistorias;i++){
         if(strcmp(cadena,vecHistorias[i].getNombreMascota())==0 && vecHistorias[i].getDNICliente()==DNI){
+            cout << "------------------------------------------------------"<<endl;
             cout << "FECHA VISITA: ";
             vecHistorias[i].getFechaVisita().mostrarFecha();
             cout << "      ID DE VISITA: " << vecHistorias[i].getIDHistoria() << endl;
-            cout << "--------------------------------------------" << endl;
             encontrado=true;
         }
     }
     if(!encontrado){
         cout << "NO HUBO COINCIDENCIAS" << endl;
     }
+    cout << "======================================================"<< endl;
     pausar();
     delete(vecHistorias);
     return true;
@@ -399,7 +407,9 @@ bool transferirMascotas(){
     Mascotas regMascota;
     int posMascota,posCliente,DNI,validar;
     char cadena[20];
-    cout <<"TRANFERIR MASCOTA" << endl<< endl;
+    cout << "======================================================"<< endl;
+    cout << "                    TRANSFERIR MASCOTA" << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout<<"DNI DUENIO ACTUAL: ";
     cin>>DNI;
     posMascota=buscarMascotaPorDNI(DNI);
@@ -407,8 +417,8 @@ bool transferirMascotas(){
         errorEnteroInvalido(DNI,"ES UN DNI INVALIDO");
         return false;
     }
+    cout<<"         MASCOTAS: ";
     listarMascotasConDNICliente(DNI);
-    cout << endl;
 
     cout<<"NOMBRE DE MASCOTA: ";
     cin.ignore();
@@ -420,8 +430,8 @@ bool transferirMascotas(){
     }
     regMascota.leerMascota(posMascota);
     verMascota(regMascota);
-    cout <<"-----------------------------------"<< endl;
-    cout <<"            TRANSFERIR" << endl;
+    cout << "------------------------------------------------------"<< endl;
+    cout <<"                        TRANSFERIR A:" << endl;
     cout << "       DNI NUEVO DUENIO: ";
     cin>>DNI;
     cin.ignore();
@@ -448,6 +458,11 @@ bool transferirMascotas(){
             return false;
         }
     }
+    limpiar();
+    cout << "======================================================"<< endl;
+    cout << "                    TRANSFERIR MASCOTA" << endl;
+    cout << "------------------------------------------------------"<< endl<< endl;
+    cout << "                MASCOTA: "<< regMascota.getIDmascota()<< endl;
     cout << "NOMBRE DEL NUEVO DUENIO: "<< regCliente.getNombreCliente() << endl;
     cout << "               APELLIDO: "<< regCliente.getApellido() << endl;
     cout << "                    DNI: "<< regCliente.getDNICliente() << endl;
@@ -470,6 +485,4 @@ bool transferirMascotas(){
     }
     return true;
 }
-
-
 
