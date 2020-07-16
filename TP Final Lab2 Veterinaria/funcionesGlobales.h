@@ -34,7 +34,7 @@ bool validarDomicilio(const char*);
 bool validarSiNo(const char*);
 const char* tipoDePagoACadena(char);
 int listarTiposDeVisita(int);
-void listarMascotasConDNICliente(int);
+int listarMascotasConDNICliente(int);
 void listarClientesConIDMascotas(int);
 int preguntarSIoNO();
 int generarRandom(int);

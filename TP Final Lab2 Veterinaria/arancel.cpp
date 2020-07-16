@@ -239,7 +239,7 @@ bool nuevoArancel(){
     cin >> valor;
     pos=buscarTipoVisita(valor);
     if(pos==-1){
-        errorRegistro();
+        error("NO SE ENCUENTRA EL SERVICIO EN LE ARCHIVO");
         return false;           ///SI NO ESTA EN DISCO POS=-1 Y SALE
     }
     regTipoVisita.leerTipoVisita(pos);

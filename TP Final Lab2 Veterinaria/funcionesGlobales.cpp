@@ -298,12 +298,12 @@ int listarTiposDeVisita(int op){///parametro 0=muestra Inactivos, 1=activos, 2=t
     }
     return 1;
 }
-void listarMascotasConDNICliente(int DNI){
+int listarMascotasConDNICliente(int DNI){
     Mascotas reg;
     FILE*p=fopen(ARCHIVOMASCOTAS,"rb");
     if (p==NULL){
-        error("NO SE ENCONTRO EL ARCHIVO DE MASCOTAS");
-        return;
+        cout << "NO SE ENCONTRO EL ARCHIVO DE MASCOTAS"<< endl;
+        return 0;
     }
     bool estado=false;
     int con=0;
@@ -321,11 +321,15 @@ void listarMascotasConDNICliente(int DNI){
             }
         }
     }
+
     if(!estado){
         cout << "SIN MASCOTA REGISTRADA";
+        cout << endl;
+        return 0;
     }
     cout << endl;
     fclose(p);
+    return 1;
 }
 void listarClientesEnMascotas(int DNI){
     Mascotas reg;
@@ -508,7 +512,7 @@ bool validarDNICliente(int DNI){///Busca el ID en ARCHIVOCLIENTES y devuelve tru
     if(p==NULL)
         return false;
     if(DNI<1||DNI>99999999){
-        return false;
+        return true;
     }
     while(fread(&aux,sizeof (Cliente),1,p)==1)
     {
@@ -583,7 +587,12 @@ bool listarVisitasClientes(){
         errorIngresoInvalido();
         return false;
     }
-    listarMascotasConDNICliente(DNI);
+    if(listarMascotasConDNICliente(DNI)==0){
+        pausar();
+        return false;
+
+    }
+
     cout << endl;
     cout << "   NOMBRE DE MASCOTA: ";
     cin.getline(cadena,20);
@@ -624,7 +633,7 @@ bool ingresarCliente(){
     cout << "           DNI: ";
     cin >> DNI;
     if(validarDNICliente(DNI)){
-        error("EL DNI YA HA SIDO INGRESADO, O EL INGRESO ESINVALIDO");
+        error("EL DNI YA ESTA REGISTRADO, O NO ES VALIDO");
         return false;
     }
     regCliente.setDNICliente(DNI);
@@ -739,6 +748,7 @@ bool ingresarMascota(){
     }
     else{
         errorIngresoInvalido();
+        return false;
     }
 
     cout << "            ESPECIE: ";
@@ -762,7 +772,7 @@ bool ingresarMascota(){
     if(caracter=='H'||caracter=='h'){
         regMascota.setSexo(caracter);
     }
-    else if(caracter=='M'||caracter!='m'){
+    else if(caracter=='M'||caracter=='m'){
         regMascota.setSexo(caracter);
     }
     else{
@@ -784,7 +794,7 @@ bool ingresarMascota(){
 //    }
     regMascota.getFechaVacuna().setFecha(1,1,1); ///BORRAR AL DESCOMENTAR
     regMascota.setVivo(true);
-
+    cout << "------------------------------------------------------" << endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     cin.ignore();
     validar=preguntarSIoNO();
@@ -896,7 +906,7 @@ bool ingresarSoloMascota(){
     if(caracter=='H'||caracter=='h'){
         regMascota.setSexo(caracter);
     }
-    else if(caracter=='M'||caracter!='m'){
+    else if(caracter=='M'||caracter=='m'){
         regMascota.setSexo(caracter);
     }
     else{
@@ -918,7 +928,7 @@ bool ingresarSoloMascota(){
 //    }
     regMascota.getFechaVacuna().setFecha(1,1,1);
     regMascota.setVivo(true);
-
+    cout << "------------------------------------------------------"<< endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO : ";
     cin.ignore();
     validar=preguntarSIoNO();
@@ -1140,6 +1150,7 @@ bool restaurarSistema(){
         errorEnteroInvalido(validar, ", ES UN INGRESO INVALIDO");
         return false;
     }
+    cout << "------------------------------------------------------" << endl;
     cout << "ESTA SEGURO QUE DESEA REALIZAR LA OPERACION? SI | NO: ";
     cin.ignore();
     validar=preguntarSIoNO();
@@ -1183,6 +1194,7 @@ bool realizarBKP(){
         errorEnteroInvalido(validar, ", ES UN INGRESO INVALIDO");
         return false;
     }
+    cout << "------------------------------------------------------" << endl;
     cout << "ESTA SEGURO QUE DESEA REALIZAR LA OPERACION? SI | NO: ";
     cin.ignore();
     validar=preguntarSIoNO();

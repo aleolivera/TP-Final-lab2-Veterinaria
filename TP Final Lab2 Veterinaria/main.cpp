@@ -25,14 +25,14 @@ int main()
 //    }
 //    pausar();
 
-    TipoVisita reg;
-    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
-    if(p==NULL) return -1;
-    while(fread(&reg,sizeof reg,1,p)==1){
-        cout << reg.getIDTipoVisita() << endl;
-        cout << reg.getNombreTipoVisita() << endl;
-    }
-    pausar();
+//    TipoVisita reg;
+//    FILE*p=fopen(ARCHIVOTIPOVISITA,"rb");
+//    if(p==NULL) return -1;
+//    while(fread(&reg,sizeof reg,1,p)==1){
+//        cout << reg.getIDTipoVisita() << endl;
+//        cout << reg.getNombreTipoVisita() << endl;
+//    }
+//    pausar();
 
     int op;
     bool salir=false;

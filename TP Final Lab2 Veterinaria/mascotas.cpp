@@ -262,6 +262,7 @@ bool modificarMascotas(){
     cin.getline(cadena,20);
     if(!validarNombres(cadena)){
         errorCadenaInvalida(cadena,"NO ES UN NOMBRE VALIDO PARA UNA MASCOTA");
+        return false;
     }
     regMascota.setNombreMascota(cadena);
 
@@ -324,6 +325,7 @@ bool modificarMascotas(){
     }
     else{
         error("INGRESO INVALIDO");
+        return false;
     }
     cout << "------------------------------------------------------"<< endl;
     cout << "DESEA GUARDAR LOS CAMBIOS?  SI | NO: ";
@@ -366,7 +368,12 @@ bool listarVisitas(){
         errorIngresoInvalido();
         return false;
     }
-    listarMascotasConDNICliente(DNI);
+    cout << "          MASCOTAS: ";
+    if(listarMascotasConDNICliente(DNI)==0){
+        pausar();
+        return false;
+
+    }
     cout << endl;
     cout << "   NOMBRE DE MASCOTA: ";
     cin.getline(cadena,20);
@@ -439,11 +446,12 @@ bool transferirMascotas(){
     regCliente.leerCliente(posCliente);
     if(posCliente==-1){
         cout << DNI << ", ES UN DNI INVALIDO, O NO SE ENCUENTRA REGISTRADO"<< endl;
-        cout << "¿DESEA REGISTRARLO AHORA?:";
+        cout << "DESEA REGISTRARLO AHORA?: ";
         validar=preguntarSIoNO();
         if(validar==1){
             limpiar();
             if(!ingresarCliente()){
+                cout << endl;
                 error("NO SE PUDO INGRESAR EL CLIENTE");
                 return false;
             }
@@ -461,11 +469,12 @@ bool transferirMascotas(){
     limpiar();
     cout << "======================================================"<< endl;
     cout << "                    TRANSFERIR MASCOTA" << endl;
-    cout << "------------------------------------------------------"<< endl<< endl;
+    cout << "------------------------------------------------------"<< endl;
     cout << "                MASCOTA: "<< regMascota.getIDmascota()<< endl;
     cout << "NOMBRE DEL NUEVO DUENIO: "<< regCliente.getNombreCliente() << endl;
     cout << "               APELLIDO: "<< regCliente.getApellido() << endl;
     cout << "                    DNI: "<< regCliente.getDNICliente() << endl;
+    cout << "------------------------------------------------------"<< endl;
     cout << "DESEA COMPLETAR LA TRANSFERENCIA? SI | NO: ";
     validar=preguntarSIoNO();
     if(validar==1){

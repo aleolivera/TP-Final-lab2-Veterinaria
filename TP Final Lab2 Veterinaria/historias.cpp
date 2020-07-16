@@ -189,7 +189,7 @@ void verVisita(Historia regHistoria, Cliente regCliente){
     cout << "CLIENTE: " << regCliente.getApellido() << ", " << regCliente.getNombreCliente() << endl << endl << endl;
     cout <<"ANAMNESIS: " << regHistoria.getAnamnesis() << endl;
     if(regHistoria.getControl()){
-        cout << endl << "REQUIERE CONTROL LA FECHA: " << endl;
+        cout << endl << "FECHA DE VISITA DE CONTROL: " << endl;
         regHistoria.getFechaControl().mostrarFecha();
         cout << endl;
     }
@@ -368,7 +368,7 @@ bool mostrarHistoria(){
         if(strcmp(nombreMascota,vecMascotas[i].getNombreMascota())==0)
             for(int j=0;j<cantidadRegistrosClientes();j++){
                 if(vecMascotas[i].getDNICliente()==vecClientes[j].getDNICliente()){
-                    cout << "                 DUENIOS: " << vecClientes[i].getApellido()<< " | ";
+                    cout << "                 DUENIOS: " << vecClientes[j].getApellido()<< " | ";
                     encontrado=true;
                 }
             }

@@ -188,7 +188,9 @@ void errorEnteroInvalido(int numero,const char* mensaje){
 //    colorPantalla(15,4);
     system("color 4F");
     gotoxy(0,4);
-    cout << "'"<<numero<<"' "<< mensaje << endl;
+    cout << " =====================================================" << endl<< endl;
+    cout << "       '"<< numero <<"' " << mensaje << endl << endl;
+    cout << " =====================================================" << endl;
     pausar();
 }
 void errorFloatInvalido(float numero,const char* mensaje){
